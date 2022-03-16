@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MagnumOpusOfSPLORR", "MagnumOpusOfSPLORR\MagnumOpusOfSPLORR.vbproj", "{F3032E1A-DF60-4E94-ABBA-34BBB396A3F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stuff", "Stuff", "{D51687D3-4443-4596-BF6E-B80B6C244D7D}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3032E1A-DF60-4E94-ABBA-34BBB396A3F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3032E1A-DF60-4E94-ABBA-34BBB396A3F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3032E1A-DF60-4E94-ABBA-34BBB396A3F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3032E1A-DF60-4E94-ABBA-34BBB396A3F6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {08F956EE-7F72-4E9C-9E0A-67B7B4E2A7AC}
+	EndGlobalSection
+EndGlobal
