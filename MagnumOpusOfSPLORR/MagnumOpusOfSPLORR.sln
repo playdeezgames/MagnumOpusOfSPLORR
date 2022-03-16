@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stuff", "Stuff", "{D51687D3
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MOOS.Game", "MOOS.Game\MOOS.Game.vbproj", "{47550F75-A6DD-438C-BB88-465268DC556B}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MOOS.Data", "MOOS.Data\MOOS.Data.vbproj", "{00FAAD79-E7F4-47B0-A944-E5E934D701DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +24,14 @@ Global
 		{F3032E1A-DF60-4E94-ABBA-34BBB396A3F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3032E1A-DF60-4E94-ABBA-34BBB396A3F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3032E1A-DF60-4E94-ABBA-34BBB396A3F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47550F75-A6DD-438C-BB88-465268DC556B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47550F75-A6DD-438C-BB88-465268DC556B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47550F75-A6DD-438C-BB88-465268DC556B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47550F75-A6DD-438C-BB88-465268DC556B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00FAAD79-E7F4-47B0-A944-E5E934D701DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00FAAD79-E7F4-47B0-A944-E5E934D701DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00FAAD79-E7F4-47B0-A944-E5E934D701DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00FAAD79-E7F4-47B0-A944-E5E934D701DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

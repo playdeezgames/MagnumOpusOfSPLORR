@@ -1,8 +1,10 @@
 Imports System
+Imports MOOS.Game
 Imports Spectre.Console
 
 Module Program
     Sub Main(args As String())
+        AddHandler Game.PlaySfx, AddressOf HandleSfx
         Console.Title = "Magnum Opus of SPLORR!!"
         AnsiConsole.MarkupLine("[aqua]***************************[/]")
         AnsiConsole.MarkupLine("[aqua]* Magnum Opus of SPLORR!! *[/]")

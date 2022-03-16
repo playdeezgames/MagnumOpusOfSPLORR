@@ -10,4 +10,8 @@
     <PackageReference Include="Spectre.Console" Version="0.43.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MOOS.Game\MOOS.Game.vbproj" />
+  </ItemGroup>
+
 </Project>
