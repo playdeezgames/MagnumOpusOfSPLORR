@@ -1,4 +1,3 @@
-Imports System
 Imports MOOS.Game
 Imports Spectre.Console
 
@@ -11,6 +10,8 @@ Module Program
         AnsiConsole.MarkupLine("[gray]...With ""help"" from his ""friends""[/]")
         AnsiConsole.WriteLine()
     End Sub
+    Private Const EmbarkText = "Embark!"
+    Private Const QuitText = "Quit"
     Private Sub MainMenu()
         Dim done = False
         While Not done
@@ -18,10 +19,13 @@ Module Program
             {
                 .Title = "[olive]Main Menu:[/]"
             }
-            prompt.AddChoice("Quit")
+            prompt.AddChoice(EmbarkText)
+            prompt.AddChoice(QuitText)
             Select Case AnsiConsole.Prompt(prompt)
-                Case "Quit"
+                Case QuitText
                     done = ConfirmQuit()
+                Case EmbarkText
+                    Embark.Run()
             End Select
         End While
     End Sub
