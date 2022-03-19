@@ -11,28 +11,9 @@
 
 ## TODO Decisions
 
-- Locations and Characters
-	- Must a character exist in a location?
-		- if yes
-			- CharacterId in Locations table
-		- if no
-			- either CharacterLocations 
-			- or LocationCharacters table
-	- May more than one character exist in a location?
-		- if yes
-			- either CharacterLocations
-			- or LocationCharacters
-			- or LocationId in Characters
-		- if no
-			- either CharacterLocations
-			- or LocationCharacters
-	- What is the relationship between locations?
-		- Routes
-			- either one way
-			- or two way
-	- Do locations have coordinates?
-		- if they can have coordinates, MUST they have coordinates?
-		- can they move?
+Characters MUST exist at a Location
+More than one Character MAY exist at a Location
+One way Routes connection Locations
 
 ## DB Schema
 
@@ -49,4 +30,10 @@
 ### Players
 
 - PlayerId (PK, CK = 1)
-- CharacterId FK Characters
+- CharacterId (FK Characters)
+
+### Routes
+
+- RouteId (PK)
+- FromLocationId (FK Locations)
+- ToLocationId (FK Locations)
