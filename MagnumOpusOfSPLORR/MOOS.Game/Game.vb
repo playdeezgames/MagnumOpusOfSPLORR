@@ -3,7 +3,14 @@ Imports MOOS.Data
 Public Module Game
     Sub Start()
         Store.Reset()
+        CreatePlayerCharacter()
     End Sub
+
+    Private Sub CreatePlayerCharacter()
+        Dim characterId = CharacterData.Create(CharacterType.Player)
+        PlayerData.Write(characterId)
+    End Sub
+
     Sub Finish()
         Store.ShutDown()
     End Sub
