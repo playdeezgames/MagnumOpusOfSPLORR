@@ -1,3 +1,3 @@
 ﻿Public Enum LocationType
-    Spawn
+    Ungenerated
 End Enum

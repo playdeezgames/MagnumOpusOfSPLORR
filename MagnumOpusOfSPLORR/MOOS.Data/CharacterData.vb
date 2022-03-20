@@ -27,4 +27,15 @@
             MakeParameter("@LocationId", locationId))
         Return LastInsertRowId
     End Function
+    Function ReadLocationId(characterId As Long) As Long?
+        Initialize()
+        Return ExecuteScalar(Of Long)(
+            "SELECT
+                [LocationId]
+            FROM
+                [Characters]
+            WHERE
+                [CharacterId]=@CharacterId;",
+            MakeParameter("@CharacterId", characterId))
+    End Function
 End Module

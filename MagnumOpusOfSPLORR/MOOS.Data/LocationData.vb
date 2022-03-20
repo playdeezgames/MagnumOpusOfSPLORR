@@ -21,4 +21,16 @@
             MakeParameter("@LocationType", locationType))
         Return LastInsertRowId
     End Function
+    Function ReadLocationType(locationId As Long) As Long?
+        Initialize()
+        Return ExecuteScalar(Of Long)(
+            "SELECT
+                [LocationType]
+            FROM
+                [Locations]
+            WHERE
+                [LocationId] = @LocationId;",
+            MakeParameter("@LocationId", locationId))
+
+    End Function
 End Module
