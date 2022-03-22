@@ -21,6 +21,7 @@ Module Program
             }
             prompt.AddChoice(EmbarkText)
             prompt.AddChoice(QuitText)
+            Play("L500;C4;L250;G3;G3;L500;G#3;G3;R500;B3;C4;R500")
             Select Case AnsiConsole.Prompt(prompt)
                 Case QuitText
                     done = ConfirmQuit()
