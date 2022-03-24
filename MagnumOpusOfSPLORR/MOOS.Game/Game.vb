@@ -1,11 +1,10 @@
 Imports MOOS.Data
 
 Public Module Game
-    Sub Start()
+    Sub NewGame()
         Store.Reset()
         CreatePlayerCharacter()
     End Sub
-
     Private Sub CreatePlayerCharacter()
         Dim locationId = LocationData.Create()
         Dim characterId = CharacterData.Create(locationId)
