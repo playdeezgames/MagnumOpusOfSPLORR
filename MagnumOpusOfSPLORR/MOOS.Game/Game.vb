@@ -10,7 +10,6 @@ Public Module Game
         Dim characterId = CharacterData.Create(locationId, "Tagon")
         PlayerData.Write(characterId)
     End Sub
-
     Sub Finish()
         Store.ShutDown()
     End Sub
