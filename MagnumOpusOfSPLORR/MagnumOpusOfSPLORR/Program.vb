@@ -17,6 +17,7 @@ Module Program
     Private Const SaveGameText = "Save Game..."
     Private Const AbandonGameText = "Abandon Game"
     Private Const EmbarkText = "Embark!"
+    Private Const EditGameText = "Edit Game..."
     Private Const QuitText = "Quit"
     Private Sub MainMenu()
         Dim done = False
@@ -28,6 +29,7 @@ Module Program
             If Store.Exists Then
                 prompt.AddChoice(EmbarkText)
                 prompt.AddChoice(SaveGameText)
+                prompt.AddChoice(EditGameText)
                 prompt.AddChoice(AbandonGameText)
             Else
                 prompt.AddChoice(NewGameText)
@@ -41,6 +43,8 @@ Module Program
                     HandleAbandonGame()
                 Case LoadGameText
                     HandleLoadGame()
+                Case EditGameText
+                    EditGameMenu.Run()
                 Case NewGameText
                     Game.NewGame()
                 Case QuitText
