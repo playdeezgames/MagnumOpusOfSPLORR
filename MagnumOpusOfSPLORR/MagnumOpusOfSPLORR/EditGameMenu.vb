@@ -1,6 +1,6 @@
 ﻿Imports Spectre.Console
 Module EditGameMenu
-    Private Const StopEditingText = "Stop Editing"
+    Private Const LocationsText = "Locations..."
     Sub Run()
         Dim done = False
         While Not done
@@ -8,9 +8,12 @@ Module EditGameMenu
                 {
                     .Title = "[olive]Edit Menu:[/]"
                 }
-            prompt.AddChoice(StopEditingText)
+            prompt.AddChoice(GoBackText)
+            prompt.AddChoice(LocationsText)
             Select Case AnsiConsole.Prompt(prompt)
-                Case StopEditingText
+                Case LocationsText
+                    EditLocationsMenu.Run()
+                Case GoBackText
                     done = True
                 Case Else
                     Throw New NotImplementedException

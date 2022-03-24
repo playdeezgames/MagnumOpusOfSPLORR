@@ -6,11 +6,10 @@ Public Module Game
         CreatePlayerCharacter()
     End Sub
     Private Sub CreatePlayerCharacter()
-        Dim locationId = LocationData.Create()
-        Dim characterId = CharacterData.Create(locationId)
+        Dim locationId = LocationData.Create("Start")
+        Dim characterId = CharacterData.Create(locationId, "Tagon")
         PlayerData.Write(characterId)
     End Sub
-
     Sub Finish()
         Store.ShutDown()
     End Sub

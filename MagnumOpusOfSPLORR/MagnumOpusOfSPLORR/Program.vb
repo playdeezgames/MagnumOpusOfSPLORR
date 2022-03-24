@@ -3,7 +3,8 @@ Imports MOOS.Game
 Imports Spectre.Console
 
 Module Program
-    Const NeverMindText = "Never Mind"
+    Friend Const NeverMindText = "Never Mind"
+    Friend Const GoBackText = "Go Back"
     Private Sub Welcome()
         AnsiConsole.MarkupLine("[aqua]***************************[/]")
         AnsiConsole.MarkupLine("[aqua]* Magnum Opus of SPLORR!! *[/]")
@@ -53,6 +54,7 @@ Module Program
                     Embark.Run()
             End Select
         End While
+        Play("L500;C4;L250;G3;G3;L500;G#3;G3;R500;B3;C4;R500")
         Game.Finish()
     End Sub
 
