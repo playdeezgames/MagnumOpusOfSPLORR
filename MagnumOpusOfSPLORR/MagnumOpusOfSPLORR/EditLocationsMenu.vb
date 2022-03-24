@@ -4,7 +4,7 @@ Module EditLocationsMenu
     Sub Run()
         Dim done = False
         While Not done
-            Dim prompt As New SelectionPrompt(Of String) With {.Title = "Locations:"}
+            Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Locations:[/]"}
             prompt.AddChoice(GoBackText)
             For Each location In Locations.AllLocations
                 prompt.AddChoice(location.UniqueName)

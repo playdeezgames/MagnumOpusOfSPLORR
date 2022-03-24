@@ -30,6 +30,7 @@
         End Get
     End Property
     Function ReadName(locationId As Long) As String
-        Throw New NotImplementedException
+        Initialize()
+        Return ExecuteScalar(Function(x) CStr(x),"SELECT [LocationName] FROM [Locations] WHERE [LocationId]=@LocationId;", MakeParameter("@LocationId", locationId))
     End Function
 End Module
