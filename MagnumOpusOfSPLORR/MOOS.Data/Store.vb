@@ -51,6 +51,17 @@ Public Module Store
             Return ExecuteScalar(Of TResult)(command)
         End Using
     End Function
+    Function ExecuteReader(Of TResult)(transform As Func(Of SqliteDataReader, TResult), query As String, ParamArray parameters() As SqliteParameter) As List(Of TResult)
+        Using command = CreateCommand(query, parameters)
+            Using reader = command.ExecuteReader
+                Dim result As New List(Of TResult)
+                While reader.Read
+                    result.Add(transform(reader))
+                End While
+                Return result
+            End Using
+        End Using
+    End Function
     ReadOnly Property LastInsertRowId() As Long
         Get
             Using command = connection.CreateCommand()
