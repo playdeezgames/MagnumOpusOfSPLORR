@@ -12,6 +12,12 @@ Public Module Store
             connection = Nothing
         End If
     End Sub
+    ReadOnly Property Exists As Boolean
+        Get
+            Return connection IsNot Nothing
+        End Get
+    End Property
+
     Sub Save(filename As String)
         Using saveConnection As New SqliteConnection($"Data Source={filename}")
             connection.BackupDatabase(saveConnection)
@@ -20,6 +26,7 @@ Public Module Store
     Sub Load(filename As String)
         Reset()
         Using loadConnection As New SqliteConnection($"Data Source={filename}")
+            loadConnection.Open()
             loadConnection.BackupDatabase(connection)
         End Using
     End Sub
