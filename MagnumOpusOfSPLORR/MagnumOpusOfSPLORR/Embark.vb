@@ -47,7 +47,7 @@ Module Embark
             AnsiConsole.WriteLine()
             AnsiConsole.MarkupLine("You exist!")
             Dim character As New PlayerCharacter()
-            AnsiConsole.MarkupLine($"Location: {character.Location.Name}")
+            AnsiConsole.MarkupLine($"Location: {character.Location.Id}")
             Dim prompt As New SelectionPrompt(Of String) With
                 {
                     .Title = "[olive]Now what?[/]"
