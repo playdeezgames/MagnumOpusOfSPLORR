@@ -9,9 +9,12 @@ Module EditLocationsMenu
             For Each location In Locations.AllLocations
                 prompt.AddChoice(location.UniqueName)
             Next
-            Select Case AnsiConsole.Prompt(prompt)
+            Dim answer = AnsiConsole.Prompt(prompt)
+            Select Case answer
                 Case GoBackText
                     done = True
+                Case Else
+                    EditLocationMenu.Run(AllLocations.Single(Function(x) x.UniqueName = answer))
             End Select
         End While
 

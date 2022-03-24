@@ -6,24 +6,28 @@
             (
                 [CharacterId] INTEGER PRIMARY KEY AUTOINCREMENT,
                 [LocationId] INT NOT NULL,
+                [CharacterName] TEXT NOT NULL,
                 FOREIGN KEY([LocationId]) REFERENCES [Locations]([LocationId])
             );")
     End Sub
-    Function Create(locationId As Long) As Long
+    Function Create(locationId As Long, characterName As String) As Long
         Initialize()
         ExecuteNonQuery(
             "INSERT INTO [Characters]
             (
-                [LocationId]
+                [LocationId],
+                [CharacterName]
             ) 
             VALUES
             (
-                @LocationId
+                @LocationId,
+                @CharacterName
             );",
-            MakeParameter("@LocationId", locationId))
+            MakeParameter("@LocationId", locationId),
+            MakeParameter("@CharacterName", characterName))
         Return LastInsertRowId
     End Function
-    Function ReadLocationId(characterId As Long) As Long?
+    Function ReadLocation(characterId As Long) As Long?
         Initialize()
         Return ExecuteScalar(Of Long)(
             "SELECT
@@ -33,5 +37,29 @@
             WHERE
                 [CharacterId]=@CharacterId;",
             MakeParameter("@CharacterId", characterId))
+    End Function
+    Function ReadName(characterId As Long) As String
+        Initialize()
+        Return ExecuteScalar(
+            Function(x) CStr(x),
+            "SELECT 
+                [CharacterName] 
+            FROM 
+                [Characters] 
+            WHERE 
+                [CharacterId]=@CharacterId;",
+            MakeParameter("@CharacterId", characterId))
+    End Function
+    Function ForLocation(locationId As Long) As List(Of Long)
+        Initialize()
+        Return ExecuteReader(
+            Function(reader) CLng(reader("CharacterId")),
+            "SELECT 
+                [CharacterId] 
+            FROM 
+                [Characters] 
+            WHERE 
+                [LocationId]=@LocationId;",
+            MakeParameter("@LocationId", locationId))
     End Function
 End Module
