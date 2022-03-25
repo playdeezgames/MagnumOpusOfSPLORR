@@ -14,10 +14,22 @@ Module EditLocationMenu
             End If
             Dim prompt = New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
             prompt.AddChoice(GoBackText)
+            prompt.AddChoice(ChangeNameText)
             Select Case AnsiConsole.Prompt(prompt)
                 Case GoBackText
                     done = True
+                Case ChangeNameText
+                    HandleChangeName(location)
+                Case Else
+                    Throw New NotImplementedException
             End Select
         End While
+    End Sub
+
+    Private Sub HandleChangeName(location As Location)
+        Dim newName = AnsiConsole.Ask(Of String)("New Location Name:")
+        If Not String.IsNullOrWhiteSpace(newName) Then
+            location.Name = newName
+        End If
     End Sub
 End Module

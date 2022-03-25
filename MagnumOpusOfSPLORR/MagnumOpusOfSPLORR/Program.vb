@@ -3,8 +3,6 @@ Imports MOOS.Game
 Imports Spectre.Console
 
 Module Program
-    Friend Const NeverMindText = "Never Mind"
-    Friend Const GoBackText = "Go Back"
     Private Sub Welcome()
         AnsiConsole.MarkupLine("[aqua]***************************[/]")
         AnsiConsole.MarkupLine("[aqua]* Magnum Opus of SPLORR!! *[/]")

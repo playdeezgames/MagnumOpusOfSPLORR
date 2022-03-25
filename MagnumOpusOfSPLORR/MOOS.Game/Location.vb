@@ -2,10 +2,13 @@
 
 Public Class Location
     ReadOnly Property Id As Long
-    ReadOnly Property Name As String
+    Property Name As String
         Get
             Return LocationData.ReadName(Id)
         End Get
+        Set(value As String)
+            LocationData.WriteName(Id, value)
+        End Set
     End Property
     ReadOnly Property UniqueName As String
         Get
