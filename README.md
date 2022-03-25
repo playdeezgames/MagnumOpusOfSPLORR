@@ -3,11 +3,14 @@
 ## Action Items
 
 - Location
+	-
 - Character
-	- create
 	- delete
-	- assign player character
-
+	-
+- Direction
+	- 
+- Route
+	- 
 
 ## Deliberate Decisions
 

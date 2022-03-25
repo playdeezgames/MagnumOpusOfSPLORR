@@ -35,4 +35,7 @@ Public Class Character
             CharacterData.WriteName(Id, value)
         End Set
     End Property
+    Public Sub SetAsPlayerCharacter()
+        PlayerData.Write(Id)
+    End Sub
 End Class
