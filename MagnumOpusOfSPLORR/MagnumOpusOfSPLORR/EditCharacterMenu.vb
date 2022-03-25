@@ -28,18 +28,10 @@ Module EditCharacterMenu
     End Sub
 
     Private Sub HandleChangeLocation(character As Character)
-        Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Which location?[/]"}
-        prompt.AddChoice(NeverMindText)
-        For Each location In AllLocations
-            prompt.AddChoices(location.UniqueName)
-        Next
-        Dim answer = AnsiConsole.Prompt(prompt)
-        Select Case answer
-            Case NeverMindText
-                'do nothing
-            Case Else
-                character.Location = AllLocations.Single(Function(x) x.UniqueName = answer)
-        End Select
+        Dim newLocation = ChooseLocation("Which Location", True)
+        If newLocation IsNot Nothing Then
+            character.Location = newLocation
+        End If
     End Sub
 
     Private Sub HandleChangeName(character As Character)

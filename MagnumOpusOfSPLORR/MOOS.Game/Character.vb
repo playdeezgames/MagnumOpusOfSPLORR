@@ -13,9 +13,18 @@ Public Class Character
             CharacterData.WriteLocation(Id, value.Id)
         End Set
     End Property
+    ReadOnly Property IsPlayerCharacter As Boolean
+        Get
+            Return Id = PlayerData.Read.Value
+        End Get
+    End Property
     ReadOnly Property UniqueName As String
         Get
-            Return $"{Name}(#{Id})"
+            Dim result = $"{Name}(#{Id})"
+            If IsPlayerCharacter Then
+                result &= "(PC)"
+            End If
+            Return result
         End Get
     End Property
     Property Name As String

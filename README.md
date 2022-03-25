@@ -6,6 +6,7 @@
 - Character
 	- create
 	- delete
+	- assign player character
 
 
 ## Deliberate Decisions
