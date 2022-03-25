@@ -3,9 +3,7 @@
 ## Action Items
 
 - Location
-	- 
 - Character
-	- 
 - Direction
 	- boilerplate
 	- list
@@ -13,7 +11,6 @@
 	- create
 	- destroy
 - Route
-	- 
 
 ## Deliberate Decisions
 
