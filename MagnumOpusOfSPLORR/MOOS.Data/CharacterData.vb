@@ -50,7 +50,7 @@
                 [CharacterId]=@CharacterId;",
             MakeParameter("@CharacterId", characterId))
     End Function
-    Function ForLocation(locationId As Long) As List(Of Long)
+    Function ReadForLocation(locationId As Long) As List(Of Long)
         Initialize()
         Return ExecuteReader(
             Function(reader) CLng(reader("CharacterId")),
@@ -62,4 +62,13 @@
                 [LocationId]=@LocationId;",
             MakeParameter("@LocationId", locationId))
     End Function
+    Sub ClearForLocation(locationId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            "DELETE FROM 
+                [Characters] 
+            WHERE 
+                [LocationId]=@LocationId;",
+            MakeParameter("@LocationId", locationId))
+    End Sub
 End Module

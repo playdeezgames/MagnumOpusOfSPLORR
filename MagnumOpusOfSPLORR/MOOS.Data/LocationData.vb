@@ -43,4 +43,11 @@
             MakeParameter("@LocationId", locationId),
             MakeParameter("@LocationName", locationName))
     End Sub
+    Sub Clear(locationId As Long)
+        Initialize()
+        CharacterData.ClearForLocation(locationId)
+        ExecuteNonQuery(
+            "DELETE FROM [Locations] WHERE [LocationId]=@LocationId;",
+            MakeParameter("@LocationId", locationId))
+    End Sub
 End Module

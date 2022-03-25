@@ -1,5 +1,16 @@
 # Magnum Opus Of SPLORR!!
 
+## Action Items
+
+- Location
+	- delete
+- Character
+	- create
+	- rename
+	- delete
+	- relocate
+
+
 ## Deliberate Decisions
 
 - UI is Spectre.Console
@@ -8,24 +19,24 @@
 - All Presentation layer is strictly in MagnumOpusOfSPLORR.vbproj
 - All "Business" layer is strictly in MOOS.Game.vbproj
 - All Persistence layer is strictly in MOOS.Data.vbproj
+- Characters MUST exist at a Location
+- More than one Character MAY exist at a Location
+- One way Routes connection Locations
 
 ## TODO Decisions
-
-Characters MUST exist at a Location
-More than one Character MAY exist at a Location
-One way Routes connection Locations
 
 ## DB Schema
 
 ### Locations
 
 - LocationId (PK AUTO)
-- LocationType (INT)
+- LocationName (TEXT)
 
 ### Characters
 
 - CharacterId (PK AUTO)
-- CharacterType (INT)
+- CharacterName (TEXT)
+- LocationId (FK Locations)
 
 ### Players
 

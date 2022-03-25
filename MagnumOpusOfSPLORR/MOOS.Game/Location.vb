@@ -20,7 +20,17 @@ Public Class Location
     End Sub
     ReadOnly Property Characters As List(Of Character)
         Get
-            Return CharacterData.ForLocation(Id).Select(Function(x) New Character(x)).ToList
+            Return CharacterData.ReadForLocation(Id).Select(Function(x) New Character(x)).ToList
         End Get
     End Property
+    ReadOnly Property CanDestroy As Boolean
+        Get
+            Return Not Characters.Any
+        End Get
+    End Property
+    Sub Destroy()
+        If CanDestroy Then
+            LocationData.Clear(Id)
+        End If
+    End Sub
 End Class
