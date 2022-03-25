@@ -71,4 +71,19 @@
                 [LocationId]=@LocationId;",
             MakeParameter("@LocationId", locationId))
     End Sub
+    ReadOnly Property All As List(Of Long)
+        Get
+            Initialize()
+            Return ExecuteReader(
+                Function(reader) CLng(reader("CharacterId")),
+                "SELECT [CharacterId] FROM [Characters]")
+        End Get
+    End Property
+    Sub WriteName(characterId As Long, characterName As String)
+        Initialize()
+        ExecuteNonQuery(
+            "UPDATE [Characters] SET [CharacterName]=@CharacterName WHERE [CharacterId]=@CharacterId;",
+            MakeParameter("@CharacterId", characterId),
+            MakeParameter("@CharacterName", characterName))
+    End Sub
 End Module

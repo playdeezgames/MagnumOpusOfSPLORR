@@ -15,9 +15,12 @@ Public Class Character
             Return $"{Name}(#{Id})"
         End Get
     End Property
-    ReadOnly Property Name As String
+    Property Name As String
         Get
             Return CharacterData.ReadName(Id)
         End Get
+        Set(value As String)
+            CharacterData.WriteName(Id, value)
+        End Set
     End Property
 End Class
