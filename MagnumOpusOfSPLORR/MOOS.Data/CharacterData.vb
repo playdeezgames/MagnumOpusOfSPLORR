@@ -38,6 +38,18 @@
                 [CharacterId]=@CharacterId;",
             MakeParameter("@CharacterId", characterId))
     End Function
+    Sub WriteLocation(characterId As Long, locationId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            "UPDATE 
+                [Characters] 
+            SET 
+                [LocationId]=@LocationId 
+            WHERE 
+                [CharacterId]=@CharacterId;",
+            MakeParameter("@CharacterId", characterId),
+            MakeParameter("@LocationId", locationId))
+    End Sub
     Function ReadName(characterId As Long) As String
         Initialize()
         Return ExecuteScalar(

@@ -5,9 +5,7 @@
 - Location
 - Character
 	- create
-	- rename
 	- delete
-	- relocate
 
 
 ## Deliberate Decisions
