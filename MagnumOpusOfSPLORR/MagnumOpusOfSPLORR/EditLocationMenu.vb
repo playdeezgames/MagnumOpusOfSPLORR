@@ -5,6 +5,7 @@ Module EditLocationMenu
     Sub Run(location As Location)
         Dim done = False
         While Not done
+            AnsiConsole.Clear()
             AnsiConsole.MarkupLine($"Id: {location.Id}")
             AnsiConsole.MarkupLine($"Name: {location.Name}")
             Dim characters = location.Characters

@@ -4,6 +4,7 @@ Module EditGameMenu
     Sub Run()
         Dim done = False
         While Not done
+            AnsiConsole.Clear()
             Dim prompt As New SelectionPrompt(Of String) With
                 {
                     .Title = "[olive]Edit Menu:[/]"
