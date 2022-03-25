@@ -3,11 +3,15 @@
 ## Action Items
 
 - Location
-	-
-- Character
-	-
-- Direction
 	- 
+- Character
+	- 
+- Direction
+	- boilerplate
+	- list
+	- edit
+	- create
+	- destroy
 - Route
 	- 
 
