@@ -4,12 +4,15 @@ Imports Spectre.Console
 
 Module Program
     Private Sub Welcome()
+        AnsiConsole.Clear()
         AnsiConsole.MarkupLine("[aqua]***************************[/]")
         AnsiConsole.MarkupLine("[aqua]* Magnum Opus of SPLORR!! *[/]")
         AnsiConsole.MarkupLine("[aqua]***************************[/]")
         AnsiConsole.MarkupLine("[gray]A Production of TheGrumpyGameDev[/]")
         AnsiConsole.MarkupLine("[gray]...With ""help"" from his ""friends""[/]")
-        AnsiConsole.WriteLine()
+        Dim prompt = New SelectionPrompt(Of String) With {.Title = ""}
+        prompt.AddChoice("Ok")
+        AnsiConsole.Prompt(prompt)
     End Sub
     Private Const NewGameText = "New Game"
     Private Const LoadGameText = "Load Game..."
@@ -21,6 +24,7 @@ Module Program
     Private Sub MainMenu()
         Dim done = False
         While Not done
+            AnsiConsole.Clear()
             Dim prompt As New SelectionPrompt(Of String) With
             {
                 .Title = "[olive]Main Menu:[/]"

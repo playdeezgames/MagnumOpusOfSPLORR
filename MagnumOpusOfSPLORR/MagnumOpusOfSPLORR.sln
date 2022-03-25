@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MagnumOpusOfSPLORR", "MagnumOpusOfSPLORR\MagnumOpusOfSPLORR.vbproj", "{F3032E1A-DF60-4E94-ABBA-34BBB396A3F6}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MagnumOpusOfSPLORR", "MagnumOpusOfSPLORR\MagnumOpusOfSPLORR.vbproj", "{F3032E1A-DF60-4E94-ABBA-34BBB396A3F6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stuff", "Stuff", "{D51687D3-4443-4596-BF6E-B80B6C244D7D}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,9 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stuff", "Stuff", "{D51687D3
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MOOS.Game", "MOOS.Game\MOOS.Game.vbproj", "{47550F75-A6DD-438C-BB88-465268DC556B}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MOOS.Game", "MOOS.Game\MOOS.Game.vbproj", "{47550F75-A6DD-438C-BB88-465268DC556B}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MOOS.Data", "MOOS.Data\MOOS.Data.vbproj", "{00FAAD79-E7F4-47B0-A944-E5E934D701DF}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MOOS.Data", "MOOS.Data\MOOS.Data.vbproj", "{00FAAD79-E7F4-47B0-A944-E5E934D701DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
