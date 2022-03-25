@@ -21,6 +21,9 @@ Module EditCharacterMenu
             If Not character.IsPlayerCharacter Then
                 prompt.AddChoice(AssignPlayerCharacterText)
             End If
+            If character.CanDestroy Then
+                prompt.AddChoice(DestroyText)
+            End If
             Select Case AnsiConsole.Prompt(prompt)
                 Case GoBackText
                     done = True
@@ -30,6 +33,9 @@ Module EditCharacterMenu
                     HandleChangeLocation(character)
                 Case AssignPlayerCharacterText
                     character.SetAsPlayerCharacter()
+                Case DestroyText
+                    character.Destroy()
+                    done = True
                 Case Else
                     Throw New NotImplementedException
             End Select

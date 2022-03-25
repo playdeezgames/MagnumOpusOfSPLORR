@@ -38,4 +38,14 @@ Public Class Character
     Public Sub SetAsPlayerCharacter()
         PlayerData.Write(Id)
     End Sub
+    ReadOnly Property CanDestroy As Boolean
+        Get
+            Return Not IsPlayerCharacter
+        End Get
+    End Property
+    Sub Destroy()
+        If CanDestroy Then
+            CharacterData.Clear(Id)
+        End If
+    End Sub
 End Class

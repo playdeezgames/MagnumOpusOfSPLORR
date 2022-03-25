@@ -29,4 +29,8 @@
             );",
             MakeParameter("@CharacterId", characterId))
     End Sub
+    Sub Clear()
+        Initialize()
+        ExecuteNonQuery("DELETE FROM [Players];")
+    End Sub
 End Module

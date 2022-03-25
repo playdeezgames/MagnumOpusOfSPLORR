@@ -5,7 +5,6 @@
 - Location
 	-
 - Character
-	- delete
 	-
 - Direction
 	- 

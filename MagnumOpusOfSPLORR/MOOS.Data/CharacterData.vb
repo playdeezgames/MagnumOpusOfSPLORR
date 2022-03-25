@@ -98,4 +98,12 @@
             MakeParameter("@CharacterId", characterId),
             MakeParameter("@CharacterName", characterName))
     End Sub
+    Sub Clear(characterId As Long)
+        Initialize()
+        Dim playerCharacterId = PlayerData.Read
+        If playerCharacterId.HasValue AndAlso playerCharacterId.Value = characterId Then
+            PlayerData.Clear()
+        End If
+        ExecuteNonQuery("DELETE FROM [Characters] WHERE [CharacterId]=@CharacterId;", MakeParameter("@CharacterId", characterId))
+    End Sub
 End Module
