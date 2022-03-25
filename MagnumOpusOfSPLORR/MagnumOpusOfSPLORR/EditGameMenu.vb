@@ -1,6 +1,7 @@
 ﻿Imports Spectre.Console
 Module EditGameMenu
     Private Const LocationsText = "Locations..."
+    Private Const CharactersText = "Characters..."
     Sub Run()
         Dim done = False
         While Not done
@@ -11,9 +12,12 @@ Module EditGameMenu
                 }
             prompt.AddChoice(GoBackText)
             prompt.AddChoice(LocationsText)
+            prompt.AddChoice(CharactersText)
             Select Case AnsiConsole.Prompt(prompt)
                 Case LocationsText
                     EditLocationsMenu.Run()
+                Case CharactersText
+                    EditCharactersMenu.Run()
                 Case GoBackText
                     done = True
                 Case Else

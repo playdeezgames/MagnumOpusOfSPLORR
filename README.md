@@ -3,7 +3,6 @@
 ## Action Items
 
 - Location
-	- delete
 - Character
 	- create
 	- rename
