@@ -6,8 +6,10 @@
 - Character
 - Direction
 - Route
-    - Edit for location
-    - Delete for location
+- WinningLocation
+    - set
+    - clear
+    - game is over when player character is at a/the winning location
 
 ## Deliberate Decisions
 
@@ -23,6 +25,9 @@
 - The Routes have unique combinations of from location and direction
 
 ## TODO Decisions
+
+- How do we "win"?
+    - Be at a/the "winning location"?
 
 ## DB Schema
 
