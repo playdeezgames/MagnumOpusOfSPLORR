@@ -41,7 +41,7 @@ Module EditLocationMenu
     End Sub
     Private Sub HandleAddRoute(fromLocation As Location)
         Dim toLocation = CommonMenu.ChooseLocation("Route to where?", False)
-        Dim direction = CommonMenu.ChooseDirection("Direction of route?", False)
+        Dim direction = CommonMenu.ChooseDirection("Direction of route?", False) 'TODO: limit to available directions!
         Routes.CreateRoute(fromLocation, toLocation, direction)
     End Sub
     Private Sub HandleChangeName(location As Location)

@@ -11,7 +11,8 @@
                 [Directionid] INT NOT NULL,
                 FOREIGN KEY([FromLocationId]) REFERENCES [Locations]([LocationId]),
                 FOREIGN KEY([ToLocationId]) REFERENCES [Locations]([LocationId]),
-                FOREIGN KEY([Directionid]) REFERENCES [Directions]([DirectionId])
+                FOREIGN KEY([Directionid]) REFERENCES [Directions]([DirectionId]),
+                UNIQUE([FromLocationId], [DirectionId])
             );")
     End Sub
     Function Create(fromLocationId As Long, toLocationId As Long, directionId As Long) As Long
