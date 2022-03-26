@@ -10,6 +10,16 @@
     - set
     - clear
     - game is over when player character is at a/the winning location
+- Item
+- EquipSlot
+- CharacterType
+- Generator
+    - list generators
+    - add entry
+    - edit entry
+    - remove entry
+    - delete generator
+    - create generator
 
 ## Deliberate Decisions
 
