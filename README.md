@@ -6,7 +6,8 @@
 - Character
 - Direction
 - Route
-    - List for Location
+    - Edit for location
+    - Delete for location
 
 ## Deliberate Decisions
 
