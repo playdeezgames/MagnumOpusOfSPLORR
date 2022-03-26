@@ -1,0 +1,33 @@
+﻿Imports MOOS.Data
+
+Public Class Route
+    ReadOnly Property Id As Long
+    Sub New(routeId As Long)
+        Id = routeId
+    End Sub
+    ReadOnly Property UniqueName As String
+        Get
+            Return $"{Name}(#{Id})"
+        End Get
+    End Property
+    ReadOnly Property Name As String
+        Get
+            Return $"{Direction.Name} from {FromLocation.Name} to {ToLocation.Name}"
+        End Get
+    End Property
+    ReadOnly Property FromLocation As Location
+        Get
+            Return New Location(RouteData.ReadFromLocation(Id).Value)
+        End Get
+    End Property
+    ReadOnly Property ToLocation As Location
+        Get
+            Return New Location(RouteData.ReadToLocation(Id).Value)
+        End Get
+    End Property
+    ReadOnly Property Direction As Direction
+        Get
+            Return New Direction(RouteData.ReadDirection(Id).Value)
+        End Get
+    End Property
+End Class

@@ -23,9 +23,14 @@ Public Class Location
             Return CharacterData.ReadForLocation(Id).Select(Function(x) New Character(x)).ToList
         End Get
     End Property
+    ReadOnly Property Routes As List(Of Route)
+        Get
+            Return RouteData.ReadForLocation(Id).Select(Function(id) New Route(id)).ToList
+        End Get
+    End Property
     ReadOnly Property CanDestroy As Boolean
         Get
-            Return Not Characters.Any
+            Return Not Characters.Any AndAlso Not Routes.Any
         End Get
     End Property
     Sub Destroy()

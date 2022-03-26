@@ -46,6 +46,7 @@
     Sub Clear(locationId As Long)
         Initialize()
         CharacterData.ClearForLocation(locationId)
+        RouteData.ClearForLocation(locationId)
         ExecuteNonQuery(
             "DELETE FROM [Locations] WHERE [LocationId]=@LocationId;",
             MakeParameter("@LocationId", locationId))

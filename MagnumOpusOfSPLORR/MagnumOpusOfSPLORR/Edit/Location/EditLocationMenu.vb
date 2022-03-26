@@ -12,6 +12,10 @@ Module EditLocationMenu
             If characters.Any Then
                 AnsiConsole.MarkupLine($"Characters: {String.Join(", ", characters.Select(Function(x) x.UniqueName))}")
             End If
+            Dim routes = location.Routes
+            If routes.Any Then
+                AnsiConsole.MarkupLine($"Routes: {String.Join(", ", routes.Select(Function(x) x.UniqueName))}")
+            End If
             Dim prompt = New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
             prompt.AddChoice(GoBackText)
             prompt.AddChoice(ChangeNameText)

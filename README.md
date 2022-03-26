@@ -5,8 +5,8 @@
 - Location
 - Character
 - Direction
-	- create
 - Route
+    - List for Location
 
 ## Deliberate Decisions
 
@@ -23,6 +23,11 @@
 ## TODO Decisions
 
 ## DB Schema
+
+### Directions
+
+- DirectionId (PK AUTO)
+- DirectionName (TEXT)
 
 ### Locations
 
@@ -42,6 +47,7 @@
 
 ### Routes
 
-- RouteId (PK)
+- RouteId (PK AUTO)
 - FromLocationId (FK Locations)
+- DirectionId (FK Directions)
 - ToLocationId (FK Locations)
