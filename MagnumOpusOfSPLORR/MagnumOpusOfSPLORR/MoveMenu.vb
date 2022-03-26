@@ -3,8 +3,7 @@ Imports Spectre.Console
 
 Module MoveMenu
     Friend Sub Run(character As PlayerCharacter, routes As List(Of Route))
-        AnsiConsole.Clear()
-        Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Which way?[/]"}
+        Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Go which way?[/]"}
         prompt.AddChoice(NeverMindText)
         For Each route In routes
             prompt.AddChoice(route.Direction.Name)
