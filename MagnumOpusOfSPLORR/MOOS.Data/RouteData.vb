@@ -35,19 +35,33 @@
             MakeParameter("@DirectionId", directionId))
         Return LastInsertRowId
     End Function
+
+    Public Sub Clear(routeId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            "DELETE FROM [Routes] WHERE [RouteId]=@RouteId;",
+            MakeParameter("@RouteId", routeId))
+    End Sub
+
     Public Function ReadFromLocation(routeId As Long) As Long?
         Initialize()
-        Return ExecuteScalar(Of Long)("SELECT [FromLocationId] FROM [Routes] WHERE [RouteId] = @RouteId;", MakeParameter("@RouteId", routeId))
+        Return ExecuteScalar(Of Long)(
+            "SELECT [FromLocationId] FROM [Routes] WHERE [RouteId] = @RouteId;",
+            MakeParameter("@RouteId", routeId))
     End Function
 
     Public Function ReadToLocation(routeId As Long) As Long?
         Initialize()
-        Return ExecuteScalar(Of Long)("SELECT [ToLocationId] FROM [Routes] WHERE [RouteId] = @RouteId;", MakeParameter("@RouteId", routeId))
+        Return ExecuteScalar(Of Long)(
+            "SELECT [ToLocationId] FROM [Routes] WHERE [RouteId] = @RouteId;",
+            MakeParameter("@RouteId", routeId))
     End Function
 
     Public Function ReadDirection(routeId As Long) As Long?
         Initialize()
-        Return ExecuteScalar(Of Long)("SELECT [DirectionId] FROM [Routes] WHERE [RouteId] = @RouteId;", MakeParameter("@RouteId", routeId))
+        Return ExecuteScalar(Of Long)(
+            "SELECT [DirectionId] FROM [Routes] WHERE [RouteId] = @RouteId;",
+            MakeParameter("@RouteId", routeId))
     End Function
 
     Function ReadForLocation(locationId As Long) As List(Of Long)

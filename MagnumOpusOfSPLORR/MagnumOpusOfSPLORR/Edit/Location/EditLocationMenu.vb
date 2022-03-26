@@ -3,6 +3,7 @@ Imports Spectre.Console
 
 Module EditLocationMenu
     Private Const AddRouteText = "Add Route..."
+    Private Const RemoveRouteText = "Remove Route..."
     Sub Run(location As Location)
         Dim done = False
         While Not done
@@ -23,6 +24,9 @@ Module EditLocationMenu
             If location.AvailableDirections.Any Then
                 prompt.AddChoice(AddRouteText)
             End If
+            If location.Routes.Any Then
+                prompt.AddChoice(RemoveRouteText)
+            End If
             If location.CanDestroy Then
                 prompt.AddChoice(DestroyText)
             End If
@@ -33,6 +37,8 @@ Module EditLocationMenu
                     HandleChangeName(location)
                 Case AddRouteText
                     HandleAddRoute(location)
+                Case RemoveRouteText
+                    HandleRemoveRoute(location)
                 Case DestroyText
                     location.Destroy()
                     done = True
@@ -40,6 +46,21 @@ Module EditLocationMenu
                     Throw New NotImplementedException
             End Select
         End While
+    End Sub
+    Private Sub HandleRemoveRoute(location As Location)
+        Dim routes = location.Routes
+        Dim prompt As New SelectionPrompt(Of String) With {.Title = "Remove which route?"}
+        prompt.AddChoice(NeverMindText)
+        For Each route In routes
+            prompt.AddChoice(route.UniqueName)
+        Next
+        Dim answer = AnsiConsole.Prompt(prompt)
+        Select Case answer
+            Case NeverMindText
+                'do nothing
+            Case Else
+                routes.Single(Function(r) r.UniqueName = answer).Destroy()
+        End Select
     End Sub
     Private Sub HandleAddRoute(fromLocation As Location)
         Dim toLocation = CommonMenu.ChooseLocation("Route to where?", False)

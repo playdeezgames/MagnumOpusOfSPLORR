@@ -30,4 +30,7 @@ Public Class Route
             Return New Direction(RouteData.ReadDirection(Id).Value)
         End Get
     End Property
+    Sub Destroy()
+        RouteData.Clear(Id)
+    End Sub
 End Class
