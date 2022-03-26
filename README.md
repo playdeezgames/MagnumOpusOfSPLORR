@@ -2,10 +2,10 @@
 
 ## Action Items
 
-- Location
-- Character
-- Direction
-- Route
+- Location!
+- Character!
+- Direction!
+- Route!
 - WinningLocation
     - set
     - clear
