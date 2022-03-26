@@ -2,6 +2,7 @@
 Imports Spectre.Console
 
 Module EditLocationMenu
+    Private Const AddRouteText = "Add Route..."
     Sub Run(location As Location)
         Dim done = False
         While Not done
@@ -19,6 +20,7 @@ Module EditLocationMenu
             Dim prompt = New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
             prompt.AddChoice(GoBackText)
             prompt.AddChoice(ChangeNameText)
+            prompt.AddChoice(AddRouteText)
             If location.CanDestroy Then
                 prompt.AddChoice(DestroyText)
             End If
@@ -27,6 +29,8 @@ Module EditLocationMenu
                     done = True
                 Case ChangeNameText
                     HandleChangeName(location)
+                Case AddRouteText
+                    HandleAddRoute(location)
                 Case DestroyText
                     location.Destroy()
                     done = True
@@ -34,6 +38,11 @@ Module EditLocationMenu
                     Throw New NotImplementedException
             End Select
         End While
+    End Sub
+    Private Sub HandleAddRoute(fromLocation As Location)
+        Dim toLocation = CommonMenu.ChooseLocation("Route to where?", False)
+        Dim direction = CommonMenu.ChooseDirection("Direction of route?", False)
+        Routes.CreateRoute(fromLocation, toLocation, direction)
     End Sub
     Private Sub HandleChangeName(location As Location)
         Dim newName = AnsiConsole.Ask(Of String)("New Location Name:")

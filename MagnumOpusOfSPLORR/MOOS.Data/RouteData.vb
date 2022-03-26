@@ -11,23 +11,42 @@
                 [Directionid] INT NOT NULL,
                 FOREIGN KEY([FromLocationId]) REFERENCES [Locations]([LocationId]),
                 FOREIGN KEY([ToLocationId]) REFERENCES [Locations]([LocationId]),
-                FOREIGN KEY([Directionid]) REFERENCES [Direction]([DirectionId])
+                FOREIGN KEY([Directionid]) REFERENCES [Directions]([DirectionId])
             );")
     End Sub
-
+    Function Create(fromLocationId As Long, toLocationId As Long, directionId As Long) As Long
+        Initialize()
+        ExecuteNonQuery(
+            "INSERT INTO [Routes]
+            (
+                [FromLocationId],
+                [ToLocationId],
+                [DirectionId]
+            ) 
+            VALUES
+            (
+                @FromLocationId,
+                @ToLocationId,
+                @DirectionId
+            );",
+            MakeParameter("@FromLocationId", fromLocationId),
+            MakeParameter("@ToLocationId", toLocationId),
+            MakeParameter("@DirectionId", directionId))
+        Return LastInsertRowId
+    End Function
     Public Function ReadFromLocation(routeId As Long) As Long?
         Initialize()
-        Return ExecuteScalar(Of Long)("SELECT [FromLocationId] FROM [Routes] WHERE [RouteId]=@RouteId;", MakeParameter("@RouteId", routeId))
+        Return ExecuteScalar(Of Long)("SELECT [FromLocationId] FROM [Routes] WHERE [RouteId] = @RouteId;", MakeParameter("@RouteId", routeId))
     End Function
 
     Public Function ReadToLocation(routeId As Long) As Long?
         Initialize()
-        Return ExecuteScalar(Of Long)("SELECT [ToLocationId] FROM [Routes] WHERE [RouteId]=@RouteId;", MakeParameter("@RouteId", routeId))
+        Return ExecuteScalar(Of Long)("SELECT [ToLocationId] FROM [Routes] WHERE [RouteId] = @RouteId;", MakeParameter("@RouteId", routeId))
     End Function
 
     Public Function ReadDirection(routeId As Long) As Long?
         Initialize()
-        Return ExecuteScalar(Of Long)("SELECT [DirectionId] FROM [Routes] WHERE [RouteId]=@RouteId;", MakeParameter("@RouteId", routeId))
+        Return ExecuteScalar(Of Long)("SELECT [DirectionId] FROM [Routes] WHERE [RouteId] = @RouteId;", MakeParameter("@RouteId", routeId))
     End Function
 
     Function ReadForLocation(locationId As Long) As List(Of Long)
