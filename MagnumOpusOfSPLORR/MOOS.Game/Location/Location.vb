@@ -15,6 +15,14 @@ Public Class Location
             Return $"{Name}(#{Id})"
         End Get
     End Property
+    ReadOnly Property AvailableDirections As List(Of Direction)
+        Get
+            Dim unavailableDirectionIds As New HashSet(Of Long)(Routes.Select(Function(r) r.Direction.Id))
+            Dim result = New HashSet(Of Direction)(AllDirections)
+            result.RemoveWhere(Function(d) unavailableDirectionIds.Contains(d.Id))
+            Return result.ToList
+        End Get
+    End Property
     Sub New(locationId As Long)
         Id = locationId
     End Sub

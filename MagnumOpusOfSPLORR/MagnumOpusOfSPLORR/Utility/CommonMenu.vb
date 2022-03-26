@@ -22,12 +22,12 @@ Module CommonMenu
                 Return AllLocations.Single(Function(x) x.UniqueName = answer)
         End Select
     End Function
-    Function ChooseDirection(title As String, canCancel As Boolean) As Direction
+    Function ChooseDirection(title As String, candidates As List(Of Direction), canCancel As Boolean) As Direction
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then
             prompt.AddChoice(NeverMindText)
         End If
-        For Each direction In AllDirections
+        For Each direction In candidates
             prompt.AddChoices(direction.UniqueName)
         Next
         Dim answer = AnsiConsole.Prompt(prompt)
@@ -37,5 +37,8 @@ Module CommonMenu
             Case Else
                 Return AllDirections.Single(Function(x) x.UniqueName = answer)
         End Select
+    End Function
+    Function ChooseDirection(title As String, canCancel As Boolean) As Direction
+        Return ChooseDirection(title, AllDirections, canCancel)
     End Function
 End Module

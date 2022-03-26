@@ -20,7 +20,9 @@ Module EditLocationMenu
             Dim prompt = New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
             prompt.AddChoice(GoBackText)
             prompt.AddChoice(ChangeNameText)
-            prompt.AddChoice(AddRouteText)
+            If location.AvailableDirections.Any Then
+                prompt.AddChoice(AddRouteText)
+            End If
             If location.CanDestroy Then
                 prompt.AddChoice(DestroyText)
             End If
@@ -41,7 +43,7 @@ Module EditLocationMenu
     End Sub
     Private Sub HandleAddRoute(fromLocation As Location)
         Dim toLocation = CommonMenu.ChooseLocation("Route to where?", False)
-        Dim direction = CommonMenu.ChooseDirection("Direction of route?", False) 'TODO: limit to available directions!
+        Dim direction = CommonMenu.ChooseDirection("Direction of route?", fromLocation.AvailableDirections, False) 'TODO: limit to available directions!
         Routes.CreateRoute(fromLocation, toLocation, direction)
     End Sub
     Private Sub HandleChangeName(location As Location)
