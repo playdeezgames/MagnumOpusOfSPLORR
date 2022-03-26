@@ -5,11 +5,7 @@
 - Location
 - Character
 - Direction
-	- boilerplate
-	- list
-	- edit
 	- create
-	- destroy
 - Route
 
 ## Deliberate Decisions
