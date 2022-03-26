@@ -20,6 +20,7 @@
 - Characters MUST exist at a Location
 - More than one Character MAY exist at a Location
 - One way Routes connection Locations
+- The Routes have unique combinations of from location and direction
 
 ## TODO Decisions
 
