@@ -2,19 +2,25 @@
 Imports Spectre.Console
 
 Module EditItemTypeMenu
+    Private Sub ShowStatus(itemType As ItemType)
+        AnsiConsole.MarkupLine($"Id: {itemType.Id}")
+        AnsiConsole.MarkupLine($"Name: {itemType.Name}")
+    End Sub
+    Private Function CreatePrompt(itemType As ItemType) As SelectionPrompt(Of String)
+        Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
+        prompt.AddChoice(GoBackText)
+        prompt.AddChoice(ChangeNameText)
+        If itemType.CanDestroy Then
+            prompt.AddChoice(DestroyText)
+        End If
+        Return prompt
+    End Function
     Sub Run(itemType As ItemType)
         Dim done = False
         While Not done
             AnsiConsole.Clear()
-            AnsiConsole.MarkupLine($"Id: {itemType.Id}")
-            AnsiConsole.MarkupLine($"Name: {itemType.Name}")
-            Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
-            prompt.AddChoice(GoBackText)
-            prompt.AddChoice(ChangeNameText)
-            If itemType.CanDestroy Then
-                prompt.AddChoice(DestroyText)
-            End If
-            Select Case AnsiConsole.Prompt(prompt)
+            ShowStatus(itemType)
+            Select Case AnsiConsole.Prompt(CreatePrompt(itemType))
                 Case GoBackText
                     done = True
                 Case DestroyText

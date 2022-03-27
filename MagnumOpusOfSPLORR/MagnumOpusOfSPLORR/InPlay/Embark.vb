@@ -34,10 +34,9 @@
         Return prompt
     End Function
     Sub Run()
-        AnsiConsole.WriteLine()
-        AnsiConsole.MarkupLine("So, you embarked. Good for you!")
         Dim done = False
         While Not done
+            AnsiConsole.Clear()
             Dim character As New PlayerCharacter()
             ShowStatus(character)
             If character.DidWin Then
@@ -66,6 +65,7 @@
         End If
     End Sub
     Private Sub HandleWin()
+        AnsiConsole.Clear()
         AnsiConsole.MarkupLine("You win!")
         Dim prompt As New SelectionPrompt(Of String) With {.Title = ""}
         prompt.AddChoice("Ok")

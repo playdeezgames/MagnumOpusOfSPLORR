@@ -4,11 +4,12 @@ Module InventoryMenu
     Sub Run(character As Character)
         Dim done = False
         While Not done
+            AnsiConsole.Clear()
             Dim itemStacks = character.Inventory.StackedItems
             If itemStacks.Any Then
-                AnsiConsole.MarkupLine($"Items: {String.Join(", ", itemStacks.Select(Function(s) $"{s.Key.Name}(x{s.Value.Count})"))}")
+                AnsiConsole.MarkupLine($"Yer Inventory: {String.Join(", ", itemStacks.Select(Function(s) $"{s.Key.Name}(x{s.Value.Count})"))}")
             End If
-            Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Yer Inventory:[/]"}
+            Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]What now?[/]"}
             prompt.AddChoice(NeverMindText)
             If itemStacks.Any Then
                 prompt.AddChoice(DropText)
@@ -19,6 +20,7 @@ Module InventoryMenu
                     done = True
                 Case DropText
                     HandleDrop(character)
+                    done = character.Inventory.IsEmpty
                 Case Else
                     Throw New NotImplementedException
             End Select
