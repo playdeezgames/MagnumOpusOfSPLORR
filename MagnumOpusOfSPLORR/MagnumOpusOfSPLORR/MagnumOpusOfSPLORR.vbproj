@@ -40,6 +40,7 @@
   <ItemGroup>
     <Import Include="MOOS.Data" />
     <Import Include="MOOS.Game" />
+    <Import Include="Spectre.Console" />
   </ItemGroup>
 
 </Project>

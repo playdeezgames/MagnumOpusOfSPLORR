@@ -3,17 +3,20 @@ Imports MOOS.Game
 
 Module EditCharactersMenu
     Private Const CreateCharacterText = "Create Character"
+    Private Function CreatePrompt() As SelectionPrompt(Of String)
+        Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Characters:[/]"}
+        prompt.AddChoice(GoBackText)
+        prompt.AddChoice(CreateCharacterText)
+        For Each character In AllCharacters
+            prompt.AddChoice(character.UniqueName)
+        Next
+        Return prompt
+    End Function
     Sub Run()
         Dim done = False
         While Not done
             AnsiConsole.Clear()
-            Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Characters:[/]"}
-            prompt.AddChoice(GoBackText)
-            prompt.AddChoice(CreateCharacterText)
-            For Each character In AllCharacters
-                prompt.AddChoice(character.UniqueName)
-            Next
-            Dim answer = AnsiConsole.Prompt(prompt)
+            Dim answer = AnsiConsole.Prompt(CreatePrompt)
             Select Case answer
                 Case GoBackText
                     done = True

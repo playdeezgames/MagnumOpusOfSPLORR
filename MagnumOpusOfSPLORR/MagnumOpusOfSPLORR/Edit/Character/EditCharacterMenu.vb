@@ -1,40 +1,43 @@
-﻿Imports MOOS.Game
-Imports Spectre.Console
-
-Module EditCharacterMenu
+﻿Module EditCharacterMenu
     Private Const ChangeLocationText = "Change Location"
     Private Const AssignPlayerCharacterText = "Make this the player character"
+    Private Sub ShowStatus(character As Character)
+        If character.IsPlayerCharacter Then
+            AnsiConsole.MarkupLine("[aqua]This is the player character[/]")
+        End If
+        AnsiConsole.MarkupLine($"Id: {character.Id}")
+        AnsiConsole.MarkupLine($"Name: {character.Name}")
+        AnsiConsole.MarkupLine($"Location: {character.Location.UniqueName}")
+        Dim itemStacks = character.Inventory.StackedItems
+        If itemStacks.Any Then
+            AnsiConsole.MarkupLine($"Items: {String.Join(
+                    ", ",
+                    itemStacks.Select(Function(x) $"{x.Key.Name}(x{x.Value.Count})"))}")
+        End If
+    End Sub
+    Private Function CreatePrompt(character As Character) As SelectionPrompt(Of String)
+        Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
+        prompt.AddChoice(GoBackText)
+        prompt.AddChoice(ChangeNameText)
+        prompt.AddChoice(ChangeLocationText)
+        prompt.AddChoice(AddItemText)
+        If Not character.Inventory.IsEmpty Then
+            prompt.AddChoice(RemoveItemText)
+        End If
+        If Not character.IsPlayerCharacter Then
+            prompt.AddChoice(AssignPlayerCharacterText)
+        End If
+        If character.CanDestroy Then
+            prompt.AddChoice(DestroyText)
+        End If
+        Return prompt
+    End Function
     Sub Run(character As Character)
         Dim done = False
         While Not done
             AnsiConsole.Clear()
-            If character.IsPlayerCharacter Then
-                AnsiConsole.MarkupLine("[aqua]This is the player character[/]")
-            End If
-            AnsiConsole.MarkupLine($"Id: {character.Id}")
-            AnsiConsole.MarkupLine($"Name: {character.Name}")
-            AnsiConsole.MarkupLine($"Location: {character.Location.UniqueName}")
-            Dim itemStacks = character.Inventory.StackedItems
-            If itemStacks.Any Then
-                AnsiConsole.MarkupLine($"Items: {String.Join(
-                    ", ",
-                    itemStacks.Select(Function(x) $"{x.Key.Name}(x{x.Value.Count})"))}")
-            End If
-            Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
-            prompt.AddChoice(GoBackText)
-            prompt.AddChoice(ChangeNameText)
-            prompt.AddChoice(ChangeLocationText)
-            prompt.AddChoice(AddItemText)
-            If Not character.Inventory.IsEmpty Then
-                prompt.AddChoice(RemoveItemText)
-            End If
-            If Not character.IsPlayerCharacter Then
-                prompt.AddChoice(AssignPlayerCharacterText)
-            End If
-            If character.CanDestroy Then
-                prompt.AddChoice(DestroyText)
-            End If
-            Select Case AnsiConsole.Prompt(prompt)
+            ShowStatus(character)
+            Select Case AnsiConsole.Prompt(CreatePrompt(character))
                 Case GoBackText
                     done = True
                 Case ChangeNameText

@@ -61,7 +61,7 @@ Module Program
     End Sub
 
     Private Function ConfirmQuit() As Boolean
-        Dim prompt = New ConfirmationPrompt("Are you sure you want to quit?")
+        Dim prompt = New ConfirmationPrompt("[red]Are you sure you want to quit?[/]")
         Return AnsiConsole.Prompt(prompt)
     End Function
 
@@ -84,8 +84,7 @@ Module Program
         End If
     End Sub
     Private Sub HandleAbandonGame()
-        Dim prompt = New ConfirmationPrompt("Are you sure you want to abandon the game?")
-        If AnsiConsole.Prompt(prompt) Then
+        If AnsiConsole.Prompt(New ConfirmationPrompt("[red]Are you sure you want to abandon the game?[/]")) Then
             Game.Finish()
         End If
     End Sub
