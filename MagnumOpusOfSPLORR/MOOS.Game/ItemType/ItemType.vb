@@ -20,7 +20,7 @@ Public Class ItemType
     End Property
     ReadOnly Property CanDestroy As Boolean
         Get
-            Return True
+            Return ItemData.ReadCountForItemType(Id) = 0
         End Get
     End Property
     Sub Destroy()

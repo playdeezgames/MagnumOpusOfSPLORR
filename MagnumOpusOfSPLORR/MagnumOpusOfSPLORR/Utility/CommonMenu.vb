@@ -6,6 +6,7 @@ Module CommonMenu
     Friend Const GoBackText = "Go Back"
     Friend Const ChangeNameText = "Change Name"
     Friend Const DestroyText = "Destroy"
+    Friend Const InventoryText = "Inventory..."
     Function ChooseLocation(title As String, canCancel As Boolean) As Location
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then

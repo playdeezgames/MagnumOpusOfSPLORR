@@ -26,6 +26,7 @@
 
     Public Sub Clear(itemTypeId As Long)
         Initialize()
+        ItemData.ClearForItemType(itemTypeId)
         ExecuteNonQuery(
             "DELETE FROM [ItemTypes] WHERE [ItemTypeId]=@ItemTypeId;",
             MakeParameter("@ItemTypeId", itemTypeId))

@@ -26,6 +26,7 @@ Module EditLocationMenu
             prompt.AddChoice(GoBackText)
             prompt.AddChoice(ChangeNameText)
             prompt.AddChoice(ToggleWinningLocation)
+            prompt.AddChoice(InventoryText)
             If location.AvailableDirections.Any Then
                 prompt.AddChoice(AddRouteText)
             End If
@@ -46,6 +47,8 @@ Module EditLocationMenu
                     HandleRemoveRoute(location)
                 Case ToggleWinningLocation
                     HandlToggleWinningLocation(location)
+                Case InventoryText
+                    EditLocationInventoryMenu.Run(location)
                 Case DestroyText
                     location.Destroy()
                     done = True
