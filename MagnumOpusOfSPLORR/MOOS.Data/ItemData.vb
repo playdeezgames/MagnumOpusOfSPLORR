@@ -22,6 +22,14 @@
         Return LastInsertRowId
     End Function
 
+    Public Sub WriteInventory(itemId As Long, inventoryId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            "UPDATE [Items] SET [InventoryId]=@InventoryId WHERE [ItemId]=@ItemId;",
+            MakeParameter("@ItemId", itemId),
+            MakeParameter("@InventoryId", inventoryId))
+    End Sub
+
     Function ReadItemType(itemId As Long) As Long?
         Initialize()
         Return ExecuteScalar(Of Long)(

@@ -20,4 +20,12 @@ Public Class Inventory
             Return result
         End Get
     End Property
+    ReadOnly Property IsEmpty As Boolean
+        Get
+            Return Not Items.Any
+        End Get
+    End Property
+    Sub Add(item As Item)
+        ItemData.WriteInventory(item.Id, Id)
+    End Sub
 End Class
