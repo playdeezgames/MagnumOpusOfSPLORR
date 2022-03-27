@@ -5,6 +5,7 @@
 - Location!
 - Character!
 - Direction!
+    - opposite?
 - Route!
 - WinningLocation
     - set
