@@ -4,50 +4,50 @@
     Friend Const DirectionNameColumn = "DirectionName"
     Friend Sub Initialize()
         ExecuteNonQuery(
-            "CREATE TABLE IF NOT EXISTS [Directions]
+            $"CREATE TABLE IF NOT EXISTS [{TableName}]
             (
-                [DirectionId] INTEGER PRIMARY KEY AUTOINCREMENT,
-                [DirectionName] TEXT NOT NULL
+                [{DirectionIdColumn}] INTEGER PRIMARY KEY AUTOINCREMENT,
+                [{DirectionNameColumn}] TEXT NOT NULL
             );")
     End Sub
     Function Create(directionName As String) As Long
         Initialize()
         ExecuteNonQuery(
-            "INSERT INTO [Directions]([DirectionName]) VALUES(@DirectionName);",
-            MakeParameter("@DirectionName", directionName))
+            $"INSERT INTO [{TableName}]([{DirectionNameColumn}]) VALUES(@{DirectionNameColumn});",
+            MakeParameter($"@{DirectionNameColumn}", directionName))
         Return LastInsertRowId
     End Function
     Public Sub WriteName(directionId As Long, directionName As String)
         Initialize()
         ExecuteNonQuery(
-            "UPDATE [Directions] SET [DirectionName]=@DirectionName WHERE [DirectionId]=@DirectionId;",
-            MakeParameter("@DirectionId", directionId),
-            MakeParameter("@DirectionName", directionName))
+            $"UPDATE [{TableName}] SET [{DirectionNameColumn}]=@{DirectionNameColumn} WHERE [{DirectionIdColumn}]=@{DirectionIdColumn};",
+            MakeParameter($"@{DirectionIdColumn}", directionId),
+            MakeParameter($"@{DirectionNameColumn}", directionName))
     End Sub
     Public Sub Clear(directionId As Long)
         Initialize()
         ExecuteNonQuery(
-            "DELETE FROM [Directions] WHERE [DirectionId]=@DirectionId;",
-            MakeParameter("@DirectionId", directionId))
+            $"DELETE FROM [{TableName}] WHERE [{DirectionIdColumn}]=@{DirectionIdColumn};",
+            MakeParameter($"@{DirectionIdColumn}", directionId))
     End Sub
     ReadOnly Property All As List(Of Long)
         Get
             Initialize()
             Return ExecuteReader(
-                Function(reader) CLng(reader("DirectionId")),
-                "SELECT [DirectionId] FROM [Directions];")
+                Function(reader) CLng(reader($"{DirectionIdColumn}")),
+                $"SELECT [{DirectionIdColumn}] FROM [{TableName}];")
         End Get
     End Property
     Function ReadName(directionId As Long) As String
         Initialize()
         Return ExecuteScalar(
             Function(x) CStr(x),
-            "SELECT 
-                [DirectionName] 
+            $"SELECT 
+                [{DirectionNameColumn}] 
             FROM 
-                [Directions] 
+                [{TableName}] 
             WHERE 
-                [DirectionId]=@DirectionId;",
-            MakeParameter("@DirectionId", directionId))
+                [{DirectionIdColumn}]=@{DirectionIdColumn};",
+            MakeParameter($"@{DirectionIdColumn}", directionId))
     End Function
 End Module
