@@ -104,6 +104,7 @@
         If playerCharacterId.HasValue AndAlso playerCharacterId.Value = characterId Then
             PlayerData.Clear()
         End If
+        CharacterInventoryData.Clear(characterId)
         ExecuteNonQuery("DELETE FROM [Characters] WHERE [CharacterId]=@CharacterId;", MakeParameter("@CharacterId", characterId))
     End Sub
 End Module

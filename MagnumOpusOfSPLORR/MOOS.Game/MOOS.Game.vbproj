@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>MOOS.Game</RootNamespace>
@@ -20,6 +20,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MOOS.Data\MOOS.Data.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Import Include="MOOS.Data" />
   </ItemGroup>
 
 </Project>

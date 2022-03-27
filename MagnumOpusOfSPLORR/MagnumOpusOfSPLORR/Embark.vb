@@ -39,7 +39,7 @@ Module Embark
                     prompt.AddChoice(PickUpText)
                 End If
                 If Not character.Inventory.IsEmpty Then
-                    'TODO: inventory
+                    prompt.AddChoice(InventoryText)
                 End If
                 prompt.AddChoice(MainMenuText)
                 Select Case AnsiConsole.Prompt(prompt)
@@ -49,6 +49,8 @@ Module Embark
                         MoveMenu.Run(character, routes)
                     Case PickUpText
                         HandlePickUp(character)
+                    Case InventoryText
+                        InventoryMenu.Run(character)
                     Case Else
                         Throw New NotImplementedException
                 End Select

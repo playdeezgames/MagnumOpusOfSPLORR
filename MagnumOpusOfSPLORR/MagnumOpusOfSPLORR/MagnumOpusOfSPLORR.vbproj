@@ -37,4 +37,9 @@
     <ProjectReference Include="..\MOOS.Game\MOOS.Game.vbproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Import Include="MOOS.Data" />
+    <Import Include="MOOS.Game" />
+  </ItemGroup>
+
 </Project>
