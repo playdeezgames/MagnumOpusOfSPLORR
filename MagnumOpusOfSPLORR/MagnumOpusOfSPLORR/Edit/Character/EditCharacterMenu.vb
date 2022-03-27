@@ -14,10 +14,14 @@ Module EditCharacterMenu
             AnsiConsole.MarkupLine($"Id: {character.Id}")
             AnsiConsole.MarkupLine($"Name: {character.Name}")
             AnsiConsole.MarkupLine($"Location: {character.Location.UniqueName}")
+            AnsiConsole.MarkupLine($"Items: {String.Join(
+                    ", ",
+                    character.Inventory.StackedItems.Select(Function(x) $"{x.Key.Name}(x{x.Value.Count})"))}")
             Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
             prompt.AddChoice(GoBackText)
             prompt.AddChoice(ChangeNameText)
             prompt.AddChoice(ChangeLocationText)
+            prompt.AddChoice(AddItemText)
             If Not character.IsPlayerCharacter Then
                 prompt.AddChoice(AssignPlayerCharacterText)
             End If
@@ -33,6 +37,8 @@ Module EditCharacterMenu
                     HandleChangeLocation(character)
                 Case AssignPlayerCharacterText
                     character.SetAsPlayerCharacter()
+                Case AddItemText
+                    HandleAddItem(character)
                 Case DestroyText
                     character.Destroy()
                     done = True
@@ -41,6 +47,14 @@ Module EditCharacterMenu
             End Select
         End While
     End Sub
+
+    Private Sub HandleAddItem(character As Character)
+        Dim itemType = CommonMenu.ChooseItemType("", True)
+        If itemType IsNot Nothing Then
+            Items.CreateItem(itemType, character.Inventory)
+        End If
+    End Sub
+
     Private Sub HandleChangeLocation(character As Character)
         Dim newLocation = ChooseLocation("Which Location", True)
         If newLocation IsNot Nothing Then

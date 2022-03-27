@@ -7,6 +7,8 @@ Module CommonMenu
     Friend Const ChangeNameText = "Change Name"
     Friend Const DestroyText = "Destroy"
     Friend Const InventoryText = "Inventory..."
+    Friend Const AddItemText = "Add Item..."
+    Friend Const RemoveItemText = "Remove Item..."
     Function ChooseLocation(title As String, canCancel As Boolean) As Location
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then
@@ -56,6 +58,23 @@ Module CommonMenu
                 Return Nothing
             Case Else
                 Return items.FirstOrDefault(Function(x) x.Name = answer)
+        End Select
+    End Function
+
+    Friend Function ChooseItemType(title As String, canCancel As Boolean) As ItemType
+        Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
+        If canCancel Then
+            prompt.AddChoice(NeverMindText)
+        End If
+        For Each itemType In AllItemTypes
+            prompt.AddChoices(itemType.UniqueName)
+        Next
+        Dim answer = AnsiConsole.Prompt(prompt)
+        Select Case answer
+            Case NeverMindText
+                Return Nothing
+            Case Else
+                Return AllItemTypes.Single(Function(x) x.UniqueName = answer)
         End Select
     End Function
 End Module
