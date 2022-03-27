@@ -22,6 +22,11 @@
         Return LastInsertRowId
     End Function
 
+    Public Sub Clear(itemId As Long)
+        Initialize()
+        ExecuteNonQuery("DELETE FROM [Items] WHERE [ItemId]=@ItemId;", MakeParameter("@ItemId", itemId))
+    End Sub
+
     Public Sub WriteInventory(itemId As Long, inventoryId As Long)
         Initialize()
         ExecuteNonQuery(

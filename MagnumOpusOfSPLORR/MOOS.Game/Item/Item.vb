@@ -20,4 +20,8 @@ Public Class Item
             Return ItemType.Name
         End Get
     End Property
+
+    Public Sub Destroy()
+        ItemData.Clear(Id)
+    End Sub
 End Class

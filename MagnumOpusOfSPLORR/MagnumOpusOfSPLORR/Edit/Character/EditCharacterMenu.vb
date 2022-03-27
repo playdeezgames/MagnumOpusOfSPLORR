@@ -22,6 +22,9 @@ Module EditCharacterMenu
             prompt.AddChoice(ChangeNameText)
             prompt.AddChoice(ChangeLocationText)
             prompt.AddChoice(AddItemText)
+            If Not character.Inventory.IsEmpty Then
+                prompt.AddChoice(RemoveItemText)
+            End If
             If Not character.IsPlayerCharacter Then
                 prompt.AddChoice(AssignPlayerCharacterText)
             End If
@@ -39,6 +42,8 @@ Module EditCharacterMenu
                     character.SetAsPlayerCharacter()
                 Case AddItemText
                     HandleAddItem(character)
+                Case RemoveItemText
+                    HandlRemoveItem(character)
                 Case DestroyText
                     character.Destroy()
                     done = True
@@ -46,6 +51,13 @@ Module EditCharacterMenu
                     Throw New NotImplementedException
             End Select
         End While
+    End Sub
+
+    Private Sub HandlRemoveItem(character As Character)
+        Dim item = CommonMenu.ChooseItemNameFromInventory("Remove which item?", True, character.Inventory.Items)
+        If item IsNot Nothing Then
+            item.Destroy()
+        End If
     End Sub
 
     Private Sub HandleAddItem(character As Character)
