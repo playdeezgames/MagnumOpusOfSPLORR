@@ -46,9 +46,16 @@ Public Class Location
             LocationData.Clear(Id)
         End If
     End Sub
-    ReadOnly Property IsWinningLocation As Boolean
+    Property IsWinningLocation As Boolean
         Get
             Return WinningLocationData.Read(Id)
         End Get
+        Set(value As Boolean)
+            If IsWinningLocation Then
+                WinningLocationData.Clear(Id)
+            Else
+                WinningLocationData.Write(Id)
+            End If
+        End Set
     End Property
 End Class

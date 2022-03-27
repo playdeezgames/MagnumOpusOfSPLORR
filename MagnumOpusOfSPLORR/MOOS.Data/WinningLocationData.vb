@@ -10,4 +10,14 @@
             "SELECT [LocationId] FROM [WinningLocations] WHERE [LocationId]=@LocationId;",
             MakeParameter("@LocationId", locationId)).Any
     End Function
+
+    Public Sub Clear(locationId As Long)
+        Initialize()
+        ExecuteNonQuery("DELETE FROM [WinningLocations] WHERE [LocationId]=@LocationId;", MakeParameter("@LocationId", locationId))
+    End Sub
+
+    Public Sub Write(locationId As Long)
+        Initialize()
+        ExecuteNonQuery("REPLACE INTO [WinningLocations] ([LocationId]) VALUES (@LocationId);", MakeParameter("@LocationId", locationId))
+    End Sub
 End Module

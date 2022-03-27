@@ -12,6 +12,7 @@ Public Module Game
         Dim first = Locations.CreateLocation("Start")
         Dim second = Locations.CreateLocation("Middle")
         Dim third = Locations.CreateLocation("Finish")
+        third.IsWinningLocation = True
 
         Routes.CreateRoute(first, second, AllDirections.Single(Function(d) d.Name = "north"))
         Routes.CreateRoute(second, first, AllDirections.Single(Function(d) d.Name = "south"))

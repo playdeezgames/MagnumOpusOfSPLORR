@@ -4,10 +4,14 @@ Imports Spectre.Console
 Module EditLocationMenu
     Private Const AddRouteText = "Add Route..."
     Private Const RemoveRouteText = "Remove Route..."
+    Private Const ToggleWinningLocation = "Toggle Winning Location"
     Sub Run(location As Location)
         Dim done = False
         While Not done
             AnsiConsole.Clear()
+            If location.IsWinningLocation Then
+                AnsiConsole.MarkupLine("[aqua]This is a winning location[/]")
+            End If
             AnsiConsole.MarkupLine($"Id: {location.Id}")
             AnsiConsole.MarkupLine($"Name: {location.Name}")
             Dim characters = location.Characters
@@ -21,6 +25,7 @@ Module EditLocationMenu
             Dim prompt = New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
             prompt.AddChoice(GoBackText)
             prompt.AddChoice(ChangeNameText)
+            prompt.AddChoice(ToggleWinningLocation)
             If location.AvailableDirections.Any Then
                 prompt.AddChoice(AddRouteText)
             End If
@@ -39,6 +44,8 @@ Module EditLocationMenu
                     HandleAddRoute(location)
                 Case RemoveRouteText
                     HandleRemoveRoute(location)
+                Case ToggleWinningLocation
+                    HandlToggleWinningLocation(location)
                 Case DestroyText
                     location.Destroy()
                     done = True
@@ -47,6 +54,11 @@ Module EditLocationMenu
             End Select
         End While
     End Sub
+
+    Private Sub HandlToggleWinningLocation(location As Location)
+        location.IsWinningLocation = Not location.IsWinningLocation
+    End Sub
+
     Private Sub HandleRemoveRoute(location As Location)
         Dim routes = location.Routes
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "Remove which route?"}
