@@ -24,38 +24,9 @@
 - More than one Character MAY exist at a Location
 - One way Routes connection Locations
 - The Routes have unique combinations of from location and direction
+- Win condition: Player must be at a WinningLocation
 
 ## TODO Decisions
 
-- How do we "win"?
-    - Be at a/the "winning location"?
-
-## DB Schema
-
-### Directions
-
-- DirectionId (PK AUTO)
-- DirectionName (TEXT)
-
-### Locations
-
-- LocationId (PK AUTO)
-- LocationName (TEXT)
-
-### Characters
-
-- CharacterId (PK AUTO)
-- CharacterName (TEXT)
-- LocationId (FK Locations)
-
-### Players
-
-- PlayerId (PK, CK = 1)
-- CharacterId (FK Characters)
-
-### Routes
-
-- RouteId (PK AUTO)
-- FromLocationId (FK Locations)
-- DirectionId (FK Directions)
-- ToLocationId (FK Locations)
+- How do we "lose"?
+    - ????
