@@ -58,4 +58,15 @@ Public Class Location
             End If
         End Set
     End Property
+    ReadOnly Property Inventory As Inventory
+        Get
+            Dim inventoryId = LocationInventoryData.Read(Id)
+            If inventoryId.HasValue Then
+                Return New Inventory(inventoryId.Value)
+            End If
+            Dim result = Inventories.Create()
+            LocationInventoryData.Write(Id, result.Id)
+            Return result
+        End Get
+    End Property
 End Class
