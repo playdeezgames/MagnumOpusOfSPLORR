@@ -19,6 +19,10 @@ Module Embark
             If routes.Any Then
                 AnsiConsole.MarkupLine($"Exits: {String.Join(", ", routes.Select(Function(r) r.Direction.Name))}")
             End If
+            Dim itemStacks = location.Inventory.StackedItems
+            If itemStacks.Any Then
+                AnsiConsole.MarkupLine($"Items: {String.Join(", ", itemStacks.Select(Function(s) $"{s.Key.Name}(x{s.Value.Count})"))}")
+            End If
             If character.DidWin Then
                 done = True
                 HandleWin()

@@ -10,4 +10,14 @@ Public Class Inventory
             Return ItemData.ReadForInventory(Id).Select(Function(id) New Item(id)).ToList
         End Get
     End Property
+    ReadOnly Property StackedItems As Dictionary(Of ItemType, List(Of Item))
+        Get
+            Dim itemStacks = Items.GroupBy(Function(i) i.ItemType.Id)
+            Dim result As New Dictionary(Of ItemType, List(Of Item))
+            For Each itemStack In itemStacks
+                result.Add(New ItemType(itemStack.Key), itemStack.ToList)
+            Next
+            Return result
+        End Get
+    End Property
 End Class

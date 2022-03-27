@@ -3,7 +3,7 @@
         LocationData.Initialize()
         InventoryData.Initialize()
         ExecuteNonQuery(
-            "CREATE TABLE [LocationInventories]
+            "CREATE TABLE IF NOT EXISTS [LocationInventories]
             (
                 [LocationId] INT NOT NULL UNIQUE,
                 [InventoryId] INT NOT NULL,

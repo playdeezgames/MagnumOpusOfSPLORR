@@ -19,7 +19,7 @@ Public Module Game
         Dim third = Locations.CreateLocation("Finish")
         third.IsWinningLocation = True
 
-        Items.CreateItem(ItemTypes.AllItemTypes.Single(Function(i) i.Name = "key"), third.Inventory)
+        Items.CreateItem(ItemTypes.AllItemTypes.Single(Function(i) i.Name = "key"), first.Inventory)
 
         Routes.CreateRoute(first, second, AllDirections.Single(Function(d) d.Name = "north"))
         Routes.CreateRoute(second, first, AllDirections.Single(Function(d) d.Name = "south"))
