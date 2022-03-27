@@ -1,6 +1,6 @@
 ﻿Public Module PlayerData
     Friend Const TableName = "Players"
-    Friend Const CharacterIdColumn = "CharacterId"
+    Friend Const CharacterIdColumn = CharacterData.CharacterIdColumn
     Friend Const PlayerIdColumn = "PlayerId"
     Friend Sub Initialize()
         CharacterData.Initialize()

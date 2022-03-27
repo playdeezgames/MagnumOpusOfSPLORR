@@ -1,7 +1,7 @@
 ﻿Public Module CharacterInventoryData
     Friend Const TableName = "CharacterInventories"
-    Friend Const CharacterIdColumn = "CharacterId"
-    Friend Const InventoryIdColumn = "InventoryId"
+    Friend Const CharacterIdColumn = CharacterData.CharacterIdColumn
+    Friend Const InventoryIdColumn = InventoryData.InventoryIdColumn
     Friend Sub Initialize()
         CharacterData.Initialize()
         InventoryData.Initialize()

@@ -1,104 +1,106 @@
 ﻿Public Module CharacterData
     Friend Const TableName = "Characters"
     Friend Const CharacterIdColumn = "CharacterId"
+    Friend Const CharacterNameColumn = "CharacterName"
+    Friend Const LocationIdColumn = LocationData.LocationIdColumn
     Friend Sub Initialize()
         LocationData.Initialize()
         ExecuteNonQuery(
-            "CREATE TABLE IF NOT EXISTS [Characters]
+            $"CREATE TABLE IF NOT EXISTS [{TableName}]
             (
-                [CharacterId] INTEGER PRIMARY KEY AUTOINCREMENT,
-                [LocationId] INT NOT NULL,
-                [CharacterName] TEXT NOT NULL,
-                FOREIGN KEY([LocationId]) REFERENCES [Locations]([LocationId])
+                [{CharacterIdColumn}] INTEGER PRIMARY KEY AUTOINCREMENT,
+                [{LocationIdColumn}] INT NOT NULL,
+                [{CharacterNameColumn}] TEXT NOT NULL,
+                FOREIGN KEY([{LocationIdColumn}]) REFERENCES [{LocationData.TableName}]([{LocationData.LocationIdColumn}])
             );")
     End Sub
     Function Create(locationId As Long, characterName As String) As Long
         Initialize()
         ExecuteNonQuery(
-            "INSERT INTO [Characters]
+            $"INSERT INTO [{TableName}]
             (
-                [LocationId],
-                [CharacterName]
+                [{LocationIdColumn}],
+                [{CharacterNameColumn}]
             ) 
             VALUES
             (
-                @LocationId,
-                @CharacterName
+                @{LocationIdColumn},
+                @{CharacterNameColumn}
             );",
-            MakeParameter("@LocationId", locationId),
-            MakeParameter("@CharacterName", characterName))
+            MakeParameter($"@{LocationIdColumn}", locationId),
+            MakeParameter($"@{CharacterNameColumn}", characterName))
         Return LastInsertRowId
     End Function
     Function ReadLocation(characterId As Long) As Long?
         Initialize()
         Return ExecuteScalar(Of Long)(
-            "SELECT
-                [LocationId]
+            $"SELECT
+                [{LocationIdColumn}]
             FROM
-                [Characters]
+                [{TableName}]
             WHERE
-                [CharacterId]=@CharacterId;",
-            MakeParameter("@CharacterId", characterId))
+                [{CharacterIdColumn}]=@{CharacterIdColumn};",
+            MakeParameter($"@{CharacterIdColumn}", characterId))
     End Function
     Sub WriteLocation(characterId As Long, locationId As Long)
         Initialize()
         ExecuteNonQuery(
-            "UPDATE 
-                [Characters] 
+            $"UPDATE 
+                [{TableName}] 
             SET 
-                [LocationId]=@LocationId 
+                [{LocationIdColumn}]=@{LocationIdColumn} 
             WHERE 
-                [CharacterId]=@CharacterId;",
-            MakeParameter("@CharacterId", characterId),
-            MakeParameter("@LocationId", locationId))
+                [{CharacterIdColumn}]=@{CharacterIdColumn};",
+            MakeParameter($"@{CharacterIdColumn}", characterId),
+            MakeParameter($"@{LocationIdColumn}", locationId))
     End Sub
     Function ReadName(characterId As Long) As String
         Initialize()
         Return ExecuteScalar(
             Function(x) CStr(x),
-            "SELECT 
-                [CharacterName] 
+            $"SELECT 
+                [{CharacterNameColumn}] 
             FROM 
-                [Characters] 
+                [{TableName}] 
             WHERE 
-                [CharacterId]=@CharacterId;",
-            MakeParameter("@CharacterId", characterId))
+                [{CharacterIdColumn}]=@{CharacterIdColumn};",
+            MakeParameter($"@{CharacterIdColumn}", characterId))
     End Function
     Function ReadForLocation(locationId As Long) As List(Of Long)
         Initialize()
         Return ExecuteReader(
-            Function(reader) CLng(reader("CharacterId")),
-            "SELECT 
-                [CharacterId] 
+            Function(reader) CLng(reader($"{CharacterIdColumn}")),
+            $"SELECT 
+                [{CharacterIdColumn}] 
             FROM 
-                [Characters] 
+                [{TableName}] 
             WHERE 
-                [LocationId]=@LocationId;",
-            MakeParameter("@LocationId", locationId))
+                [{LocationIdColumn}]=@{LocationIdColumn};",
+            MakeParameter($"@{LocationIdColumn}", locationId))
     End Function
     Sub ClearForLocation(locationId As Long)
         Initialize()
         ExecuteNonQuery(
-            "DELETE FROM 
-                [Characters] 
+            $"DELETE FROM 
+                [{TableName}] 
             WHERE 
-                [LocationId]=@LocationId;",
-            MakeParameter("@LocationId", locationId))
+                [{LocationIdColumn}]=@{LocationIdColumn};",
+            MakeParameter($"@{LocationIdColumn}", locationId))
     End Sub
     ReadOnly Property All As List(Of Long)
         Get
             Initialize()
             Return ExecuteReader(
-                Function(reader) CLng(reader("CharacterId")),
-                "SELECT [CharacterId] FROM [Characters]")
+                Function(reader) CLng(reader($"{CharacterIdColumn}")),
+                $"SELECT [{CharacterIdColumn}] FROM [{TableName}]")
         End Get
     End Property
     Sub WriteName(characterId As Long, characterName As String)
         Initialize()
         ExecuteNonQuery(
-            "UPDATE [Characters] SET [CharacterName]=@CharacterName WHERE [CharacterId]=@CharacterId;",
-            MakeParameter("@CharacterId", characterId),
-            MakeParameter("@CharacterName", characterName))
+            $"UPDATE [{TableName}] SET [{CharacterNameColumn}]=@{CharacterNameColumn} WHERE [{CharacterIdColumn}]=@{CharacterIdColumn};",
+            MakeParameter($"@{CharacterIdColumn}", characterId),
+            MakeParameter($"@{CharacterNameColumn}", characterName))
     End Sub
     Sub Clear(characterId As Long)
         Initialize()
@@ -107,6 +109,8 @@
             PlayerData.Clear()
         End If
         CharacterInventoryData.Clear(characterId)
-        ExecuteNonQuery("DELETE FROM [Characters] WHERE [CharacterId]=@CharacterId;", MakeParameter("@CharacterId", characterId))
+        ExecuteNonQuery(
+            $"DELETE FROM [{TableName}] WHERE [{CharacterIdColumn}]=@{CharacterIdColumn};",
+            MakeParameter($"@{CharacterIdColumn}", characterId))
     End Sub
 End Module

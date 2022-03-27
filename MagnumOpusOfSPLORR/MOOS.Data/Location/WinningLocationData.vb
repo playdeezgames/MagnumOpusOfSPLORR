@@ -1,24 +1,29 @@
 ﻿Public Module WinningLocationData
     Friend Const TableName = "WinningLocations"
+    Friend Const LocationIdColumn = LocationData.LocationIdColumn
     Friend Sub Initialize()
         LocationData.Initialize()
-        ExecuteNonQuery("CREATE TABLE IF NOT EXISTS [WinningLocations]([LocationId] INT NOT NULL UNIQUE);")
+        ExecuteNonQuery($"CREATE TABLE IF NOT EXISTS [{TableName}]([{LocationIdColumn}] INT NOT NULL UNIQUE);")
     End Sub
     Function Read(locationId As Long) As Boolean
         Initialize()
         Return ExecuteReader(Of Long)(
-            Function(reader) CLng(reader("LocationId")),
-            "SELECT [LocationId] FROM [WinningLocations] WHERE [LocationId]=@LocationId;",
-            MakeParameter("@LocationId", locationId)).Any
+            Function(reader) CLng(reader($"{LocationIdColumn}")),
+            $"SELECT [{LocationIdColumn}] FROM [{TableName}] WHERE [{LocationIdColumn}]=@{LocationIdColumn};",
+            MakeParameter($"@{LocationIdColumn}", locationId)).Any
     End Function
 
     Public Sub Clear(locationId As Long)
         Initialize()
-        ExecuteNonQuery("DELETE FROM [WinningLocations] WHERE [LocationId]=@LocationId;", MakeParameter("@LocationId", locationId))
+        ExecuteNonQuery(
+            $"DELETE FROM [{TableName}] WHERE [{LocationIdColumn}]=@{LocationIdColumn};",
+            MakeParameter($"@{LocationIdColumn}", locationId))
     End Sub
 
     Public Sub Write(locationId As Long)
         Initialize()
-        ExecuteNonQuery("REPLACE INTO [WinningLocations] ([LocationId]) VALUES (@LocationId);", MakeParameter("@LocationId", locationId))
+        ExecuteNonQuery(
+            $"REPLACE INTO [{TableName}] ([{LocationIdColumn}]) VALUES (@{LocationIdColumn});",
+            MakeParameter($"@{LocationIdColumn}", locationId))
     End Sub
 End Module
