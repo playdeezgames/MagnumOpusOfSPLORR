@@ -1,63 +1,83 @@
 ﻿Public Module ItemData
+    Public Const TableName = "Items"
+    Public Const ItemIdColumn = "ItemId"
+    Public Const ItemTypeIdColumn = "ItemTypeId"
+    Public Const InventoryIdColumn = "InventoryId"
     Friend Sub Initialize()
         ItemTypeData.Initialize()
         InventoryData.Initialize()
         ExecuteNonQuery(
-            "CREATE TABLE IF NOT EXISTS [Items]
+            $"CREATE TABLE IF NOT EXISTS [{TableName}]
             (
-                [ItemId] INTEGER PRIMARY KEY AUTOINCREMENT,
-                [ItemTypeId] INT NOT NULL,
-                [InventoryId] INT NOT NULL,
-                FOREIGN KEY([ItemTypeId]) REFERENCES [ItemTypes]([ItemTypeId]),
-                FOREIGN KEY([InventoryId]) REFERENCES [Inventories]([InventoryId])
+                [{ItemIdColumn}] INTEGER PRIMARY KEY AUTOINCREMENT,
+                [{ItemTypeIdColumn}] INT NOT NULL,
+                [{InventoryIdColumn}] INT NOT NULL,
+                FOREIGN KEY([{ItemTypeIdColumn}]) REFERENCES [{ItemTypeData.TableName}]([{ItemTypeData.ItemTypeIdColumn}]),
+                FOREIGN KEY([{InventoryIdColumn}]) REFERENCES [{InventoryData.TableName}]([{InventoryData.InventoryIdColumn}])
             );")
     End Sub
 
     Public Function Create(itemTypeId As Long, inventoryId As Long) As Long
         Initialize()
         ExecuteNonQuery(
-            "INSERT INTO [Items]([ItemTypeId],[InventoryId]) VALUES(@ItemTypeId,@InventoryId);",
-            MakeParameter("@ItemTypeId", itemTypeId),
-            MakeParameter("@InventoryId", inventoryId))
+            $"INSERT INTO [{TableName}]
+            (
+                [{ItemTypeIdColumn}],
+                [{InventoryIdColumn}]
+            )
+            VALUES
+            (
+                @{ItemTypeIdColumn},
+                @{InventoryIdColumn}
+            );",
+            MakeParameter($"@{ItemTypeIdColumn}", itemTypeId),
+            MakeParameter($"@{InventoryIdColumn}", inventoryId))
         Return LastInsertRowId
     End Function
 
     Public Sub Clear(itemId As Long)
         Initialize()
-        ExecuteNonQuery("DELETE FROM [Items] WHERE [ItemId]=@ItemId;", MakeParameter("@ItemId", itemId))
+        ExecuteNonQuery(
+            $"DELETE FROM [{TableName}] WHERE [{ItemIdColumn}]=@{ItemIdColumn};",
+            MakeParameter($"@{ItemIdColumn}", itemId))
     End Sub
 
     Public Sub WriteInventory(itemId As Long, inventoryId As Long)
         Initialize()
         ExecuteNonQuery(
-            "UPDATE [Items] SET [InventoryId]=@InventoryId WHERE [ItemId]=@ItemId;",
-            MakeParameter("@ItemId", itemId),
-            MakeParameter("@InventoryId", inventoryId))
+            $"UPDATE 
+                [{TableName}] 
+            SET 
+                [{InventoryIdColumn}]=@{InventoryIdColumn} 
+            WHERE 
+                [{ItemIdColumn}]=@{ItemIdColumn};",
+            MakeParameter($"@{ItemIdColumn}", itemId),
+            MakeParameter($"@{InventoryIdColumn}", inventoryId))
     End Sub
 
     Function ReadItemType(itemId As Long) As Long?
         Initialize()
         Return ExecuteScalar(Of Long)(
-            "SELECT [ItemTypeId] FROM [Items] WHERE [ItemId]=@ItemId;",
-            MakeParameter("@ItemId", itemId))
+            $"SELECT [{ItemTypeIdColumn}] FROM [{TableName}] WHERE [{ItemIdColumn}]=@{ItemIdColumn};",
+            MakeParameter($"@{ItemIdColumn}", itemId))
     End Function
     Function ReadForInventory(inventoryId As Long) As List(Of Long)
         Initialize()
         Return ExecuteReader(
-            Function(reader) CLng(reader("ItemId")),
-            "SELECT [ItemId] FROM [Items] WHERE [InventoryId]=@InventoryId;",
-            MakeParameter("@InventoryId", inventoryId))
+            Function(reader) CLng(reader($"{ItemIdColumn}")),
+            $"SELECT [{ItemIdColumn}] FROM [{TableName}] WHERE [{InventoryIdColumn}]=@{InventoryIdColumn};",
+            MakeParameter($"@{InventoryIdColumn}", inventoryId))
     End Function
     Sub ClearForItemType(itemTypeId As Long)
         Initialize()
         ExecuteNonQuery(
-            "DELETE FROM [Items] WHERE [ItemTypeId]=@ItemTypeId",
-            MakeParameter("@ItemTypeId", itemTypeId))
+            $"DELETE FROM [{TableName}] WHERE [{ItemTypeIdColumn}]=@{ItemTypeIdColumn}",
+            MakeParameter($"@{ItemTypeIdColumn}", itemTypeId))
     End Sub
     Function ReadCountForItemType(itemTypeId As Long) As Long
         Initialize()
         Return ExecuteScalar(Of Long)(
-            "SELECT COUNT(1) FROM [Items] WHERE [ItemTypeId]=@ItemTypeId;",
-            MakeParameter("@ItemTypeId", itemTypeId)).Value
+            $"SELECT COUNT(1) FROM [{TableName}] WHERE [{ItemTypeIdColumn}]=@{ItemTypeIdColumn};",
+            MakeParameter($"@{ItemTypeIdColumn}", itemTypeId)).Value
     End Function
 End Module
