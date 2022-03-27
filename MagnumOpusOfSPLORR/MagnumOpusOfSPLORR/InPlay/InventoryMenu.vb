@@ -25,7 +25,7 @@ Module InventoryMenu
         End While
     End Sub
     Private Sub HandleDrop(character As Character)
-        Dim item = CommonMenu.ChooseItemNameFromInventory("Drop what?", True, character.Inventory.Items)
+        Dim item = CommonMenu.ChooseItemNameFromInventory("Drop what?", True, character.Inventory)
         If item IsNot Nothing Then
             character.Location.Inventory.Add(item)
         End If

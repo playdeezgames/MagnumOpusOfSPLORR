@@ -44,12 +44,12 @@ Module CommonMenu
     Function ChooseDirection(title As String, canCancel As Boolean) As Direction
         Return ChooseDirection(title, AllDirections, canCancel)
     End Function
-    Friend Function ChooseItemNameFromInventory(title As String, canCancel As Boolean, items As List(Of Item)) As Item
+    Friend Function ChooseItemNameFromInventory(title As String, canCancel As Boolean, inventory As Inventory) As Item
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then
             prompt.AddChoice(NeverMindText)
         End If
-        For Each item In items
+        For Each item In inventory.Items
             prompt.AddChoices(item.Name)
         Next
         Dim answer = AnsiConsole.Prompt(prompt)
@@ -57,7 +57,7 @@ Module CommonMenu
             Case NeverMindText
                 Return Nothing
             Case Else
-                Return items.FirstOrDefault(Function(x) x.Name = answer)
+                Return inventory.Items.FirstOrDefault(Function(x) x.Name = answer)
         End Select
     End Function
 

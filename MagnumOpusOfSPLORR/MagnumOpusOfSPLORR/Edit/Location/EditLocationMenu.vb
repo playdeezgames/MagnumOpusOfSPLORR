@@ -101,7 +101,7 @@ Module EditLocationMenu
     End Sub
 
     Private Sub HandlRemoveItem(location As Location)
-        Dim item = CommonMenu.ChooseItemNameFromInventory("Remove which item?", True, location.Inventory.Items)
+        Dim item = CommonMenu.ChooseItemNameFromInventory("Remove which item?", True, location.Inventory)
         If item IsNot Nothing Then
             item.Destroy()
         End If

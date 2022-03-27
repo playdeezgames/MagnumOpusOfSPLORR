@@ -57,7 +57,7 @@ Module EditCharacterMenu
     End Sub
 
     Private Sub HandlRemoveItem(character As Character)
-        Dim item = CommonMenu.ChooseItemNameFromInventory("Remove which item?", True, character.Inventory.Items)
+        Dim item = CommonMenu.ChooseItemNameFromInventory("Remove which item?", True, character.Inventory)
         If item IsNot Nothing Then
             item.Destroy()
         End If

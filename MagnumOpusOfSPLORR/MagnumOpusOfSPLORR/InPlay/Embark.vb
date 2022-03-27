@@ -58,7 +58,7 @@ Module Embark
         End While
     End Sub
     Private Sub HandlePickUp(character As PlayerCharacter)
-        Dim item As Item = CommonMenu.ChooseItemNameFromInventory("Pick up what?", True, character.Location.Inventory.Items)
+        Dim item As Item = CommonMenu.ChooseItemNameFromInventory("Pick up what?", True, character.Location.Inventory)
         If item IsNot Nothing Then
             character.Inventory.Add(item)
         End If
