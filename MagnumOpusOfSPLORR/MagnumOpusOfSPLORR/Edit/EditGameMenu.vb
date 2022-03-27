@@ -4,6 +4,7 @@ Module EditGameMenu
     Private Const CharactersText = "Characters..."
     Private Const DirectionsText = "Directions..."
     Private Const ItemTypesText = "Item Types..."
+    Private Const BarriersText = "Barriers..."
     Sub Run()
         Dim done = False
         While Not done
@@ -17,6 +18,7 @@ Module EditGameMenu
             prompt.AddChoice(LocationsText)
             prompt.AddChoice(CharactersText)
             prompt.AddChoice(ItemTypesText)
+            prompt.AddChoice(BarriersText)
             Select Case AnsiConsole.Prompt(prompt)
                 Case LocationsText
                     EditLocationsMenu.Run()
@@ -26,6 +28,8 @@ Module EditGameMenu
                     EditDirectionsMenu.Run()
                 Case ItemTypesText
                     EditItemTypesMenu.Run()
+                Case BarriersText
+                    EditBarriersMenu.Run()
                 Case GoBackText
                     done = True
                 Case Else
