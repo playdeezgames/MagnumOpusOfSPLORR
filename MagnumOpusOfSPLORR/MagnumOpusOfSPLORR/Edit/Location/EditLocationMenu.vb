@@ -22,11 +22,16 @@ Module EditLocationMenu
             If routes.Any Then
                 AnsiConsole.MarkupLine($"Routes: {String.Join(", ", routes.Select(Function(x) x.UniqueName))}")
             End If
+            Dim itemStacks = location.Inventory.StackedItems
+            If itemStacks.Any Then
+                AnsiConsole.MarkupLine($"Items: {String.Join(
+                    ", ",
+                    itemStacks.Select(Function(x) $"{x.Key.Name}(x{x.Value.Count})"))}")
+            End If
             Dim prompt = New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
             prompt.AddChoice(GoBackText)
             prompt.AddChoice(ChangeNameText)
             prompt.AddChoice(ToggleWinningLocation)
-            prompt.AddChoice(InventoryText)
             If location.AvailableDirections.Any Then
                 prompt.AddChoice(AddRouteText)
             End If
@@ -35,6 +40,10 @@ Module EditLocationMenu
             End If
             If location.CanDestroy Then
                 prompt.AddChoice(DestroyText)
+            End If
+            prompt.AddChoice(AddItemText)
+            If Not location.Inventory.IsEmpty Then
+                prompt.AddChoice(RemoveItemText)
             End If
             Select Case AnsiConsole.Prompt(prompt)
                 Case GoBackText
@@ -47,8 +56,10 @@ Module EditLocationMenu
                     HandleRemoveRoute(location)
                 Case ToggleWinningLocation
                     HandlToggleWinningLocation(location)
-                Case InventoryText
-                    EditLocationInventoryMenu.Run(location)
+                Case AddItemText
+                    HandleAddItem(location)
+                Case RemoveItemText
+                    HandlRemoveItem(location)
                 Case DestroyText
                     location.Destroy()
                     done = True
@@ -86,6 +97,20 @@ Module EditLocationMenu
         Dim newName = AnsiConsole.Ask(Of String)("New Location Name:")
         If Not String.IsNullOrWhiteSpace(newName) Then
             location.Name = newName
+        End If
+    End Sub
+
+    Private Sub HandlRemoveItem(location As Location)
+        Dim item = CommonMenu.ChooseItemNameFromInventory("Remove which item?", True, location.Inventory.Items)
+        If item IsNot Nothing Then
+            item.Destroy()
+        End If
+    End Sub
+
+    Private Sub HandleAddItem(location As Location)
+        Dim itemType = CommonMenu.ChooseItemType("", True)
+        If itemType IsNot Nothing Then
+            Items.CreateItem(itemType, location.Inventory)
         End If
     End Sub
 End Module

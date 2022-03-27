@@ -14,9 +14,12 @@ Module EditCharacterMenu
             AnsiConsole.MarkupLine($"Id: {character.Id}")
             AnsiConsole.MarkupLine($"Name: {character.Name}")
             AnsiConsole.MarkupLine($"Location: {character.Location.UniqueName}")
-            AnsiConsole.MarkupLine($"Items: {String.Join(
+            Dim itemStacks = character.Inventory.StackedItems
+            If itemStacks.Any Then
+                AnsiConsole.MarkupLine($"Items: {String.Join(
                     ", ",
-                    character.Inventory.StackedItems.Select(Function(x) $"{x.Key.Name}(x{x.Value.Count})"))}")
+                    itemStacks.Select(Function(x) $"{x.Key.Name}(x{x.Value.Count})"))}")
+            End If
             Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
             prompt.AddChoice(GoBackText)
             prompt.AddChoice(ChangeNameText)
