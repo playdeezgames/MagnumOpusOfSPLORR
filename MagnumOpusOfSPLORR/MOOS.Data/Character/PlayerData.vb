@@ -1,36 +1,39 @@
 ﻿Public Module PlayerData
+    Public Const TableName = "Players"
+    Public Const CharacterIdColumn = "CharacterId"
+    Public Const PlayerIdColumn = "PlayerId"
     Friend Sub Initialize()
         CharacterData.Initialize()
         ExecuteNonQuery(
-            "CREATE TABLE IF NOT EXISTS [Players]
+            $"CREATE TABLE IF NOT EXISTS [{TableName}]
             (
-                [PlayerId] INT NOT NULL UNIQUE,
-                [CharacterId] INT NOT NULL,
-                CHECK([PlayerId]=1),
-                FOREIGN KEY([CharacterId]) REFERENCES [Characters]([CharacterId])
+                [{PlayerIdColumn}] INT NOT NULL UNIQUE,
+                [{CharacterIdColumn}] INT NOT NULL,
+                CHECK([{PlayerIdColumn}]=1),
+                FOREIGN KEY([{CharacterIdColumn}]) REFERENCES [{CharacterData.TableName}]([{CharacterData.CharacterIdColumn}])
             );")
     End Sub
     Function Read() As Long?
         Initialize()
-        Return ExecuteScalar(Of Long)("SELECT [CharacterId] FROM [Players];")
+        Return ExecuteScalar(Of Long)($"SELECT [{CharacterIdColumn}] FROM [{TableName}];")
     End Function
     Sub Write(characterId As Long)
         Initialize()
         ExecuteNonQuery(
-            "REPLACE INTO [Players]
+            $"REPLACE INTO [{TableName}]
             (
-                [PlayerId],
-                [CharacterId]
+                [{PlayerIdColumn}],
+                [{CharacterIdColumn}]
             ) 
             VALUES
             (
                 1,
-                @CharacterId
+                @{CharacterIdColumn}
             );",
-            MakeParameter("@CharacterId", characterId))
+            MakeParameter($"@{CharacterIdColumn}", characterId))
     End Sub
     Sub Clear()
         Initialize()
-        ExecuteNonQuery("DELETE FROM [Players];")
+        ExecuteNonQuery($"DELETE FROM [{TableName}];")
     End Sub
 End Module

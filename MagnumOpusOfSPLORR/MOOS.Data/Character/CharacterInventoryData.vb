@@ -1,33 +1,36 @@
 ﻿Public Module CharacterInventoryData
+    Public Const TableName = "CharacterInventories"
+    Public Const CharacterIdColumn = "CharacterId"
+    Public Const InventoryIdColumn = "InventoryId"
     Friend Sub Initialize()
         CharacterData.Initialize()
         InventoryData.Initialize()
         ExecuteNonQuery(
-            "CREATE TABLE IF NOT EXISTS [CharacterInventories]
+            $"CREATE TABLE IF NOT EXISTS [{TableName}]
             (
-                [CharacterId] INT NOT NULL UNIQUE,
-                [InventoryId] INT NOT NULL,
-                FOREIGN KEY ([CharacterId]) REFERENCES [Characters]([CharacterId]),
-                FOREIGN KEY ([InventoryId]) REFERENCES [Inventories]([InventoryId])
+                [{CharacterIdColumn}] INT NOT NULL UNIQUE,
+                [{InventoryIdColumn}] INT NOT NULL,
+                FOREIGN KEY ([{CharacterIdColumn}]) REFERENCES [{CharacterData.TableName}]([{CharacterData.CharacterIdColumn}]),
+                FOREIGN KEY ([{InventoryIdColumn}]) REFERENCES [{InventoryData.TableName}]([{InventoryData.InventoryIdColumn}])
             );")
     End Sub
     Function Read(characterId As Long) As Long?
         Initialize()
         Return ExecuteScalar(Of Long)(
-            "SELECT [InventoryId] FROM [CharacterInventories] WHERE [CharacterId]=@CharacterId;",
-            MakeParameter("@CharacterId", characterId))
+            $"SELECT [{InventoryIdColumn}] FROM [{TableName}] WHERE [{CharacterIdColumn}]=@{CharacterIdColumn};",
+            MakeParameter($"@{CharacterIdColumn}", characterId))
     End Function
     Sub Write(characterId As Long, inventoryId As Long)
         Initialize()
         ExecuteNonQuery(
-            "REPLACE INTO [CharacterInventories]([CharacterId],[InventoryId]) VALUES (@CharacterId,@InventoryId);",
-            MakeParameter("@CharacterId", characterId),
-            MakeParameter("@InventoryId", inventoryId))
+            $"REPLACE INTO [{TableName}]([{CharacterIdColumn}],[{InventoryIdColumn}]) VALUES (@{CharacterIdColumn},@{InventoryIdColumn});",
+            MakeParameter($"@{CharacterIdColumn}", characterId),
+            MakeParameter($"@{InventoryIdColumn}", inventoryId))
     End Sub
     Friend Sub Clear(characterId As Long)
         Initialize()
         ExecuteNonQuery(
-            "DELETE FROM [CharacterInventories] WHERE [CharacterId]=@CharacterId;",
-            MakeParameter("@CharacterId", characterId))
+            $"DELETE FROM [{TableName}] WHERE [{CharacterIdColumn}]=@{CharacterIdColumn};",
+            MakeParameter($"@{CharacterIdColumn}", characterId))
     End Sub
 End Module

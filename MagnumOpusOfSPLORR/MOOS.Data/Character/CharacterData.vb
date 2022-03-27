@@ -1,4 +1,6 @@
 ﻿Public Module CharacterData
+    Public Const TableName = "Characters"
+    Public Const CharacterIdColumn = "CharacterId"
     Friend Sub Initialize()
         LocationData.Initialize()
         ExecuteNonQuery(
