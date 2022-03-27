@@ -48,4 +48,15 @@ Public Class Character
             CharacterData.Clear(Id)
         End If
     End Sub
+    ReadOnly Property Inventory As Inventory
+        Get
+            Dim inventoryId = CharacterInventoryData.Read(Id)
+            If inventoryId.HasValue Then
+                Return New Inventory(inventoryId.Value)
+            End If
+            Dim result = Inventories.Create()
+            CharacterInventoryData.Write(Id, result.Id)
+            Return result
+        End Get
+    End Property
 End Class
