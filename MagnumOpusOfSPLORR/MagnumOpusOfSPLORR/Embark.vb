@@ -19,22 +19,34 @@ Module Embark
             If routes.Any Then
                 AnsiConsole.MarkupLine($"Exits: {String.Join(", ", routes.Select(Function(r) r.Direction.Name))}")
             End If
-            Dim prompt As New SelectionPrompt(Of String) With
+            If character.DidWin Then
+                done = True
+                HandleWin()
+            Else
+                Dim prompt As New SelectionPrompt(Of String) With
                 {
                     .Title = "[olive]Now what?[/]"
                 }
-            If routes.Any Then
-                prompt.AddChoice(GoText)
+                If routes.Any Then
+                    prompt.AddChoice(GoText)
+                End If
+                prompt.AddChoice(MainMenuText)
+                Select Case AnsiConsole.Prompt(prompt)
+                    Case MainMenuText
+                        done = True
+                    Case GoText
+                        MoveMenu.Run(character, routes)
+                    Case Else
+                        Throw New NotImplementedException
+                End Select
             End If
-            prompt.AddChoice(MainMenuText)
-            Select Case AnsiConsole.Prompt(prompt)
-                Case MainMenuText
-                    done = True
-                Case GoText
-                    MoveMenu.Run(character, routes)
-                Case Else
-                    Throw New NotImplementedException
-            End Select
         End While
+    End Sub
+
+    Private Sub HandleWin()
+        AnsiConsole.MarkupLine("You win!")
+        Dim prompt As New SelectionPrompt(Of String) With {.Title = ""}
+        prompt.AddChoice("Ok")
+        AnsiConsole.Prompt(prompt)
     End Sub
 End Module
