@@ -1,2 +1,2 @@
-butler push published thegrumpygamedev/magnus-opus-of-splorr:windows
+butler push published thegrumpygamedev/magnum-opus-of-splorr:windows
 
