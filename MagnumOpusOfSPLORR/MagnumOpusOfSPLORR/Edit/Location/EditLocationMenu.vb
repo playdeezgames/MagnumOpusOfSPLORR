@@ -1,51 +1,54 @@
-﻿Imports MOOS.Game
-Imports Spectre.Console
-
-Module EditLocationMenu
+﻿Module EditLocationMenu
     Private Const AddRouteText = "Add Route..."
     Private Const RemoveRouteText = "Remove Route..."
     Private Const ToggleWinningLocation = "Toggle Winning Location"
+    Private Sub ShowStatus(location As Location)
+        If location.IsWinningLocation Then
+            AnsiConsole.MarkupLine("[aqua]This is a winning location[/]")
+        End If
+        AnsiConsole.MarkupLine($"Id: {location.Id}")
+        AnsiConsole.MarkupLine($"Name: {location.Name}")
+        Dim characters = location.Characters
+        If characters.Any Then
+            AnsiConsole.MarkupLine($"Characters: {String.Join(", ", characters.Select(Function(x) x.UniqueName))}")
+        End If
+        Dim routes = location.Routes
+        If routes.Any Then
+            AnsiConsole.MarkupLine($"Routes: {String.Join(", ", routes.Select(Function(x) x.UniqueName))}")
+        End If
+        Dim itemStacks = location.Inventory.StackedItems
+        If itemStacks.Any Then
+            AnsiConsole.MarkupLine($"Items: {String.Join(
+                    ", ",
+                    itemStacks.Select(Function(x) $"{x.Key.Name}(x{x.Value.Count})"))}")
+        End If
+    End Sub
+    Private Function CreatePrompt(location As Location) As SelectionPrompt(Of String)
+        Dim prompt = New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
+        prompt.AddChoice(GoBackText)
+        prompt.AddChoice(ChangeNameText)
+        prompt.AddChoice(ToggleWinningLocation)
+        If location.AvailableDirections.Any Then
+            prompt.AddChoice(AddRouteText)
+        End If
+        If location.Routes.Any Then
+            prompt.AddChoice(RemoveRouteText)
+        End If
+        If location.CanDestroy Then
+            prompt.AddChoice(DestroyText)
+        End If
+        prompt.AddChoice(AddItemText)
+        If Not location.Inventory.IsEmpty Then
+            prompt.AddChoice(RemoveItemText)
+        End If
+        Return prompt
+    End Function
     Sub Run(location As Location)
         Dim done = False
         While Not done
             AnsiConsole.Clear()
-            If location.IsWinningLocation Then
-                AnsiConsole.MarkupLine("[aqua]This is a winning location[/]")
-            End If
-            AnsiConsole.MarkupLine($"Id: {location.Id}")
-            AnsiConsole.MarkupLine($"Name: {location.Name}")
-            Dim characters = location.Characters
-            If characters.Any Then
-                AnsiConsole.MarkupLine($"Characters: {String.Join(", ", characters.Select(Function(x) x.UniqueName))}")
-            End If
-            Dim routes = location.Routes
-            If routes.Any Then
-                AnsiConsole.MarkupLine($"Routes: {String.Join(", ", routes.Select(Function(x) x.UniqueName))}")
-            End If
-            Dim itemStacks = location.Inventory.StackedItems
-            If itemStacks.Any Then
-                AnsiConsole.MarkupLine($"Items: {String.Join(
-                    ", ",
-                    itemStacks.Select(Function(x) $"{x.Key.Name}(x{x.Value.Count})"))}")
-            End If
-            Dim prompt = New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
-            prompt.AddChoice(GoBackText)
-            prompt.AddChoice(ChangeNameText)
-            prompt.AddChoice(ToggleWinningLocation)
-            If location.AvailableDirections.Any Then
-                prompt.AddChoice(AddRouteText)
-            End If
-            If location.Routes.Any Then
-                prompt.AddChoice(RemoveRouteText)
-            End If
-            If location.CanDestroy Then
-                prompt.AddChoice(DestroyText)
-            End If
-            prompt.AddChoice(AddItemText)
-            If Not location.Inventory.IsEmpty Then
-                prompt.AddChoice(RemoveItemText)
-            End If
-            Select Case AnsiConsole.Prompt(prompt)
+            ShowStatus(location)
+            Select Case AnsiConsole.Prompt(CreatePrompt(location))
                 Case GoBackText
                     done = True
                 Case ChangeNameText
@@ -59,7 +62,7 @@ Module EditLocationMenu
                 Case AddItemText
                     HandleAddItem(location)
                 Case RemoveItemText
-                    HandlRemoveItem(location)
+                    HandleRemoveItem(location)
                 Case DestroyText
                     location.Destroy()
                     done = True
@@ -68,11 +71,9 @@ Module EditLocationMenu
             End Select
         End While
     End Sub
-
     Private Sub HandlToggleWinningLocation(location As Location)
         location.IsWinningLocation = Not location.IsWinningLocation
     End Sub
-
     Private Sub HandleRemoveRoute(location As Location)
         Dim routes = location.Routes
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "Remove which route?"}
@@ -99,14 +100,12 @@ Module EditLocationMenu
             location.Name = newName
         End If
     End Sub
-
-    Private Sub HandlRemoveItem(location As Location)
+    Private Sub HandleRemoveItem(location As Location)
         Dim item = CommonMenu.ChooseItemNameFromInventory("Remove which item?", True, location.Inventory)
         If item IsNot Nothing Then
             item.Destroy()
         End If
     End Sub
-
     Private Sub HandleAddItem(location As Location)
         Dim itemType = CommonMenu.ChooseItemType("", True)
         If itemType IsNot Nothing Then
