@@ -4,8 +4,13 @@ Public Module Game
     Sub NewGame()
         Store.Reset()
         CreateDirections()
+        CreateItemTypes()
         CreateLocationsAndRoutes()
         CreatePlayerCharacter()
+    End Sub
+
+    Private Sub CreateItemTypes()
+        CreateItemType("key")
     End Sub
 
     Private Sub CreateLocationsAndRoutes()
