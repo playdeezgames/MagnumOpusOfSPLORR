@@ -2,16 +2,6 @@
 
 ## Action Items
 
-- Location!
-- Character!
-- Direction!
-    - opposite?
-- Route!
-- WinningLocation
-    - set
-    - clear
-    - game is over when player character is at a/the winning location
-- Item
 - EquipSlot
 - CharacterType
 - Generator
