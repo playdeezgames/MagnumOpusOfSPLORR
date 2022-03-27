@@ -20,10 +20,7 @@
         prompt.AddChoice(GoBackText)
         prompt.AddChoice(ChangeNameText)
         prompt.AddChoice(ChangeLocationText)
-        prompt.AddChoice(AddItemText)
-        If Not character.Inventory.IsEmpty Then
-            prompt.AddChoice(RemoveItemText)
-        End If
+        prompt.AddChoice(InventoryText)
         If Not character.IsPlayerCharacter Then
             prompt.AddChoice(AssignPlayerCharacterText)
         End If
@@ -46,10 +43,8 @@
                     HandleChangeLocation(character)
                 Case AssignPlayerCharacterText
                     character.SetAsPlayerCharacter()
-                Case AddItemText
-                    HandleAddItem(character)
-                Case RemoveItemText
-                    HandlRemoveItem(character)
+                Case InventoryText
+                    EditInventoryMenu.Run("Character Inventory:", character.Inventory)
                 Case DestroyText
                     character.Destroy()
                     done = True
@@ -58,21 +53,6 @@
             End Select
         End While
     End Sub
-
-    Private Sub HandlRemoveItem(character As Character)
-        Dim item = CommonMenu.ChooseItemNameFromInventory("Remove which item?", True, character.Inventory)
-        If item IsNot Nothing Then
-            item.Destroy()
-        End If
-    End Sub
-
-    Private Sub HandleAddItem(character As Character)
-        Dim itemType = CommonMenu.ChooseItemType("", True)
-        If itemType IsNot Nothing Then
-            Items.CreateItem(itemType, character.Inventory)
-        End If
-    End Sub
-
     Private Sub HandleChangeLocation(character As Character)
         Dim newLocation = ChooseLocation("Which Location", True)
         If newLocation IsNot Nothing Then
