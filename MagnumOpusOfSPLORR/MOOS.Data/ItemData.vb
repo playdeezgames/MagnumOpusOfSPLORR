@@ -12,6 +12,16 @@
                 FOREIGN KEY([InventoryId]) REFERENCES [Inventories]([InventoryId])
             );")
     End Sub
+
+    Public Function Create(itemTypeId As Long, inventoryId As Long) As Long
+        Initialize()
+        ExecuteNonQuery(
+            "INSERT INTO [Items]([ItemTypeId],[InventoryId]) VALUES(@ItemTypeId,@InventoryId);",
+            MakeParameter("@ItemTypeId", itemTypeId),
+            MakeParameter("@InventoryId", inventoryId))
+        Return LastInsertRowId
+    End Function
+
     Function ReadItemType(itemId As Long) As Long?
         Initialize()
         Return ExecuteScalar(Of Long)(
