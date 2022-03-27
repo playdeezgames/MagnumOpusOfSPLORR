@@ -1,4 +1,5 @@
 ﻿Public Module RouteData
+    Friend Const TableName = "Routes"
     Friend Sub Initialize()
         LocationData.Initialize()
         DirectionData.Initialize()

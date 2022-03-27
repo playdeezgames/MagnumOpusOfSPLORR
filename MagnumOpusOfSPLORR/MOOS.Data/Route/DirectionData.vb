@@ -1,4 +1,7 @@
 ﻿Public Module DirectionData
+    Friend Const TableName = "Directions"
+    Friend Const DirectionIdColumn = "DirectionId"
+    Friend Const DirectionNameColumn = "DirectionName"
     Friend Sub Initialize()
         ExecuteNonQuery(
             "CREATE TABLE IF NOT EXISTS [Directions]

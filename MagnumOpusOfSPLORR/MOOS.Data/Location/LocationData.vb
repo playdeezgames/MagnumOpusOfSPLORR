@@ -1,4 +1,5 @@
 ﻿Public Module LocationData
+    Friend Const TableName = "Locations"
     Friend Sub Initialize()
         ExecuteNonQuery(
             "CREATE TABLE IF NOT EXISTS [Locations]

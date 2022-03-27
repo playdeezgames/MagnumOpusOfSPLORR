@@ -1,4 +1,5 @@
 ﻿Public Module WinningLocationData
+    Friend Const TableName = "WinningLocations"
     Friend Sub Initialize()
         LocationData.Initialize()
         ExecuteNonQuery("CREATE TABLE IF NOT EXISTS [WinningLocations]([LocationId] INT NOT NULL UNIQUE);")

@@ -1,7 +1,7 @@
 ﻿Public Module ItemTypeData
-    Public Const TableName = "ItemTypes"
-    Public Const ItemTypeIdColumn = "ItemTypeId"
-    Public Const ItemTypeNameColumn = "ItemTypeName"
+    Friend Const TableName = "ItemTypes"
+    Friend Const ItemTypeIdColumn = "ItemTypeId"
+    Friend Const ItemTypeNameColumn = "ItemTypeName"
     Friend Sub Initialize()
         ExecuteNonQuery(
             $"CREATE TABLE IF NOT EXISTS [{TableName}]

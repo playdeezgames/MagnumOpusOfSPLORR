@@ -1,7 +1,7 @@
 ﻿Public Module PlayerData
-    Public Const TableName = "Players"
-    Public Const CharacterIdColumn = "CharacterId"
-    Public Const PlayerIdColumn = "PlayerId"
+    Friend Const TableName = "Players"
+    Friend Const CharacterIdColumn = "CharacterId"
+    Friend Const PlayerIdColumn = "PlayerId"
     Friend Sub Initialize()
         CharacterData.Initialize()
         ExecuteNonQuery(

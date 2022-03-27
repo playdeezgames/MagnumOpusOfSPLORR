@@ -1,6 +1,6 @@
 ﻿Public Module InventoryData
-    Public Const TableName = "Inventories"
-    Public Const InventoryIdColumn = "InventoryId"
+    Friend Const TableName = "Inventories"
+    Friend Const InventoryIdColumn = "InventoryId"
     Friend Sub Initialize()
         ExecuteNonQuery(
             $"CREATE TABLE IF NOT EXISTS [{TableName}]

@@ -1,4 +1,5 @@
 ﻿Public Module LocationInventoryData
+    Friend Const TableName = "LocationInventories"
     Friend Sub Initialize()
         LocationData.Initialize()
         InventoryData.Initialize()

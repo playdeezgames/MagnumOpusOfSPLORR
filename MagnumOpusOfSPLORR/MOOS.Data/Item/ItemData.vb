@@ -1,8 +1,8 @@
 ﻿Public Module ItemData
-    Public Const TableName = "Items"
-    Public Const ItemIdColumn = "ItemId"
-    Public Const ItemTypeIdColumn = "ItemTypeId"
-    Public Const InventoryIdColumn = "InventoryId"
+    Friend Const TableName = "Items"
+    Friend Const ItemIdColumn = "ItemId"
+    Friend Const ItemTypeIdColumn = "ItemTypeId"
+    Friend Const InventoryIdColumn = "InventoryId"
     Friend Sub Initialize()
         ItemTypeData.Initialize()
         InventoryData.Initialize()
