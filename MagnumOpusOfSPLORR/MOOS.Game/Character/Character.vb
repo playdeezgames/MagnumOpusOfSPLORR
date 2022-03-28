@@ -83,6 +83,7 @@ Public Class Character
                     counter -= 1
                 End While
             Next
+            route.SelfDestructBarriers()
             Location = route.ToLocation
         End If
     End Sub
