@@ -28,4 +28,10 @@ Public Class Inventory
     Sub Add(item As Item)
         ItemData.WriteInventory(item.Id, Id)
     End Sub
+    Public Shared Operator =(first As Inventory, second As Inventory) As Boolean
+        Return first.Id = second.Id
+    End Operator
+    Public Shared Operator <>(first As Inventory, second As Inventory) As Boolean
+        Return first.Id <> second.Id
+    End Operator
 End Class

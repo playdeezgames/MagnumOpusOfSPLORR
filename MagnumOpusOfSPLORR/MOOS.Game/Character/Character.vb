@@ -63,10 +63,10 @@ Public Class Character
         Dim requirements = route.PassRequirements
         Dim itemStacks = Inventory.StackedItems
         For Each requirement In requirements
-            If Not itemStacks.Any(Function(entry) entry.Key.Id = requirement.Key.Id) Then
+            If Not itemStacks.Any(Function(entry) entry.Key = requirement.Key) Then
                 Return False
             End If
-            Dim itemStack = itemStacks.Single(Function(entry) entry.Key.Id = requirement.Key.Id)
+            Dim itemStack = itemStacks.Single(Function(entry) entry.Key = requirement.Key)
             If itemStack.Value.LongCount < requirement.Value Then
                 Return False
             End If
@@ -79,7 +79,7 @@ Public Class Character
             For Each passCost In passCosts
                 Dim counter = passCost.Value
                 While counter > 0
-                    Inventory.Items.First(Function(i) i.ItemType.Id = passCost.Key.Id).Destroy()
+                    Inventory.Items.First(Function(i) i.ItemType = passCost.Key).Destroy()
                     counter -= 1
                 End While
             Next
@@ -87,5 +87,10 @@ Public Class Character
             Location = route.ToLocation
         End If
     End Sub
-
+    Public Shared Operator =(first As Character, second As Character) As Boolean
+        Return first.Id = second.Id
+    End Operator
+    Public Shared Operator <>(first As Character, second As Character) As Boolean
+        Return first.Id <> second.Id
+    End Operator
 End Class

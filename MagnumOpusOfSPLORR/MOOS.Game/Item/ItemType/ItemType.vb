@@ -26,4 +26,10 @@ Public Class ItemType
     Sub Destroy()
         ItemTypeData.Clear(Id)
     End Sub
+    Public Shared Operator =(first As ItemType, second As ItemType) As Boolean
+        Return first.Id = second.Id
+    End Operator
+    Public Shared Operator <>(first As ItemType, second As ItemType) As Boolean
+        Return first.Id <> second.Id
+    End Operator
 End Class

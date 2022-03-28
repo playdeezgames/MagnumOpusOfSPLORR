@@ -20,8 +20,13 @@ Public Class Item
             Return ItemType.Name
         End Get
     End Property
-
     Public Sub Destroy()
         ItemData.Clear(Id)
     End Sub
+    Public Shared Operator =(first As Item, second As Item) As Boolean
+        Return first.Id = second.Id
+    End Operator
+    Public Shared Operator <>(first As Item, second As Item) As Boolean
+        Return first.Id <> second.Id
+    End Operator
 End Class

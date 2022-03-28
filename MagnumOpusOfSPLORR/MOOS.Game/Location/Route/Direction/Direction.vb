@@ -26,4 +26,10 @@ Public Class Direction
     Public Sub Destroy()
         DirectionData.Clear(Id)
     End Sub
+    Public Shared Operator =(first As Direction, second As Direction) As Boolean
+        Return first.Id = second.Id
+    End Operator
+    Public Shared Operator <>(first As Direction, second As Direction) As Boolean
+        Return first.Id <> second.Id
+    End Operator
 End Class

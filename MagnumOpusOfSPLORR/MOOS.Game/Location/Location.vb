@@ -69,4 +69,10 @@ Public Class Location
             Return result
         End Get
     End Property
+    Public Shared Operator =(first As Location, second As Location) As Boolean
+        Return first.Id = second.Id
+    End Operator
+    Public Shared Operator <>(first As Location, second As Location) As Boolean
+        Return first.Id <> second.Id
+    End Operator
 End Class

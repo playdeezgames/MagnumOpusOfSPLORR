@@ -50,4 +50,10 @@
             BarrierData.Clear(Id)
         End If
     End Sub
+    Public Shared Operator =(first As Barrier, second As Barrier) As Boolean
+        Return first.Id = second.Id
+    End Operator
+    Public Shared Operator <>(first As Barrier, second As Barrier) As Boolean
+        Return first.Id <> second.Id
+    End Operator
 End Class

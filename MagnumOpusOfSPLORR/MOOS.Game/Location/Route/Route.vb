@@ -70,10 +70,15 @@ Public Class Route
             Return result
         End Get
     End Property
-
     Friend Sub SelfDestructBarriers()
         For Each barrier In Barriers.Where(Function(b) b.SelfDestructs)
             BarrierData.Clear(barrier.Id)
         Next
     End Sub
+    Public Shared Operator =(first As Route, second As Route) As Boolean
+        Return first.Id = second.Id
+    End Operator
+    Public Shared Operator <>(first As Route, second As Route) As Boolean
+        Return first.Id <> second.Id
+    End Operator
 End Class
