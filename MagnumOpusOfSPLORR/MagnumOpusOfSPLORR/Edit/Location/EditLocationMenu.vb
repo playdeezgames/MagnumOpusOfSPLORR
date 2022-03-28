@@ -11,7 +11,7 @@
         If characters.Any Then
             AnsiConsole.MarkupLine($"Characters: {String.Join(", ", characters.Select(Function(x) x.UniqueName))}")
         End If
-        EditLocationRouteMenu.ShowStatus(location.Routes)
+        EditRoutesMenu.ShowStatus(location.Routes)
         EditInventoryMenu.ShowStatus(location.Inventory)
     End Sub
     Private Function CreatePrompt(location As Location) As SelectionPrompt(Of String)
@@ -44,7 +44,7 @@
                     location.Destroy()
                     done = True
                 Case RoutesText
-                    EditLocationRouteMenu.Run(location)
+                    EditRoutesMenu.Run(location)
                 Case Else
                     Throw New NotImplementedException
             End Select
