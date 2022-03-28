@@ -23,8 +23,11 @@ Public Module Game
 
         Routes.CreateRoute(first, second, AllDirections.Single(Function(d) d.Name = "north"))
         Routes.CreateRoute(second, first, AllDirections.Single(Function(d) d.Name = "south"))
-        Routes.CreateRoute(second, third, AllDirections.Single(Function(d) d.Name = "east"))
+        Dim finalRoute = Routes.CreateRoute(second, third, AllDirections.Single(Function(d) d.Name = "east"))
         Routes.CreateRoute(third, second, AllDirections.Single(Function(d) d.Name = "west"))
+
+        Dim barrier = Barriers.CreateBarrier(ItemTypes.AllItemTypes.Single(Function(i) i.Name = "key"), True, True)
+        finalRoute.AddBarrier(barrier)
     End Sub
 
     Private Sub CreateDirections()
