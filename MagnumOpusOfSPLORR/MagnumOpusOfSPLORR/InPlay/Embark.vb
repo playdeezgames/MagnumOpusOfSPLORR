@@ -33,7 +33,11 @@
         prompt.AddChoice(MainMenuText)
         Return prompt
     End Function
-    Sub Run()
+    Sub Run(isTest As Boolean)
+        Dim tempfile = $"{Guid.NewGuid}.db"
+        If isTest Then
+            Store.Save(tempfile)
+        End If
         Dim done = False
         While Not done
             AnsiConsole.Clear()
@@ -57,6 +61,9 @@
                 End Select
             End If
         End While
+        If isTest Then
+            Store.Load(tempfile)
+        End If
     End Sub
     Private Sub HandlePickUp(character As PlayerCharacter)
         Dim item As Item = CommonMenu.ChooseItemNameFromInventory("Pick up what?", True, character.Location.Inventory)

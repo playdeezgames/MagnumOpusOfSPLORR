@@ -18,6 +18,7 @@ Module Program
     Private Const LoadGameText = "Load Game..."
     Private Const SaveGameText = "Save Game..."
     Private Const AbandonGameText = "Abandon Game"
+    Private Const TestText = "Test!"
     Private Const EmbarkText = "Embark!"
     Private Const EditGameText = "Edit Game..."
     Private Const QuitText = "Quit"
@@ -31,6 +32,7 @@ Module Program
             }
             If Store.Exists Then
                 prompt.AddChoice(EmbarkText)
+                prompt.AddChoice(TestText)
                 prompt.AddChoice(SaveGameText)
                 prompt.AddChoice(EditGameText)
                 prompt.AddChoice(AbandonGameText)
@@ -53,7 +55,9 @@ Module Program
                 Case QuitText
                     done = ConfirmQuit()
                 Case EmbarkText
-                    Embark.Run()
+                    Embark.Run(False)
+                Case TestText
+                    Embark.Run(True)
             End Select
         End While
         Play("L500;C4;L250;G3;G3;L500;G#3;G3;R500;B3;C4;R500")

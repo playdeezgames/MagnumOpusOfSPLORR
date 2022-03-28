@@ -40,4 +40,14 @@
             End If
         End Set
     End Property
+    ReadOnly Property CanDestroy As Boolean
+        Get
+            Return RouteBarrierData.ReadCountForBarrier(Id) > 0
+        End Get
+    End Property
+    Sub Destroy()
+        If CanDestroy Then
+            BarrierData.Clear(Id)
+        End If
+    End Sub
 End Class

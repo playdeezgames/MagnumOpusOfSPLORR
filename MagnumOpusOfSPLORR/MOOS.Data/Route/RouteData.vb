@@ -43,6 +43,7 @@
 
     Public Sub Clear(routeId As Long)
         Initialize()
+        RouteBarrierData.ClearForRoute(routeId)
         ExecuteNonQuery(
             $"DELETE FROM [{TableName}] WHERE [{RouteIdColumn}]=@{RouteIdColumn};",
             MakeParameter($"@{RouteIdColumn}", routeId))
@@ -78,8 +79,12 @@
     End Function
     Friend Sub ClearForLocation(locationId As Long)
         Initialize()
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{FromLocationIdColumn}]=@{LocationData.LocationIdColumn} OR [{ToLocationIdColumn}]=@{LocationData.LocationIdColumn};",
+        Dim routeIds = ExecuteReader(
+            Function(reader) CLng(reader(RouteIdColumn)),
+            $"SELECT [{RouteIdColumn}] FROM [{TableName}] WHERE [{FromLocationIdColumn}]=@{LocationData.LocationIdColumn} OR [{ToLocationIdColumn}]=@{LocationData.LocationIdColumn};",
             MakeParameter($"@{LocationData.LocationIdColumn}", locationId))
+        For Each routeId In routeIds
+            Clear(routeId)
+        Next
     End Sub
 End Module

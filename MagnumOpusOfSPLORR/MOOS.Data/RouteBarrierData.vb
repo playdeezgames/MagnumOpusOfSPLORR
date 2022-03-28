@@ -31,11 +31,32 @@
             MakeParameter($"{BarrierIdColumn}", barrierId))
     End Sub
 
+    Public Function ReadCountForBarrier(barrierId As Long) As Long
+        Initialize()
+        Return ExecuteScalar(Of Long)(
+            $"SELECT COUNT(1) FROM [{TableName}] WHERE [{BarrierIdColumn}]=@{BarrierIdColumn};",
+            MakeParameter($"@{BarrierIdColumn}", barrierId)).Value
+    End Function
+
+    Friend Sub ClearForBarrier(barrierId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            $"DELETE FROM [{TableName}] WHERE [{BarrierIdColumn}]=@{BarrierIdColumn};",
+            MakeParameter($"@{BarrierIdColumn}", barrierId))
+    End Sub
+
     Public Sub Write(routeId As Long, barrierId As Long)
         Initialize()
         ExecuteNonQuery(
             $"REPLACE INTO [{TableName}]([{RouteIdColumn}],[{BarrierIdColumn}]) VALUES(@{RouteIdColumn},@{BarrierIdColumn});",
             MakeParameter($"{RouteIdColumn}", routeId),
             MakeParameter($"{BarrierIdColumn}", barrierId))
+    End Sub
+
+    Friend Sub ClearForRoute(routeId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            $"DELETE FROM [{TableName}] WHERE [{RouteIdColumn}]=@{RouteIdColumn};",
+            MakeParameter($"@{RouteIdColumn}", routeId))
     End Sub
 End Module

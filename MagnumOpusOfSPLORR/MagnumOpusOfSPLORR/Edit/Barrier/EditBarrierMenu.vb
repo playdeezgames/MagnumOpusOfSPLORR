@@ -8,6 +8,9 @@
     Private Function CreatePrompt(barrier As Barrier) As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]What now?[/]"}
         prompt.AddChoice(GoBackText)
+        If barrier.CanDestroy Then
+            prompt.AddChoice(DestroyText)
+        End If
         Return prompt
     End Function
     Sub Run(barrier As Barrier)
