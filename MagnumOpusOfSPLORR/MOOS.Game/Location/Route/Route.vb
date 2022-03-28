@@ -60,4 +60,14 @@ Public Class Route
             Return result
         End Get
     End Property
+    ReadOnly Property PassCosts As Dictionary(Of ItemType, Long)
+        Get
+            Dim result As New Dictionary(Of ItemType, Long)
+            Dim groups = Barriers.Where(Function(barrier) barrier.DestroysItem).GroupBy(Function(barrier) barrier.ItemType.Id)
+            For Each group In groups
+                result.Add(New ItemType(group.Key), group.LongCount)
+            Next
+            Return result
+        End Get
+    End Property
 End Class

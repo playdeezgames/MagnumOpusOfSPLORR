@@ -75,6 +75,14 @@ Public Class Character
     End Function
     Public Sub Pass(route As Route)
         If CanPass(route) Then
+            Dim passCosts = route.PassCosts
+            For Each passCost In passCosts
+                Dim counter = passCost.Value
+                While counter > 0
+                    Inventory.Items.First(Function(i) i.ItemType.Id = passCost.Key.Id).Destroy()
+                    counter -= 1
+                End While
+            Next
             Location = route.ToLocation
         End If
     End Sub
