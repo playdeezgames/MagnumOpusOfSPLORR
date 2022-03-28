@@ -59,4 +59,24 @@ Public Class Character
             Return result
         End Get
     End Property
+    Function CanPass(route As Route) As Boolean
+        Dim requirements = route.PassRequirements
+        Dim itemStacks = Inventory.StackedItems
+        For Each requirement In requirements
+            If Not itemStacks.Any(Function(entry) entry.Key.Id = requirement.Key.Id) Then
+                Return False
+            End If
+            Dim itemStack = itemStacks.Single(Function(entry) entry.Key.Id = requirement.Key.Id)
+            If itemStack.Value.LongCount < requirement.Value Then
+                Return False
+            End If
+        Next
+        Return True
+    End Function
+    Public Sub Pass(route As Route)
+        If CanPass(route) Then
+            Location = route.ToLocation
+        End If
+    End Sub
+
 End Class

@@ -11,7 +11,22 @@ Module MoveMenu
         Dim answer = AnsiConsole.Prompt(prompt)
         Dim chosenRoute = routes.SingleOrDefault(Function(r) r.Direction.Name = answer)
         If chosenRoute IsNot Nothing Then
-            character.Pass(chosenRoute)
+            If character.CanPass(chosenRoute) Then
+                character.Pass(chosenRoute)
+            Else
+                ShowPassRequirements(chosenRoute)
+            End If
         End If
+    End Sub
+    Private Sub ShowPassRequirements(route As Route)
+        AnsiConsole.Clear()
+        AnsiConsole.MarkupLine("You cannot go that way without:")
+        Dim requirements = route.PassRequirements
+        For Each requirement In requirements
+            AnsiConsole.MarkupLine($"{requirement.Key.Name} (x{requirement.Value})")
+        Next
+        Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]That sucks![/]"}
+        prompt.AddChoices("Yeah it do.")
+        AnsiConsole.Prompt(prompt)
     End Sub
 End Module
