@@ -4,7 +4,7 @@ Module EditGameMenu
     Private Const CharactersText = "Characters..."
     Private Const DirectionsText = "Directions..."
     Private Const ItemTypesText = "Item Types..."
-    Private Const BarriersText = "Barriers..."
+
     Sub Run()
         Dim done = False
         While Not done

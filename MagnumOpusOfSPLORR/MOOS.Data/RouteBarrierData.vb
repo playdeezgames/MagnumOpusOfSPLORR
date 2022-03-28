@@ -18,8 +18,24 @@
     Function ReadForRoute(routeId As Long) As List(Of Long)
         Initialize()
         Return ExecuteReader(
-            Function(reader) CLng(reader(RouteIdColumn)),
+            Function(reader) CLng(reader(BarrierIdColumn)),
             $"SELECT [{BarrierIdColumn}] FROM [{TableName}] WHERE [{RouteIdColumn}]=@{RouteIdColumn}",
             MakeParameter($"@{RouteIdColumn}", routeId))
     End Function
+
+    Public Sub Clear(routeId As Long, barrierId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            $"DELETE FROM [{TableName}] WHERE [{RouteIdColumn}]=@{RouteIdColumn} AND [{BarrierIdColumn}]=@{BarrierIdColumn};",
+            MakeParameter($"{RouteIdColumn}", routeId),
+            MakeParameter($"{BarrierIdColumn}", barrierId))
+    End Sub
+
+    Public Sub Write(routeId As Long, barrierId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            $"REPLACE INTO [{TableName}]([{RouteIdColumn}],[{BarrierIdColumn}]) VALUES(@{RouteIdColumn},@{BarrierIdColumn});",
+            MakeParameter($"{RouteIdColumn}", routeId),
+            MakeParameter($"{BarrierIdColumn}", barrierId))
+    End Sub
 End Module

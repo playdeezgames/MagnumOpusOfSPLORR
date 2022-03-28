@@ -30,6 +30,11 @@ Public Class Route
             Return New Direction(RouteData.ReadDirection(Id).Value)
         End Get
     End Property
+
+    Public Sub RemoveBarrier(barrier As Barrier)
+        RouteBarrierData.Clear(Id, barrier.Id)
+    End Sub
+
     ReadOnly Property CanDestroy As Boolean
         Get
             Return Not Barriers.Any
@@ -43,4 +48,8 @@ Public Class Route
             Return RouteBarrierData.ReadForRoute(Id).Select(Function(id) New Barrier(id)).ToList
         End Get
     End Property
+
+    Public Sub AddBarrier(barrier As Barrier)
+        RouteBarrierData.Write(Id, barrier.Id)
+    End Sub
 End Class

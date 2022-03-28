@@ -11,6 +11,7 @@
     Private Function CreatePrompt(route As Route) As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
         prompt.AddChoice(GoBackText)
+        prompt.AddChoice(BarriersText)
         If route.CanDestroy Then
             prompt.AddChoice(DestroyText)
         End If
@@ -27,6 +28,8 @@
                 Case DestroyText
                     route.Destroy()
                     done = True
+                Case BarriersText
+                    EditRouteBarriersMenu.Run(route)
                 Case Else
                     Throw New NotImplementedException
             End Select
