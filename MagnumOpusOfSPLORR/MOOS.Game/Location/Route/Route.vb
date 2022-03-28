@@ -32,10 +32,15 @@ Public Class Route
     End Property
     ReadOnly Property CanDestroy As Boolean
         Get
-            Return True
+            Return Not Barriers.Any
         End Get
     End Property
     Sub Destroy()
         RouteData.Clear(Id)
     End Sub
+    ReadOnly Property Barriers As List(Of Barrier)
+        Get
+            Return RouteBarrierData.ReadForRoute(Id).Select(Function(id) New Barrier(id)).ToList
+        End Get
+    End Property
 End Class

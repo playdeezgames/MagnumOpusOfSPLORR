@@ -4,6 +4,9 @@
         AnsiConsole.MarkupLine($"From: {route.FromLocation.UniqueName}")
         AnsiConsole.MarkupLine($"To: {route.ToLocation.UniqueName}")
         AnsiConsole.MarkupLine($"Direction: {route.Direction.UniqueName}")
+        If route.Barriers.Any Then
+            AnsiConsole.MarkupLine($"Barriers: {String.Join(", ", route.Barriers.Select(Function(barrier) barrier.UniqueName))}")
+        End If
     End Sub
     Private Function CreatePrompt(route As Route) As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
