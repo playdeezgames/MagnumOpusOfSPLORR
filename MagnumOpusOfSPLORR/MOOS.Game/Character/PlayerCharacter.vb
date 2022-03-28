@@ -10,4 +10,7 @@ Public Class PlayerCharacter
             Return Location.IsWinningLocation
         End Get
     End Property
+    Public Sub Pass(route As Route)
+        Location = route.ToLocation
+    End Sub
 End Class

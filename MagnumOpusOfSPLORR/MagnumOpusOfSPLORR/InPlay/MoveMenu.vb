@@ -11,7 +11,7 @@ Module MoveMenu
         Dim answer = AnsiConsole.Prompt(prompt)
         Dim chosenRoute = routes.SingleOrDefault(Function(r) r.Direction.Name = answer)
         If chosenRoute IsNot Nothing Then
-            chosenRoute.Pass(character)
+            character.Pass(chosenRoute)
         End If
     End Sub
 End Module

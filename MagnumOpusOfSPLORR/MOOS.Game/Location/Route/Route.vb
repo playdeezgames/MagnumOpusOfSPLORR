@@ -21,10 +21,6 @@ Public Class Route
         End Get
     End Property
 
-    Public Sub Pass(character As PlayerCharacter)
-        character.Location = ToLocation
-    End Sub
-
     ReadOnly Property ToLocation As Location
         Get
             Return New Location(RouteData.ReadToLocation(Id).Value)
