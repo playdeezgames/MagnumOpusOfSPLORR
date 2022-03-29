@@ -19,14 +19,14 @@ Public Module Game
         Dim third = Locations.CreateLocation("Finish")
         third.IsWinningLocation = True
 
-        Items.CreateItem(ItemTypes.AllItemTypes.Single(Function(i) i.Name = "key"), first.Inventory)
+        Items.CreateItem(FindItemTypeByName("key").Single, first.Inventory)
 
         Routes.CreateRoute(first, second, FindDirectionByName("north").Single)
         Routes.CreateRoute(second, first, FindDirectionByName("south").Single)
         Dim finalRoute = Routes.CreateRoute(second, third, FindDirectionByName("east").Single)
         Routes.CreateRoute(third, second, FindDirectionByName("west").Single)
 
-        Dim barrier = Barriers.CreateBarrier(ItemTypes.AllItemTypes.Single(Function(i) i.Name = "key"), True, True)
+        Dim barrier = Barriers.CreateBarrier(FindItemTypeByName("key").Single, True, True)
         finalRoute.AddBarrier(barrier)
     End Sub
 

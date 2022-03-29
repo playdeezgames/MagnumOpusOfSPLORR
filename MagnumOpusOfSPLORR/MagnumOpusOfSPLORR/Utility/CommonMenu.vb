@@ -24,7 +24,7 @@ Module CommonMenu
             Case NeverMindText
                 Return Nothing
             Case Else
-                Return FindLocationByName(answer).Single
+                Return FindLocationByUniqueName(answer)
         End Select
     End Function
     Function ChooseDirection(title As String, candidates As List(Of Direction), canCancel As Boolean) As Direction
@@ -40,7 +40,7 @@ Module CommonMenu
             Case NeverMindText
                 Return Nothing
             Case Else
-                Return FindDirectionByName(answer).Single
+                Return FindDirectionByUniqueName(answer)
         End Select
     End Function
     Function ChooseDirection(title As String, canCancel As Boolean) As Direction
@@ -76,7 +76,7 @@ Module CommonMenu
             Case NeverMindText
                 Return Nothing
             Case Else
-                Return AllItemTypes.Single(Function(x) x.UniqueName = answer)
+                Return FindItemTypeByUniqueName(answer)
         End Select
     End Function
 End Module

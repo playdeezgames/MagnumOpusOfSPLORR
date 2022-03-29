@@ -13,4 +13,7 @@ Public Module Locations
     Function FindLocationByName(locationName As String) As List(Of Location)
         Return LocationData.ReadForName(locationName).Select(Function(id) New Location(id)).ToList
     End Function
+    Function FindLocationByUniqueName(locationUniqueName As String) As Location
+        Return AllLocations.SingleOrDefault(Function(x) x.UniqueName = locationUniqueName)
+    End Function
 End Module

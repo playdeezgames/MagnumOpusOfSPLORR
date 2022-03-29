@@ -20,7 +20,7 @@
                 Case CreateLocationText
                     EditLocationMenu.Run(CreateLocation("New Location"))
                 Case Else
-                    EditLocationMenu.Run(FindLocationByName(answer).Single)
+                    EditLocationMenu.Run(FindLocationByUniqueName(answer))
             End Select
         End While
 

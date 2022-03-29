@@ -12,4 +12,7 @@ Public Module Directions
     Function FindDirectionByName(directionName As String) As List(Of Direction)
         Return DirectionData.ReadForName(directionName).Select(Function(id) New Direction(id)).ToList
     End Function
+    Function FindDirectionByUniqueName(directionUniqueName As String) As Direction
+        Return AllDirections.SingleOrDefault(Function(x) x.UniqueName = directionUniqueName)
+    End Function
 End Module

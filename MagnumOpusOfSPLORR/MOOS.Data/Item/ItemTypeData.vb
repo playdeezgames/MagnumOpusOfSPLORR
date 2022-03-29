@@ -56,4 +56,11 @@
             MakeParameter($"@{ItemTypeNameColumn}", itemTypeName))
         Return LastInsertRowId
     End Function
+    Function ReadForName(itemTypeName As String) As List(Of Long)
+        Initialize()
+        Return ExecuteReader(
+            Function(reader) CLng(reader(ItemTypeIdColumn)),
+            $"SELECT [{ItemTypeIdColumn}] FROM [{TableName}] WHERE [{ItemTypeNameColumn}]=@{ItemTypeNameColumn};",
+            MakeParameter($"@{ItemTypeNameColumn}", itemTypeName))
+    End Function
 End Module
