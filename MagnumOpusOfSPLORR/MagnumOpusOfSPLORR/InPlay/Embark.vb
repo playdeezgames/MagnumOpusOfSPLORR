@@ -1,5 +1,6 @@
 ﻿Module Embark
     Private Const MainMenuText = "Main Menu"
+    Private Const EndTestText = "End Test"
     Private Const GoText = "Go..."
     Private Const PickUpText = "Pick Up..."
     Private Sub ShowStatus(character As Character)
@@ -16,7 +17,7 @@
             AnsiConsole.MarkupLine($"Items: {String.Join(", ", locationItemStacks.Select(Function(s) $"{s.Key.Name}(x{s.Value.Count})"))}")
         End If
     End Sub
-    Private Function CreatePrompt(character As Character) As SelectionPrompt(Of String)
+    Private Function CreatePrompt(character As Character, isTest As Boolean) As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With
                 {
                     .Title = "[olive]Now what?[/]"
@@ -30,7 +31,11 @@
         If Not character.Inventory.IsEmpty Then
             prompt.AddChoice(InventoryText)
         End If
-        prompt.AddChoice(MainMenuText)
+        If isTest Then
+            prompt.AddChoice(EndTestText)
+        Else
+            prompt.AddChoice(MainMenuText)
+        End If
         Return prompt
     End Function
     Sub Run(isTest As Boolean)
@@ -41,15 +46,20 @@
         Dim done = False
         While Not done
             AnsiConsole.Clear()
+            If isTest Then
+                AnsiConsole.MarkupLine("[aqua]***TESTING***[/]")
+            End If
             Dim character As New PlayerCharacter()
             ShowStatus(character)
             If character.DidWin Then
                 done = True
                 HandleWin()
             Else
-                Select Case AnsiConsole.Prompt(CreatePrompt(character))
+                Select Case AnsiConsole.Prompt(CreatePrompt(character, isTest))
                     Case MainMenuText
                         done = True
+                    Case EndTestText
+                        done = AnsiConsole.Confirm("[red]Are you sure you want to end the test?[/]", False)
                     Case GoText
                         MoveMenu.Run(character, character.Location.Routes)
                     Case PickUpText
