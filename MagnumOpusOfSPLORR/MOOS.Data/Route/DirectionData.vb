@@ -50,4 +50,11 @@
                 [{DirectionIdColumn}]=@{DirectionIdColumn};",
             MakeParameter($"@{DirectionIdColumn}", directionId))
     End Function
+    Function ReadForName(directionName As String) As List(Of Long)
+        Initialize()
+        Return ExecuteReader(
+            Function(reader) CLng(reader(DirectionIdColumn)),
+            $"SELECT [{DirectionIdColumn}] FROM [{TableName}] WHERE [{DirectionNameColumn}]=@{DirectionNameColumn};",
+            MakeParameter($"@{DirectionNameColumn}", directionName))
+    End Function
 End Module

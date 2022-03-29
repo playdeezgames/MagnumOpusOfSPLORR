@@ -23,7 +23,7 @@ Module EditDirectionsMenu
                 Case CreateDirectionText
                     EditDirectionMenu.Run(Directions.CreateDirection("New Direction"))
                 Case Else
-                    EditDirectionMenu.Run(AllDirections.Single(Function(x) x.UniqueName = answer))
+                    EditDirectionMenu.Run(FindDirectionByName(answer).Single)
             End Select
         End While
     End Sub

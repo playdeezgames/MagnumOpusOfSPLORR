@@ -21,10 +21,10 @@ Public Module Game
 
         Items.CreateItem(ItemTypes.AllItemTypes.Single(Function(i) i.Name = "key"), first.Inventory)
 
-        Routes.CreateRoute(first, second, AllDirections.Single(Function(d) d.Name = "north"))
-        Routes.CreateRoute(second, first, AllDirections.Single(Function(d) d.Name = "south"))
-        Dim finalRoute = Routes.CreateRoute(second, third, AllDirections.Single(Function(d) d.Name = "east"))
-        Routes.CreateRoute(third, second, AllDirections.Single(Function(d) d.Name = "west"))
+        Routes.CreateRoute(first, second, FindDirectionByName("north").Single)
+        Routes.CreateRoute(second, first, FindDirectionByName("south").Single)
+        Dim finalRoute = Routes.CreateRoute(second, third, FindDirectionByName("east").Single)
+        Routes.CreateRoute(third, second, FindDirectionByName("west").Single)
 
         Dim barrier = Barriers.CreateBarrier(ItemTypes.AllItemTypes.Single(Function(i) i.Name = "key"), True, True)
         finalRoute.AddBarrier(barrier)
@@ -38,7 +38,7 @@ Public Module Game
     End Sub
 
     Private Sub CreatePlayerCharacter()
-        Dim location = Locations.AllLocations.Single(Function(l) l.Name = "Start")
+        Dim location = Locations.FindLocationByName("Start").Single
         Dim character = Characters.CreateCharacter("Tagon", Location)
         character.SetAsPlayerCharacter()
     End Sub

@@ -9,4 +9,7 @@ Public Module Directions
             Return DirectionData.All.Select(Function(id) New Direction(id)).ToList
         End Get
     End Property
+    Function FindDirectionByName(directionName As String) As List(Of Direction)
+        Return DirectionData.ReadForName(directionName).Select(Function(id) New Direction(id)).ToList
+    End Function
 End Module

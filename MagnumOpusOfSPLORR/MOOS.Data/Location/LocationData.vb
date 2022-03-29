@@ -55,4 +55,11 @@
             $"DELETE FROM [{TableName}] WHERE [{LocationIdColumn}]=@{LocationIdColumn};",
             MakeParameter($"@{LocationIdColumn}", locationId))
     End Sub
+    Function ReadForName(locationName As String) As List(Of Long)
+        Initialize()
+        Return ExecuteReader(
+            Function(reader) CLng(reader(LocationIdColumn)),
+            $"SELECT [{LocationIdColumn}] FROM [{TableName}] WHERE [{LocationNameColumn}]=@{LocationNameColumn};",
+            MakeParameter($"@{LocationNameColumn}", locationName))
+    End Function
 End Module

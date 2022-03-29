@@ -9,4 +9,8 @@ Public Module Locations
     Function CreateLocation(locationName As String) As Location
         Return New Location(LocationData.Create(locationName))
     End Function
+
+    Function FindLocationByName(locationName As String) As List(Of Location)
+        Return LocationData.ReadForName(locationName).Select(Function(id) New Location(id)).ToList
+    End Function
 End Module
