@@ -17,7 +17,7 @@ Module Program
     Private Const NewGameText = "New Game"
     Private Const LoadGameText = "Load Game..."
     Private Const SaveGameText = "Save Game..."
-    Private Const AbandonGameText = "Abandon Game"
+    Private Const UnloadGameText = "Unload Game"
     Private Const TestText = "Test!"
     Private Const EmbarkText = "Embark!"
     Private Const EditGameText = "Edit Game..."
@@ -35,7 +35,7 @@ Module Program
                 prompt.AddChoice(TestText)
                 prompt.AddChoice(SaveGameText)
                 prompt.AddChoice(EditGameText)
-                prompt.AddChoice(AbandonGameText)
+                prompt.AddChoice(UnloadGameText)
             Else
                 prompt.AddChoice(NewGameText)
                 prompt.AddChoice(LoadGameText)
@@ -44,8 +44,8 @@ Module Program
             Select Case AnsiConsole.Prompt(prompt)
                 Case SaveGameText
                     HandleSaveGame()
-                Case AbandonGameText
-                    HandleAbandonGame()
+                Case UnloadGameText
+                    HandleUnloadGame()
                 Case LoadGameText
                     HandleLoadGame()
                 Case EditGameText
@@ -65,8 +65,7 @@ Module Program
     End Sub
 
     Private Function ConfirmQuit() As Boolean
-        Dim prompt = New ConfirmationPrompt("[red]Are you sure you want to quit?[/]")
-        Return AnsiConsole.Prompt(prompt)
+        Return AnsiConsole.Confirm("[red]Are you sure you want to quit?[/]", False)
     End Function
 
     Sub Main(args As String())
@@ -76,19 +75,19 @@ Module Program
         MainMenu()
     End Sub
     Private Sub HandleSaveGame()
-        Dim fileName = AnsiConsole.Ask(Of String)("Filename:")
+        Dim fileName = AnsiConsole.Ask(Of String)("Filename:", "")
         If Not String.IsNullOrEmpty(fileName) Then
             Store.Save(fileName)
         End If
     End Sub
     Private Sub HandleLoadGame()
-        Dim fileName = AnsiConsole.Ask(Of String)("Filename:")
+        Dim fileName = AnsiConsole.Ask(Of String)("Filename:", "")
         If Not String.IsNullOrEmpty(fileName) Then
             Store.Load(fileName)
         End If
     End Sub
-    Private Sub HandleAbandonGame()
-        If AnsiConsole.Prompt(New ConfirmationPrompt("[red]Are you sure you want to abandon the game?[/]")) Then
+    Private Sub HandleUnloadGame()
+        If AnsiConsole.Confirm("[red]Are you sure you want to unload the game?[/]", False) Then
             Game.Finish()
         End If
     End Sub
