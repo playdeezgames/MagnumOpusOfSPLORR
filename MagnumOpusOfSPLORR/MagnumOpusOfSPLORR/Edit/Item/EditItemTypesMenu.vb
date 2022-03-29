@@ -23,7 +23,7 @@ Module EditItemTypesMenu
                 Case CreateItemTypeText
                     HandleCreateItemType()
                 Case Else
-                    Throw New NotImplementedException
+                    EditItemTypeMenu.Run(FindItemTypeByUniqueName(answer))
             End Select
         End While
     End Sub
