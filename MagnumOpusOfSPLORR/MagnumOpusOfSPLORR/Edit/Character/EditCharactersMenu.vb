@@ -1,7 +1,4 @@
-﻿Imports Spectre.Console
-Imports MOOS.Game
-
-Module EditCharactersMenu
+﻿Module EditCharactersMenu
     Private Const CreateCharacterText = "Create Character"
     Private Function CreatePrompt() As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Characters:[/]"}

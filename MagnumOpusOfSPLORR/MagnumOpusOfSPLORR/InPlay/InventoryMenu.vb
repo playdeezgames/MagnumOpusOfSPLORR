@@ -1,5 +1,4 @@
-﻿Imports Spectre.Console
-Module InventoryMenu
+﻿Module InventoryMenu
     Private Const DropText = "Drop..."
     Sub Run(character As Character)
         Dim done = False

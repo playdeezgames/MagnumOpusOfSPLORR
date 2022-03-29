@@ -1,7 +1,4 @@
-﻿Imports MOOS.Game
-Imports Spectre.Console
-
-Module EditDirectionsMenu
+﻿Module EditDirectionsMenu
     Private Const CreateDirectionText = "Create Direction"
     Private Function CreatePrompt() As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Edit Directions:[/]"}

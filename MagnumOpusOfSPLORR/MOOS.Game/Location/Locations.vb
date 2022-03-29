@@ -1,6 +1,4 @@
-﻿Imports MOOS.Data
-
-Public Module Locations
+﻿Public Module Locations
     ReadOnly Property AllLocations As List(Of Location)
         Get
             Return LocationData.All().Select(Function(id) New Location(id)).ToList

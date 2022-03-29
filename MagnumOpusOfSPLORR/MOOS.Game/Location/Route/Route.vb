@@ -1,6 +1,4 @@
-﻿Imports MOOS.Data
-
-Public Class Route
+﻿Public Class Route
     ReadOnly Property Id As Long
     Sub New(routeId As Long)
         Id = routeId

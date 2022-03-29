@@ -1,7 +1,4 @@
-﻿Imports MOOS.Game
-Imports Spectre.Console
-
-Module EditItemTypeMenu
+﻿Module EditItemTypeMenu
     Private Sub ShowStatus(itemType As ItemType)
         AnsiConsole.MarkupLine($"Id: {itemType.Id}")
         AnsiConsole.MarkupLine($"Name: {itemType.Name}")

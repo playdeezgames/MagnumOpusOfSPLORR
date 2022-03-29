@@ -1,6 +1,4 @@
-﻿Imports MOOS.Data
-
-Public Class Direction
+﻿Public Class Direction
     ReadOnly Property Id As Long
     Sub New(directionId As Long)
         Id = directionId

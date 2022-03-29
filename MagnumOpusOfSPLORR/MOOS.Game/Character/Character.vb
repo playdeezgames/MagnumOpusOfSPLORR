@@ -1,6 +1,4 @@
-﻿Imports MOOS.Data
-
-Public Class Character
+﻿Public Class Character
     ReadOnly Property Id As Long
     Sub New(characterId As Long)
         Id = characterId

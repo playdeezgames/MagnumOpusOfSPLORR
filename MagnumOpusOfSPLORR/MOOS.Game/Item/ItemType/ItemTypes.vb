@@ -1,6 +1,4 @@
-﻿Imports MOOS.Data
-
-Public Module ItemTypes
+﻿Public Module ItemTypes
     ReadOnly Property AllItemTypes As List(Of ItemType)
         Get
             Return ItemTypeData.All.Select(Function(id) New ItemType(id)).ToList

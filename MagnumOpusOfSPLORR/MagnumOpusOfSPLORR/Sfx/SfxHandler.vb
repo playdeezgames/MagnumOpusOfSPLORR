@@ -1,6 +1,4 @@
-﻿Imports MOOS.Game
-
-Module SfxHandler
+﻿Module SfxHandler
     Sub HandleSfx(sfx As Sfx)
 
     End Sub

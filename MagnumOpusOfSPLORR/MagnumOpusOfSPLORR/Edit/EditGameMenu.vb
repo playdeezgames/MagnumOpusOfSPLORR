@@ -1,5 +1,4 @@
-﻿Imports Spectre.Console
-Module EditGameMenu
+﻿Module EditGameMenu
     Private Const LocationsText = "Locations..."
     Private Const CharactersText = "Characters..."
     Private Const DirectionsText = "Directions..."

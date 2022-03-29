@@ -1,5 +1,3 @@
-Imports MOOS.Data
-
 Public Module Game
     Sub NewGame()
         Store.Reset()
@@ -39,7 +37,7 @@ Public Module Game
 
     Private Sub CreatePlayerCharacter()
         Dim location = Locations.FindLocationByName("Start").Single
-        Dim character = Characters.CreateCharacter("Tagon", Location)
+        Dim character = Characters.CreateCharacter("Tagon", location)
         character.SetAsPlayerCharacter()
     End Sub
     Sub Finish()

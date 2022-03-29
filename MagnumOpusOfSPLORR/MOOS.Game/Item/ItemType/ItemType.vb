@@ -1,6 +1,4 @@
-﻿Imports MOOS.Data
-
-Public Class ItemType
+﻿Public Class ItemType
     ReadOnly Property Id As Long
     Sub New(itemTypeId As Long)
         Id = itemTypeId

@@ -1,6 +1,4 @@
-﻿Imports MOOS.Data
-
-Public Module Inventories
+﻿Public Module Inventories
     Function Create() As Inventory
         Return New Inventory(InventoryData.Create())
     End Function

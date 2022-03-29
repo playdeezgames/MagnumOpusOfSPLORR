@@ -1,6 +1,4 @@
-﻿Imports MOOS.Data
-
-Public Class Location
+﻿Public Class Location
     ReadOnly Property Id As Long
     Property Name As String
         Get

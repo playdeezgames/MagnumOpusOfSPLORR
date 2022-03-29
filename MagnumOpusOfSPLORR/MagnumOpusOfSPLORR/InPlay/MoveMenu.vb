@@ -1,7 +1,4 @@
-﻿Imports MOOS.Game
-Imports Spectre.Console
-
-Module MoveMenu
+﻿Module MoveMenu
     Friend Sub Run(character As PlayerCharacter, routes As List(Of Route))
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Go which way?[/]"}
         prompt.AddChoice(NeverMindText)

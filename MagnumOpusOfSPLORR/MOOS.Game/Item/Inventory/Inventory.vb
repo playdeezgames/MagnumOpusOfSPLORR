@@ -1,6 +1,4 @@
-﻿Imports MOOS.Data
-
-Public Class Inventory
+﻿Public Class Inventory
     ReadOnly Property Id As Long
     Sub New(inventoryId As Long)
         Id = inventoryId

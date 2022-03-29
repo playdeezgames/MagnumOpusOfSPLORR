@@ -1,7 +1,4 @@
-﻿Imports MOOS.Game
-Imports Spectre.Console
-
-Module EditItemTypesMenu
+﻿Module EditItemTypesMenu
     Private Const CreateItemTypeText = "Create Item Type"
     Private Function CreatePrompt() As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Item Types:[/]"}

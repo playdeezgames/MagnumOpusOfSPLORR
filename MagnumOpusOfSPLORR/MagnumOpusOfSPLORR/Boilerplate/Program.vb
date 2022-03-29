@@ -1,7 +1,3 @@
-Imports MOOS.Data
-Imports MOOS.Game
-Imports Spectre.Console
-
 Module Program
     Private Sub Welcome()
         AnsiConsole.Clear()
