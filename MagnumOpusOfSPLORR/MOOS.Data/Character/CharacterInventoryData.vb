@@ -29,8 +29,10 @@
     End Sub
     Friend Sub Clear(characterId As Long)
         Initialize()
+        CharacterInventoryData.Clear(characterId)
         ExecuteNonQuery(
             $"DELETE FROM [{TableName}] WHERE [{CharacterIdColumn}]=@{CharacterIdColumn};",
             MakeParameter($"@{CharacterIdColumn}", characterId))
+        InventoryData.Purge()
     End Sub
 End Module

@@ -32,5 +32,6 @@
         ExecuteNonQuery(
             $"DELETE FROM [{TableName}] WHERE [{LocationIdColumn}]=@{LocationIdColumn};",
             MakeParameter($"@{LocationIdColumn}", locationId))
+        InventoryData.Purge()
     End Sub
 End Module
