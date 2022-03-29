@@ -22,7 +22,24 @@
             $"SELECT [{BarrierIdColumn}] FROM [{TableName}] WHERE [{RouteIdColumn}]=@{RouteIdColumn}",
             MakeParameter($"@{RouteIdColumn}", routeId))
     End Function
-
+    Function ReadAvailableForRoute(routeId As Long) As List(Of Long)
+        Initialize()
+        Return ExecuteReader(
+            Function(reader) CLng(reader(BarrierIdColumn)),
+            $"SELECT 
+                b.[{BarrierData.BarrierIdColumn}] 
+            FROM 
+                [{BarrierData.TableName}] b 
+                CROSS JOIN [{RouteData.TableName}] r
+                LEFT JOIN [{TableName}] rb 
+                    ON 
+                        b.[{BarrierData.BarrierIdColumn}]=rb.[{BarrierIdColumn}] 
+                        AND r.[{RouteData.RouteIdColumn}]=rb.[{RouteIdColumn}]
+            WHERE 
+                r.[{RouteIdColumn}]=@{RouteIdColumn}
+                AND rb.[{BarrierIdColumn}] IS NULL;",
+            MakeParameter($"@{RouteIdColumn}", routeId))
+    End Function
     Public Sub Clear(routeId As Long, barrierId As Long)
         Initialize()
         ExecuteNonQuery(

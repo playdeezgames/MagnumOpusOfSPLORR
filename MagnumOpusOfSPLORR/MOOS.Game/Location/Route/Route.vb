@@ -47,6 +47,11 @@ Public Class Route
             Return RouteBarrierData.ReadForRoute(Id).Select(Function(id) New Barrier(id)).ToList
         End Get
     End Property
+    ReadOnly Property AvailableBarriers As List(Of Barrier)
+        Get
+            Return RouteBarrierData.ReadAvailableForRoute(Id).Select(Function(id) New Barrier(id)).ToList
+        End Get
+    End Property
     Public Sub AddBarrier(barrier As Barrier)
         RouteBarrierData.Write(Id, barrier.Id)
     End Sub
