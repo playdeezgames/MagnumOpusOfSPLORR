@@ -3,6 +3,14 @@
     Sub New(characterId As Long)
         Id = characterId
     End Sub
+    Property CharacterType As CharacterType
+        Get
+            Return New CharacterType(CharacterData.ReadCharacterType(Id).Value)
+        End Get
+        Set(value As CharacterType)
+            CharacterData.WriteCharacterType(Id, value.Id)
+        End Set
+    End Property
     Property Location As Location
         Get
             Return New Location(CharacterData.ReadLocation(Id).Value)

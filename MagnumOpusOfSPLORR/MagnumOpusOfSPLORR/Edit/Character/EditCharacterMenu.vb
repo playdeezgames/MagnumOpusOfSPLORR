@@ -1,5 +1,6 @@
 ﻿Module EditCharacterMenu
     Private Const ChangeLocationText = "Change Location"
+    Private Const ChangeCharacterTypeText = "Change Character Type"
     Private Const AssignPlayerCharacterText = "Make this the player character"
     Private Sub ShowStatus(character As Character)
         If character.IsPlayerCharacter Then
@@ -8,6 +9,7 @@
         AnsiConsole.MarkupLine($"Id: {character.Id}")
         AnsiConsole.MarkupLine($"Name: {character.Name}")
         AnsiConsole.MarkupLine($"Location: {character.Location.UniqueName}")
+        AnsiConsole.MarkupLine($"Character Type: {character.CharacterType.UniqueName}")
         Dim itemStacks = character.Inventory.StackedItems
         If itemStacks.Any Then
             AnsiConsole.MarkupLine($"Items: {String.Join(
@@ -20,6 +22,7 @@
         prompt.AddChoice(GoBackText)
         prompt.AddChoice(ChangeNameText)
         prompt.AddChoice(ChangeLocationText)
+        prompt.AddChoice(ChangeCharacterTypeText)
         prompt.AddChoice(InventoryText)
         If Not character.IsPlayerCharacter Then
             prompt.AddChoice(AssignPlayerCharacterText)
@@ -41,6 +44,8 @@
                     HandleChangeName(character)
                 Case ChangeLocationText
                     HandleChangeLocation(character)
+                Case ChangeCharacterTypeText
+                    HandleChangeCharacterType(character)
                 Case AssignPlayerCharacterText
                     character.SetAsPlayerCharacter()
                 Case InventoryText
@@ -57,6 +62,12 @@
         Dim newLocation = ChooseLocation("Which Location", True)
         If newLocation IsNot Nothing Then
             character.Location = newLocation
+        End If
+    End Sub
+    Private Sub HandleChangeCharacterType(character As Character)
+        Dim newCharacterType = ChooseCharacterType("Which Character Type", True)
+        If newCharacterType IsNot Nothing Then
+            character.CharacterType = newCharacterType
         End If
     End Sub
     Private Sub HandleChangeName(character As Character)

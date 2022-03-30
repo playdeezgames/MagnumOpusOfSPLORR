@@ -26,6 +26,7 @@
     End Sub
     Private Sub HandleCreateCharacter()
         Dim location = ChooseLocation("What Location?", False)
-        EditCharacterMenu.Run(Characters.CreateCharacter("New Character", location))
+        Dim characterType = ChooseCharacterType("What Character Type?", False)
+        EditCharacterMenu.Run(Characters.CreateCharacter("New Character", location, characterType))
     End Sub
 End Module

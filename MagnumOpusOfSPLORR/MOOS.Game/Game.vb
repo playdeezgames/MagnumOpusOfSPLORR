@@ -36,8 +36,9 @@ Public Module Game
     End Sub
 
     Private Sub CreatePlayerCharacter()
+        Dim characterType = CharacterTypes.CreateCharacterType("PC")
         Dim location = Locations.FindLocationByName("Start").Single
-        Dim character = Characters.CreateCharacter("Tagon", location)
+        Dim character = Characters.CreateCharacter("Tagon", location, characterType)
         character.SetAsPlayerCharacter()
     End Sub
     Sub Finish()

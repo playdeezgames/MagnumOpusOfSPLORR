@@ -2,6 +2,33 @@
     Friend Const TableName = "Characters"
     Friend Const CharacterIdColumn = "CharacterId"
     Friend Const CharacterNameColumn = "CharacterName"
+    Friend Const CharacterTypeIdColumn = CharacterTypeData.CharacterTypeIdColumn
+
+    Public Function ReadCharacterType(characterId As Long) As Long?
+        Initialize()
+        Return ExecuteScalar(Of Long)(
+            $"SELECT
+                [{CharacterTypeIdColumn}]
+            FROM
+                [{TableName}]
+            WHERE
+                [{CharacterIdColumn}]=@{CharacterIdColumn};",
+            MakeParameter($"@{CharacterIdColumn}", characterId))
+    End Function
+
+    Public Sub WriteCharacterType(characterId As Long, characterTypeId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            $"UPDATE 
+                [{TableName}] 
+            SET 
+                [{CharacterTypeIdColumn}]=@{CharacterTypeIdColumn} 
+            WHERE 
+                [{CharacterIdColumn}]=@{CharacterIdColumn};",
+            MakeParameter($"@{CharacterIdColumn}", characterId),
+            MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId))
+    End Sub
+
     Friend Const LocationIdColumn = LocationData.LocationIdColumn
     Friend Sub Initialize()
         LocationData.Initialize()
@@ -10,25 +37,30 @@
             (
                 [{CharacterIdColumn}] INTEGER PRIMARY KEY AUTOINCREMENT,
                 [{LocationIdColumn}] INT NOT NULL,
+                [{CharacterTypeIdColumn}] INT NOT NULL,
                 [{CharacterNameColumn}] TEXT NOT NULL,
-                FOREIGN KEY([{LocationIdColumn}]) REFERENCES [{LocationData.TableName}]([{LocationData.LocationIdColumn}])
+                FOREIGN KEY([{LocationIdColumn}]) REFERENCES [{LocationData.TableName}]([{LocationData.LocationIdColumn}]),
+                FOREIGN KEY([{CharacterTypeIdColumn}]) REFERENCES [{CharacterTypeData.TableName}]([{CharacterTypeData.CharacterTypeIdColumn}])
             );")
     End Sub
-    Function Create(locationId As Long, characterName As String) As Long
+    Function Create(locationId As Long, characterName As String, characterTypeId As Long) As Long
         Initialize()
         ExecuteNonQuery(
             $"INSERT INTO [{TableName}]
             (
                 [{LocationIdColumn}],
-                [{CharacterNameColumn}]
+                [{CharacterNameColumn}],
+                [{CharacterTypeIdColumn}]
             ) 
             VALUES
             (
                 @{LocationIdColumn},
-                @{CharacterNameColumn}
+                @{CharacterNameColumn},
+                @{CharacterTypeIdColumn}
             );",
             MakeParameter($"@{LocationIdColumn}", locationId),
-            MakeParameter($"@{CharacterNameColumn}", characterName))
+            MakeParameter($"@{CharacterNameColumn}", characterName),
+            MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId))
         Return LastInsertRowId
     End Function
     Function ReadLocation(characterId As Long) As Long?
