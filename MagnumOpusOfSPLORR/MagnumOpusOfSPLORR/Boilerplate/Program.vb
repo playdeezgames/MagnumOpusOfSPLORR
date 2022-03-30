@@ -47,7 +47,7 @@ Module Program
                 Case EditGameText
                     EditGameMenu.Run()
                 Case NewGameText
-                    Game.NewGame()
+                    Game.NewGame(4, 4) 'TODO: allow selection of maze size
                 Case QuitText
                     done = ConfirmQuit()
                 Case EmbarkText
