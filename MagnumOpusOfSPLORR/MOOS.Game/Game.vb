@@ -1,4 +1,10 @@
 Public Module Game
+    Private ReadOnly walker As New Dictionary(Of String, MazeDirection(Of String)) From {
+            {"north", New MazeDirection(Of String)("south", 0, -1)},
+            {"east", New MazeDirection(Of String)("west", 1, 0)},
+            {"south", New MazeDirection(Of String)("north", 0, 1)},
+            {"west", New MazeDirection(Of String)("east", -1, 0)}}
+
     Sub NewGame(mazeColumns As Long, mazeRows As Long)
         Store.Reset()
         CreateDirections()
@@ -9,11 +15,7 @@ Public Module Game
     End Sub
 
     Private Function GenerateMaze(mazeColumns As Long, mazeRows As Long) As Maze(Of String)
-        Dim maze As New Maze(Of String)(mazeColumns, mazeRows, New Dictionary(Of String, MazeDirection(Of String)) From {
-            {"north", New MazeDirection(Of String)("south", 0, -1)},
-            {"east", New MazeDirection(Of String)("west", 1, 0)},
-            {"south", New MazeDirection(Of String)("north", 0, 1)},
-            {"west", New MazeDirection(Of String)("east", -1, 0)}})
+        Dim maze As New Maze(Of String)(mazeColumns, mazeRows, walker)
         maze.Generate()
         Return maze
     End Function
@@ -29,13 +31,18 @@ Public Module Game
                 CreateLocation($"Cell({column},{row})")
             Next
         Next
-        'For column = 0 To maze.Columns - 1
-        '    For row = 0 To maze.Rows - 1
-        '        Dim cell = maze.GetCell(column, row)
-        '        Dim location = Locations.FindLocationByName($"Cell({column},{row})")
-        '        Dim directions = cell.Directions.Where()
-        '    Next
-        'Next
+        For column = 0 To maze.Columns - 1
+            For row = 0 To maze.Rows - 1
+                Dim cell = maze.GetCell(column, row)
+                Dim location = Locations.FindLocationByName($"Cell({column},{row})").Single
+                For Each direction In cell.Directions.Where(Function(x) cell.GetDoor(x).Open)
+                    Dim nextColumn = column + walker(direction).DeltaX
+                    Dim nextRow = row + walker(direction).DeltaY
+                    Dim nextLocation = Locations.FindLocationByName($"Cell({nextColumn},{nextRow})").Single
+                    Routes.CreateRoute(location, nextLocation, Directions.FindDirectionByName(direction).Single)
+                Next
+            Next
+        Next
 
         'Dim first = Locations.CreateLocation("Start")
         'Dim second = Locations.CreateLocation("Middle")
