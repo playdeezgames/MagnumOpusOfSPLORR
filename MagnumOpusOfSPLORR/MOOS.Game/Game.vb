@@ -4,7 +4,7 @@ Public Module Game
         CreateDirections()
         CreateItemTypes()
         Dim maze = GenerateMaze(mazeColumns, mazeRows)
-        CreateLocationsAndRoutes()
+        CreateLocationsAndRoutes(maze)
         CreatePlayerCharacter()
     End Sub
 
@@ -22,21 +22,35 @@ Public Module Game
         CreateItemType("key")
     End Sub
 
-    Private Sub CreateLocationsAndRoutes()
-        Dim first = Locations.CreateLocation("Start")
-        Dim second = Locations.CreateLocation("Middle")
-        Dim third = Locations.CreateLocation("Finish")
-        third.IsWinningLocation = True
+    Private Sub CreateLocationsAndRoutes(maze As Maze(Of String))
+        For column = 0 To maze.Columns - 1
+            For row = 0 To maze.Rows - 1
+                Dim cell = maze.GetCell(column, row)
+                CreateLocation($"Cell({column},{row})")
+            Next
+        Next
+        'For column = 0 To maze.Columns - 1
+        '    For row = 0 To maze.Rows - 1
+        '        Dim cell = maze.GetCell(column, row)
+        '        Dim location = Locations.FindLocationByName($"Cell({column},{row})")
+        '        Dim directions = cell.Directions.Where()
+        '    Next
+        'Next
 
-        Items.CreateItem(FindItemTypeByName("key").Single, first.Inventory)
+        'Dim first = Locations.CreateLocation("Start")
+        'Dim second = Locations.CreateLocation("Middle")
+        'Dim third = Locations.CreateLocation("Finish")
+        'third.IsWinningLocation = True
 
-        Routes.CreateRoute(first, second, FindDirectionByName("north").Single)
-        Routes.CreateRoute(second, first, FindDirectionByName("south").Single)
-        Dim finalRoute = Routes.CreateRoute(second, third, FindDirectionByName("east").Single)
-        Routes.CreateRoute(third, second, FindDirectionByName("west").Single)
+        'Items.CreateItem(FindItemTypeByName("key").Single, first.Inventory)
 
-        Dim barrier = Barriers.CreateBarrier(FindItemTypeByName("key").Single, True, True)
-        finalRoute.AddBarrier(barrier)
+        'Routes.CreateRoute(first, second, FindDirectionByName("north").Single)
+        'Routes.CreateRoute(second, first, FindDirectionByName("south").Single)
+        'Dim finalRoute = Routes.CreateRoute(second, third, FindDirectionByName("east").Single)
+        'Routes.CreateRoute(third, second, FindDirectionByName("west").Single)
+
+        'Dim barrier = Barriers.CreateBarrier(FindItemTypeByName("key").Single, True, True)
+        'finalRoute.AddBarrier(barrier)
     End Sub
 
     Private Sub CreateDirections()
@@ -48,7 +62,7 @@ Public Module Game
 
     Private Sub CreatePlayerCharacter()
         Dim characterType = CharacterTypes.CreateCharacterType("PC")
-        Dim location = Locations.FindLocationByName("Start").Single
+        Dim location = Locations.FindLocationByName("Cell(0,0)").Single
         Dim character = Characters.CreateCharacter("Tagon", location, characterType)
         character.SetAsPlayerCharacter()
     End Sub
