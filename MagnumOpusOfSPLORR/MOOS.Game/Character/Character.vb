@@ -3,6 +3,11 @@
     Sub New(characterId As Long)
         Id = characterId
     End Sub
+    ReadOnly Property Counters As List(Of Counter)
+        Get
+            Return CounterData.ReadForCharacter(Id).Select(Function(x) New Counter(x)).ToList
+        End Get
+    End Property
     Property CharacterType As CharacterType
         Get
             Return New CharacterType(CharacterData.ReadCharacterType(Id).Value)

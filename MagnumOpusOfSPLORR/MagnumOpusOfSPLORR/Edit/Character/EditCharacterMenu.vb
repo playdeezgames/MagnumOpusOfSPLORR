@@ -10,6 +10,7 @@
         AnsiConsole.MarkupLine($"Name: {character.Name}")
         AnsiConsole.MarkupLine($"Location: {character.Location.UniqueName}")
         AnsiConsole.MarkupLine($"Character Type: {character.CharacterType.UniqueName}")
+        ShowCounters(character)
         Dim itemStacks = character.Inventory.StackedItems
         If itemStacks.Any Then
             AnsiConsole.MarkupLine($"Items: {String.Join(
@@ -17,6 +18,14 @@
                     itemStacks.Select(Function(x) $"{x.Key.Name}(x{x.Value.Count})"))}")
         End If
     End Sub
+
+    Private Sub ShowCounters(character As Character)
+        Dim counters = character.Counters
+        If counters.Any Then
+            AnsiConsole.MarkupLine($"Counters: {String.Join(", ", counters.Select(Function(x) $"{x.CounterType.Name}({x.Value})"))}")
+        End If
+    End Sub
+
     Private Function CreatePrompt(character As Character) As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
         prompt.AddChoice(GoBackText)
