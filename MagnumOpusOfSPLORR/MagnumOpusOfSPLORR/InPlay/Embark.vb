@@ -53,7 +53,7 @@
             ShowStatus(character)
             If character.DidWin Then
                 done = True
-                HandleWin()
+                HandleWin(character)
             Else
                 Select Case AnsiConsole.Prompt(CreatePrompt(character, isTest))
                     Case MainMenuText
@@ -81,9 +81,13 @@
             character.Inventory.Add(item)
         End If
     End Sub
-    Private Sub HandleWin()
+    Private Sub HandleWin(character As PlayerCharacter)
         AnsiConsole.Clear()
         AnsiConsole.MarkupLine("You win!")
+        Dim counter = character.Counters.SingleOrDefault(Function(x) x.CounterType = CounterType.Movement)
+        If counter IsNot Nothing Then
+            AnsiConsole.MarkupLine($"Moves: {counter.Value}")
+        End If
         Dim prompt As New SelectionPrompt(Of String) With {.Title = ""}
         prompt.AddChoice("Ok")
         AnsiConsole.Prompt(prompt)
