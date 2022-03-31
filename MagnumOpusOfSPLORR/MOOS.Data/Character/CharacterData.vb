@@ -16,6 +16,14 @@
             MakeParameter($"@{CharacterIdColumn}", characterId))
     End Function
 
+    Public Function ReadForCharacterType(characterTypeId As Long) As List(Of Long)
+        Initialize()
+        Return ExecuteReader(
+            Function(reader) CLng(reader(CharacterIdColumn)),
+            $"SELECT [{CharacterIdColumn}] FROM [{TableName}] WHERE [{CharacterTypeIdColumn}]=@{CharacterTypeIdColumn};",
+            MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId))
+    End Function
+
     Public Sub WriteCharacterType(characterId As Long, characterTypeId As Long)
         Initialize()
         ExecuteNonQuery(

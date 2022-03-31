@@ -18,11 +18,13 @@
     End Property
     ReadOnly Property CanDestroy As Boolean
         Get
-            Return True
+            Return Not CharacterData.ReadForCharacterType(Id).Any
         End Get
     End Property
 
     Public Sub Destroy()
-        Throw New NotImplementedException()
+        If CanDestroy Then
+            CharacterTypeData.Clear(Id)
+        End If
     End Sub
 End Class
