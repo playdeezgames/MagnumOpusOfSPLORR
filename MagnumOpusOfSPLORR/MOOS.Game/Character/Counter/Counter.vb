@@ -8,9 +8,12 @@
             Return CType(CounterData.ReadCounterType(Id).Value, CounterType)
         End Get
     End Property
-    ReadOnly Property Value As Long
+    Property Value As Long
         Get
             Return CounterData.ReadCounterValue(Id).Value
         End Get
+        Set(value As Long)
+            CounterData.WriteCounterValue(Id, value)
+        End Set
     End Property
 End Class

@@ -95,7 +95,16 @@
                 End While
             Next
             route.SelfDestructBarriers()
+            AddMoveToCounter()
             Location = route.ToLocation
+        End If
+    End Sub
+    Private Sub AddMoveToCounter()
+        Dim moveCounter = Counters.SingleOrDefault(Function(x) x.CounterType = CounterType.Movement)
+        If moveCounter IsNot Nothing Then
+            moveCounter.Value += 1
+        Else
+            CounterData.Create(Id, CounterType.Movement, 1)
         End If
     End Sub
     Public Shared Operator =(first As Character, second As Character) As Boolean
