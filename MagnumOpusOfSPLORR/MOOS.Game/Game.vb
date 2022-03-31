@@ -10,7 +10,7 @@ Public Module Game
         CreateDirections()
         CreateItemTypes()
         Dim maze = GenerateMaze(mazeColumns, mazeRows)
-        CreateLocationsAndRoutes(maze)
+        CreateWorld(maze)
         CreatePlayerCharacter()
     End Sub
 
@@ -23,14 +23,14 @@ Public Module Game
     Private Sub CreateItemTypes()
         CreateItemType("key")
     End Sub
-
-    Private Sub CreateLocationsAndRoutes(maze As Maze(Of String))
-        For column = 0 To maze.Columns - 1
-            For row = 0 To maze.Rows - 1
-                Dim cell = maze.GetCell(column, row)
+    Private Sub CreateLocations(columns As Long, rows As Long)
+        For column = 0 To columns - 1
+            For row = 0 To rows - 1
                 CreateLocation($"Cell({column},{row})")
             Next
         Next
+    End Sub
+    Private Sub CreateRoutes(maze As Maze(Of String))
         For column = 0 To maze.Columns - 1
             For row = 0 To maze.Rows - 1
                 Dim cell = maze.GetCell(column, row)
@@ -43,21 +43,22 @@ Public Module Game
                 Next
             Next
         Next
-
-        'Dim first = Locations.CreateLocation("Start")
-        'Dim second = Locations.CreateLocation("Middle")
-        'Dim third = Locations.CreateLocation("Finish")
-        'third.IsWinningLocation = True
-
-        'Items.CreateItem(FindItemTypeByName("key").Single, first.Inventory)
-
-        'Routes.CreateRoute(first, second, FindDirectionByName("north").Single)
-        'Routes.CreateRoute(second, first, FindDirectionByName("south").Single)
-        'Dim finalRoute = Routes.CreateRoute(second, third, FindDirectionByName("east").Single)
-        'Routes.CreateRoute(third, second, FindDirectionByName("west").Single)
-
-        'Dim barrier = Barriers.CreateBarrier(FindItemTypeByName("key").Single, True, True)
-        'finalRoute.AddBarrier(barrier)
+    End Sub
+    Private Sub CreateWinningLocation()
+        Dim finish = RNG.FromList(Locations.AllLocations.Where(Function(x) x.Routes.Count = 1).ToList)
+        finish.IsWinningLocation = True
+        Dim barrier = Barriers.CreateBarrier(FindItemTypeByName("key").Single, True, True)
+        finish.Routes.Single.ToLocation.Routes.Single(Function(x) x.ToLocation = finish).AddBarrier(barrier)
+    End Sub
+    Private Sub PlaceKey()
+        Dim keyCell = RNG.FromList(Locations.AllLocations.Where(Function(x) x.Routes.Count = 1 AndAlso Not x.IsWinningLocation).ToList)
+        Items.CreateItem(FindItemTypeByName("key").Single, keyCell.Inventory)
+    End Sub
+    Private Sub CreateWorld(maze As Maze(Of String))
+        CreateLocations(maze.Columns, maze.Rows)
+        CreateRoutes(maze)
+        CreateWinningLocation()
+        PlaceKey()
     End Sub
 
     Private Sub CreateDirections()
@@ -69,7 +70,7 @@ Public Module Game
 
     Private Sub CreatePlayerCharacter()
         Dim characterType = CharacterTypes.CreateCharacterType("PC")
-        Dim location = Locations.FindLocationByName("Cell(0,0)").Single
+        Dim location = RNG.FromList(Locations.AllLocations.Where(Function(x) x.Routes.Count = 1 AndAlso Not x.IsWinningLocation).ToList)
         Dim character = Characters.CreateCharacter("Tagon", location, characterType)
         character.SetAsPlayerCharacter()
     End Sub
