@@ -47,7 +47,7 @@ Module Program
                 Case EditGameText
                     EditGameMenu.Run()
                 Case NewGameText
-                    Game.NewGame(4, 4) 'TODO: allow selection of maze size
+                    HandleNewGame()
                 Case QuitText
                     done = ConfirmQuit()
                 Case EmbarkText
@@ -58,6 +58,28 @@ Module Program
         End While
         Play("L500;C4;L250;G3;G3;L500;G#3;G3;R500;B3;C4;R500")
         Game.Finish()
+    End Sub
+
+    Private Sub HandleNewGame()
+        Dim prompt As New SelectionPrompt(Of String) With {.Title = "What size?"}
+        prompt.AddChoice(NeverMindText)
+        prompt.AddChoice("4")
+        prompt.AddChoice("5")
+        prompt.AddChoice("6")
+        prompt.AddChoice("7")
+        prompt.AddChoice("8")
+        prompt.AddChoice("9")
+        prompt.AddChoice("10")
+        prompt.AddChoice("11")
+        prompt.AddChoice("12")
+        Dim answer = AnsiConsole.Prompt(prompt)
+        Select Case answer
+            Case NeverMindText
+                'do nothing!
+            Case Else
+                Dim size = CLng(answer)
+                Game.NewGame(size, size)
+        End Select
     End Sub
 
     Private Function ConfirmQuit() As Boolean
