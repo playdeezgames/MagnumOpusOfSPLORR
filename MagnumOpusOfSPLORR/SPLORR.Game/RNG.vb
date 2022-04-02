@@ -22,13 +22,35 @@ Public Module RNG
     Function FromRange(minimum As Integer, maximum As Integer) As Integer
         Return random.Next(maximum - minimum + 1) + minimum
     End Function
-    Function FromDice(dieCount As Integer, dieSize As Integer) As Integer
+    Function RollXDY(dieCount As Integer, dieSize As Integer) As Integer
         Dim total = 0
         While dieCount > 0
             dieCount -= 1
             total += FromRange(1, dieSize)
         End While
         Return total
+    End Function
+    Function RollDice(diceText As String) As Integer
+        Dim diceSets = diceText.Split("+")
+        Dim tally = 0
+        For Each diceSet In diceSets
+            Dim multiplier = 1
+            Dim divisor = 1
+            If diceSet.Contains("*"c) Then
+                Dim scaleTokens = diceSet.Split("*"c)
+                multiplier = CInt(scaleTokens(1))
+                diceSet = scaleTokens(0)
+            ElseIf diceSet.Contains("/"c) Then
+                Dim scaleTokens = diceSet.Split("/"c)
+                divisor = CInt(scaleTokens(1))
+                diceSet = scaleTokens(0)
+            End If
+            Dim tokens = diceSet.Split("d"c, "D"c)
+            Dim dieCount = CInt(tokens(0))
+            Dim dieSize = CInt(tokens(1))
+            tally += (If(dieCount < 0, -RollXDY(-dieCount, dieSize), RollXDY(dieCount, dieSize)) * multiplier) \ divisor
+        Next
+        Return tally
     End Function
     Function FromList(Of TItem)(items As List(Of TItem)) As TItem
         Return items(FromRange(0, items.Count - 1))
