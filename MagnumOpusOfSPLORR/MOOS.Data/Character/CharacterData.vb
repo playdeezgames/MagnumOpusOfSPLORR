@@ -4,16 +4,20 @@
     Friend Const CharacterNameColumn = "CharacterName"
     Friend Const CharacterTypeIdColumn = CharacterTypeData.CharacterTypeIdColumn
 
-    Public Function ReadCharacterType(characterId As Long) As Long?
+    Private Function ReadColumnValue(Of TColumn As Structure)(characterId As Long, columnName As String) As TColumn?
         Initialize()
-        Return ExecuteScalar(Of Long)(
+        Return ExecuteScalar(Of TColumn)(
             $"SELECT
-                [{CharacterTypeIdColumn}]
+                [{columnName}]
             FROM
                 [{TableName}]
             WHERE
                 [{CharacterIdColumn}]=@{CharacterIdColumn};",
             MakeParameter($"@{CharacterIdColumn}", characterId))
+    End Function
+
+    Public Function ReadCharacterType(characterId As Long) As Long?
+        Return ReadColumnValue(Of Long)(characterId, CharacterTypeIdColumn)
     End Function
 
     Public Function ReadForCharacterType(characterTypeId As Long) As List(Of Long)
@@ -24,17 +28,21 @@
             MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId))
     End Function
 
-    Public Sub WriteCharacterType(characterId As Long, characterTypeId As Long)
+    Private Sub WriteColumnValue(Of TColumn)(characterId As Long, columnName As String, columnValue As TColumn)
         Initialize()
         ExecuteNonQuery(
             $"UPDATE 
                 [{TableName}] 
             SET 
-                [{CharacterTypeIdColumn}]=@{CharacterTypeIdColumn} 
+                [{columnName}]=@{columnName} 
             WHERE 
                 [{CharacterIdColumn}]=@{CharacterIdColumn};",
             MakeParameter($"@{CharacterIdColumn}", characterId),
-            MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId))
+            MakeParameter($"@{columnName}", columnValue))
+    End Sub
+
+    Public Sub WriteCharacterType(characterId As Long, characterTypeId As Long)
+        WriteColumnValue(characterId, CharacterTypeIdColumn, characterTypeId)
     End Sub
 
     Friend Const LocationIdColumn = LocationData.LocationIdColumn
@@ -72,27 +80,10 @@
         Return LastInsertRowId
     End Function
     Function ReadLocation(characterId As Long) As Long?
-        Initialize()
-        Return ExecuteScalar(Of Long)(
-            $"SELECT
-                [{LocationIdColumn}]
-            FROM
-                [{TableName}]
-            WHERE
-                [{CharacterIdColumn}]=@{CharacterIdColumn};",
-            MakeParameter($"@{CharacterIdColumn}", characterId))
+        Return ReadColumnValue(Of Long)(characterId, LocationIdColumn)
     End Function
     Sub WriteLocation(characterId As Long, locationId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"UPDATE 
-                [{TableName}] 
-            SET 
-                [{LocationIdColumn}]=@{LocationIdColumn} 
-            WHERE 
-                [{CharacterIdColumn}]=@{CharacterIdColumn};",
-            MakeParameter($"@{CharacterIdColumn}", characterId),
-            MakeParameter($"@{LocationIdColumn}", locationId))
+        WriteColumnValue(characterId, LocationIdColumn, locationId)
     End Sub
     Function ReadName(characterId As Long) As String
         Initialize()
