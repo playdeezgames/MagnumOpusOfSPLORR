@@ -21,7 +21,6 @@
             End Select
         End While
     End Sub
-
     Private Sub HandleChangeCounter(character As Character, counterType As CounterType)
         Dim counterValue = AnsiConsole.Ask(Of Long)("[olive]New Value For Counter:[/]", 0)
         character.SetCounter(counterType, counterValue)
