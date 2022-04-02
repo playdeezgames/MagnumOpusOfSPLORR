@@ -1,9 +1,9 @@
 ﻿Public Module CounterData
     Friend Const TableName = "Counters"
     Friend Const CounterIdColumn = "CounterId"
-    Friend Const CharacterIdColumn = CharacterData.CharacterIdColumn
     Friend Const CounterTypeColumn = "CounterType"
     Friend Const CounterValueColumn = "CounterValue"
+    Friend Const CharacterIdColumn = CharacterData.CharacterIdColumn
     Friend Sub Initialize()
         CharacterData.Initialize()
         ExecuteNonQuery(
@@ -19,11 +19,7 @@
     End Sub
 
     Public Sub WriteCounterValue(counterId As Long, counterValue As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"UPDATE [{TableName}] SET [{CounterValueColumn}]=@{CounterValueColumn} WHERE [{CounterIdColumn}]=@{CounterIdColumn};",
-            MakeParameter($"@{CounterIdColumn}", counterId),
-            MakeParameter($"@{CounterValueColumn}", counterValue))
+        WriteColumnValue(AddressOf Initialize, TableName, CounterIdColumn, counterId, CounterValueColumn, counterValue)
     End Sub
 
     Function ReadForCharacter(characterId As Long) As List(Of Long)
@@ -35,17 +31,11 @@
     End Function
 
     Public Function ReadCounterType(counterId As Long) As Long?
-        Initialize()
-        Return ExecuteScalar(Of Long)(
-            $"SELECT [{CounterTypeColumn}] FROM [{TableName}] WHERE [{CounterIdColumn}]=@{CounterIdColumn};",
-            MakeParameter($"@{CounterIdColumn}", counterId))
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, CounterIdColumn, counterId, CounterTypeColumn)
     End Function
 
     Public Function ReadCounterValue(counterId As Long) As Long?
-        Initialize()
-        Return ExecuteScalar(Of Long)(
-            $"SELECT [{CounterValueColumn}] FROM [{TableName}] WHERE [{CounterIdColumn}]=@{CounterIdColumn};",
-            MakeParameter($"@{CounterIdColumn}", counterId))
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, CounterIdColumn, counterId, CounterTypeColumn)
     End Function
 
     Public Function Create(characterId As Long, counterType As Long, value As Long) As Long
