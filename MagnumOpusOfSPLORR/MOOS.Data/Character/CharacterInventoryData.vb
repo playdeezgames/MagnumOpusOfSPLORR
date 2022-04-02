@@ -15,10 +15,7 @@
             );")
     End Sub
     Function Read(characterId As Long) As Long?
-        Initialize()
-        Return ExecuteScalar(Of Long)(
-            $"SELECT [{InventoryIdColumn}] FROM [{TableName}] WHERE [{CharacterIdColumn}]=@{CharacterIdColumn};",
-            MakeParameter($"@{CharacterIdColumn}", characterId))
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, CharacterIdColumn, characterId, InventoryIdColumn)
     End Function
     Sub Write(characterId As Long, inventoryId As Long)
         Initialize()

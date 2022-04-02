@@ -2,22 +2,11 @@
     Friend Const TableName = "Characters"
     Friend Const CharacterIdColumn = "CharacterId"
     Friend Const CharacterNameColumn = "CharacterName"
+    Friend Const LocationIdColumn = LocationData.LocationIdColumn
     Friend Const CharacterTypeIdColumn = CharacterTypeData.CharacterTypeIdColumn
 
-    Private Function ReadColumnValue(Of TColumn As Structure)(characterId As Long, columnName As String) As TColumn?
-        Initialize()
-        Return ExecuteScalar(Of TColumn)(
-            $"SELECT
-                [{columnName}]
-            FROM
-                [{TableName}]
-            WHERE
-                [{CharacterIdColumn}]=@{CharacterIdColumn};",
-            MakeParameter($"@{CharacterIdColumn}", characterId))
-    End Function
-
     Public Function ReadCharacterType(characterId As Long) As Long?
-        Return ReadColumnValue(Of Long)(characterId, CharacterTypeIdColumn)
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, CharacterIdColumn, characterId, CharacterTypeIdColumn)
     End Function
 
     Public Function ReadForCharacterType(characterTypeId As Long) As List(Of Long)
@@ -27,25 +16,9 @@
             $"SELECT [{CharacterIdColumn}] FROM [{TableName}] WHERE [{CharacterTypeIdColumn}]=@{CharacterTypeIdColumn};",
             MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId))
     End Function
-
-    Private Sub WriteColumnValue(Of TColumn)(characterId As Long, columnName As String, columnValue As TColumn)
-        Initialize()
-        ExecuteNonQuery(
-            $"UPDATE 
-                [{TableName}] 
-            SET 
-                [{columnName}]=@{columnName} 
-            WHERE 
-                [{CharacterIdColumn}]=@{CharacterIdColumn};",
-            MakeParameter($"@{CharacterIdColumn}", characterId),
-            MakeParameter($"@{columnName}", columnValue))
-    End Sub
-
     Public Sub WriteCharacterType(characterId As Long, characterTypeId As Long)
-        WriteColumnValue(characterId, CharacterTypeIdColumn, characterTypeId)
+        WriteColumnValue(AddressOf Initialize, TableName, CharacterIdColumn, characterId, CharacterTypeIdColumn, characterTypeId)
     End Sub
-
-    Friend Const LocationIdColumn = LocationData.LocationIdColumn
     Friend Sub Initialize()
         LocationData.Initialize()
         ExecuteNonQuery(
@@ -80,10 +53,10 @@
         Return LastInsertRowId
     End Function
     Function ReadLocation(characterId As Long) As Long?
-        Return ReadColumnValue(Of Long)(characterId, LocationIdColumn)
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, CharacterIdColumn, characterId, LocationIdColumn)
     End Function
     Sub WriteLocation(characterId As Long, locationId As Long)
-        WriteColumnValue(characterId, LocationIdColumn, locationId)
+        WriteColumnValue(AddressOf Initialize, TableName, CharacterIdColumn, characterId, LocationIdColumn, locationId)
     End Sub
     Function ReadName(characterId As Long) As String
         Initialize()

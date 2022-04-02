@@ -12,11 +12,13 @@
     End Sub
 
     Public Sub WriteName(characterTypeId As Long, characterTypeName As String)
-        Initialize()
-        ExecuteNonQuery(
-            $"UPDATE [{TableName}] SET [{CharacterTypeNameColumn}]=@{CharacterTypeNameColumn} WHERE [{CharacterTypeIdColumn}]=@{CharacterTypeIdColumn};",
-            MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId),
-            MakeParameter($"@{CharacterTypeNameColumn}", characterTypeName))
+        WriteColumnValue(
+            AddressOf Initialize,
+            TableName,
+            CharacterTypeIdColumn,
+            characterTypeId,
+            CharacterTypeNameColumn,
+            characterTypeName)
     End Sub
 
     Public Sub Clear(characterTypeId As Long)
@@ -29,7 +31,6 @@
             $"DELETE FROM [{TableName}] WHERE [{CharacterTypeIdColumn}]=@{CharacterTypeIdColumn};",
             MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId))
     End Sub
-
     ReadOnly Property All As List(Of Long)
         Get
             Initialize()
@@ -48,10 +49,6 @@
     End Function
 
     Public Function ReadName(characterTypeId As Long) As String
-        Initialize()
-        Return ExecuteScalar(
-            Function(o) CStr(o),
-            $"SELECT [{CharacterTypeNameColumn}] FROM [{TableName}] WHERE [{CharacterTypeIdColumn}]=@{CharacterTypeIdColumn};",
-            MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId))
+        Return ReadColumnString(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, CharacterTypeNameColumn)
     End Function
 End Module
