@@ -24,11 +24,10 @@
             End Select
         End While
     End Sub
-
     Private Sub HandleCreateItemType()
         Dim itemTypeName = AnsiConsole.Ask("[olive]Item Type Name:[/]", "")
         If Not String.IsNullOrWhiteSpace(itemTypeName) Then
-            EditItemTypeMenu.Run(ItemTypes.CreateItemType(itemTypeName))
+            EditItemTypeMenu.Run(CreateItemType(itemTypeName))
         End If
     End Sub
 End Module

@@ -60,20 +60,21 @@
     Function ChooseDirection(title As String, canCancel As Boolean) As Direction
         Return ChooseDirection(title, AllDirections, canCancel)
     End Function
-    Friend Function ChooseItemNameFromInventory(title As String, canCancel As Boolean, inventory As Inventory) As Item
+    Friend Function ChooseItemTypeNameFromInventory(title As String, canCancel As Boolean, inventory As Inventory) As ItemType
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then
             prompt.AddChoice(NeverMindText)
         End If
-        For Each item In inventory.Items
-            prompt.AddChoices(item.Name)
+        Dim groups = inventory.Items.GroupBy(Function(x) x.ItemType.UniqueName)
+        For Each itemType In groups
+            prompt.AddChoices(itemType.Key)
         Next
         Dim answer = AnsiConsole.Prompt(prompt)
         Select Case answer
             Case NeverMindText
                 Return Nothing
             Case Else
-                Return inventory.Items.FirstOrDefault(Function(x) x.Name = answer)
+                Return FindItemTypeByUniqueName(groups.FirstOrDefault(Function(x) x.Key = answer).Key)
         End Select
     End Function
 

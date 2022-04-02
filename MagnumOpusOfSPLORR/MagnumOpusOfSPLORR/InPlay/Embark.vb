@@ -76,9 +76,16 @@
         End If
     End Sub
     Private Sub HandlePickUp(character As PlayerCharacter)
-        Dim item As Item = CommonMenu.ChooseItemNameFromInventory("Pick up what?", True, character.Location.Inventory)
-        If item IsNot Nothing Then
-            character.Inventory.Add(item)
+        Dim itemType As ItemType = CommonMenu.ChooseItemTypeNameFromInventory("Pick up what?", True, character.Location.Inventory)
+        If itemType IsNot Nothing Then
+            Dim items = character.Location.Inventory.StackedItems.Single(Function(x) x.Key = itemType).Value
+            Dim quantity = If(items.Count = 1, 1, AnsiConsole.Ask(Of Integer)("[olive]How Many?[/]", 0))
+            If quantity > 0 Then
+                items = items.Take(quantity).ToList()
+                For Each item In items
+                    character.Inventory.Add(item)
+                Next
+            End If
         End If
     End Sub
     Private Sub HandleWin(character As PlayerCharacter)

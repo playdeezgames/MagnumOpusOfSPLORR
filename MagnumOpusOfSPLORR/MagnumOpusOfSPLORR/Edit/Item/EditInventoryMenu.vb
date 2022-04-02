@@ -34,15 +34,26 @@
         End While
     End Sub
     Private Sub HandleRemoveItem(inventory As Inventory)
-        Dim item = CommonMenu.ChooseItemNameFromInventory("Remove which item?", True, inventory)
-        If item IsNot Nothing Then
-            item.Destroy()
+        Dim itemType = CommonMenu.ChooseItemTypeNameFromInventory("Remove which item?", True, inventory)
+        If itemType IsNot Nothing Then
+            Dim items = inventory.StackedItems.Single(Function(x) x.Key = itemType).Value
+            Dim quantity = If(items.Count = 1, 1, AnsiConsole.Ask(Of Integer)("[olive]How Many?[/]", 0))
+            If quantity > 0 Then
+                items = items.Take(quantity).ToList()
+                For Each item In items
+                    item.Destroy()
+                Next
+            End If
         End If
     End Sub
     Private Sub HandleAddItem(inventory As Inventory)
         Dim itemType = CommonMenu.ChooseItemType("", True)
         If itemType IsNot Nothing Then
-            Items.CreateItem(itemType, inventory)
+            Dim quantity = AnsiConsole.Ask(Of Long)("[olive]How many?[/]", 0)
+            While quantity > 0
+                Items.CreateItem(itemType, inventory)
+                quantity -= 1
+            End While
         End If
     End Sub
 End Module
