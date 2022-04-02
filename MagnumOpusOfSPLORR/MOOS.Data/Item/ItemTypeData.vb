@@ -20,11 +20,7 @@
     End Property
 
     Public Sub WriteName(itemTypeId As Long, itemTypeName As String)
-        Initialize()
-        ExecuteNonQuery(
-            $"UPDATE [{TableName}] SET [{ItemTypeNameColumn}]=@{ItemTypeNameColumn} WHERE [{ItemTypeIdColumn}]=@{ItemTypeIdColumn};",
-            MakeParameter($"@{ItemTypeIdColumn}", itemTypeId),
-            MakeParameter($"@{ItemTypeNameColumn}", itemTypeName))
+        WriteColumnValue(AddressOf Initialize, TableName, ItemTypeIdColumn, itemTypeId, ItemTypeNameColumn, itemTypeName)
     End Sub
 
     Public Sub Clear(itemTypeId As Long)
@@ -36,11 +32,7 @@
     End Sub
 
     Public Function ReadName(itemTypeId As Long) As String
-        Initialize()
-        Return ExecuteScalar(
-            Function(x) CStr(x),
-            $"SELECT [{ItemTypeNameColumn}] FROM [{TableName}] WHERE [{ItemTypeIdColumn}]=@{ItemTypeIdColumn};",
-            MakeParameter($"@{ItemTypeIdColumn}", itemTypeId))
+        Return ReadColumnString(AddressOf Initialize, TableName, ItemTypeIdColumn, itemTypeId, ItemTypeNameColumn)
     End Function
     Function Create(itemTypeName As String) As Long
         Initialize()
