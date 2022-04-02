@@ -13,4 +13,8 @@ Public Module CounterTypeExtensions
                 Throw New ArgumentOutOfRangeException
         End Select
     End Function
+    Public ReadOnly AllCounterTypes As New List(Of CounterType) From {CounterType.Movement}
+    Public Function FindCounterTypeByName(name As String) As CounterType
+        Return AllCounterTypes.Single(Function(x) x.Name = name)
+    End Function
 End Module

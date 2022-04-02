@@ -19,7 +19,7 @@
         End If
     End Sub
 
-    Private Sub ShowCounters(character As Character)
+    Friend Sub ShowCounters(character As Character)
         Dim counters = character.Counters
         If counters.Any Then
             AnsiConsole.MarkupLine($"Counters: {String.Join(", ", counters.Select(Function(x) $"{x.CounterType.Name}({x.Value})"))}")
@@ -33,6 +33,7 @@
         prompt.AddChoice(ChangeLocationText)
         prompt.AddChoice(ChangeCharacterTypeText)
         prompt.AddChoice(InventoryText)
+        prompt.AddChoice(CountersText)
         If Not character.IsPlayerCharacter Then
             prompt.AddChoice(AssignPlayerCharacterText)
         End If
@@ -59,6 +60,8 @@
                     character.SetAsPlayerCharacter()
                 Case InventoryText
                     EditInventoryMenu.Run("Character Inventory:", character.Inventory)
+                Case CountersText
+                    EditCountersMenu.Run(character)
                 Case DestroyText
                     character.Destroy()
                     done = True

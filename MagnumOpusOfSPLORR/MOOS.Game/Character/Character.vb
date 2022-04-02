@@ -38,6 +38,16 @@
             Return result
         End Get
     End Property
+
+    Public Sub SetCounter(counterType As CounterType, counterValue As Long)
+        Dim counter = Counters.SingleOrDefault(Function(x) x.CounterType = counterType)
+        If counter Is Nothing Then
+            CounterData.Create(Id, counterType, counterValue)
+        Else
+            CounterData.WriteCounterValue(counter.Id, counterValue)
+        End If
+    End Sub
+
     Property Name As String
         Get
             Return CharacterData.ReadName(Id)

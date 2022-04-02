@@ -4,6 +4,7 @@
     Friend Const ChangeNameText = "Change Name"
     Friend Const DestroyText = "Destroy"
     Friend Const InventoryText = "Inventory..."
+    Friend Const CountersText = "Counters..."
     Friend Const AddItemText = "Add Item..."
     Friend Const RemoveItemText = "Remove Item..."
     Friend Const BarriersText = "Barriers..."
