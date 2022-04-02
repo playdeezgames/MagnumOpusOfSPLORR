@@ -30,6 +30,14 @@ Public Module RNG
         End While
         Return total
     End Function
+    Function ValidateDice(diceText As String) As Boolean
+        Try
+            RollDice(diceText)
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
     Function RollDice(diceText As String) As Integer
         Dim diceSets = diceText.Split("+")
         Dim tally = 0
