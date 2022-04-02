@@ -30,7 +30,8 @@
         If Not String.IsNullOrWhiteSpace(name) Then
             Dim health = AnsiConsole.Ask(Of Long)("[olive]Health:[/]")
             Dim damageDice = CommonMenu.ChooseValidDice("Damage Dice:")
-            EditCharacterTypeMenu.Run(CreateCharacterType(name, health, damageDice))
+            Dim armorDice = CommonMenu.ChooseValidDice("Armor Dice:")
+            EditCharacterTypeMenu.Run(CreateCharacterType(name, health, damageDice, armorDice))
         End If
     End Sub
 End Module

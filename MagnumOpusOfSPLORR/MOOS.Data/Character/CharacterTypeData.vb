@@ -4,6 +4,7 @@
     Friend Const CharacterTypeNameColumn = "CharacterTypeName"
     Friend Const HealthColumn = "Health"
     Friend Const DamageDiceColumn = "DamageDice"
+    Friend Const ArmorDiceColumn = "ArmorDice"
     Friend Sub Initialize()
         ExecuteNonQuery(
             $"CREATE TABLE IF NOT EXISTS [{TableName}]
@@ -11,7 +12,8 @@
                 [{CharacterTypeIdColumn}] INTEGER PRIMARY KEY AUTOINCREMENT,
                 [{CharacterTypeNameColumn}] TEXT NOT NULL,
                 [{HealthColumn}] INT NOT NULL,
-                [{DamageDiceColumn}] TEXT NOT NULL
+                [{DamageDiceColumn}] TEXT NOT NULL,
+                [{ArmorDiceColumn}] TEXT NOT NULL
             );")
     End Sub
 
@@ -28,11 +30,15 @@
     Public Function ReadDamageDice(characterTypeId As Long) As String
         Return ReadColumnString(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, DamageDiceColumn)
     End Function
-
     Public Sub WriteDamageDice(characterTypeId As Long, damageDice As String)
         WriteColumnValue(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, DamageDiceColumn, damageDice)
     End Sub
-
+    Public Sub WriteArmorDice(characterTypeId As Long, armorDice As String)
+        WriteColumnValue(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, ArmorDiceColumn, armorDice)
+    End Sub
+    Public Function ReadArmorDice(characterTypeId As Long) As String
+        Return ReadColumnString(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, ArmorDiceColumn)
+    End Function
     Public Sub WriteHealth(characterTypeId As Long, health As Long)
         WriteColumnValue(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, HealthColumn, health)
     End Sub
@@ -60,24 +66,27 @@
         End Get
     End Property
 
-    Public Function Create(characterTypeName As String, health As Long, damageDice As String) As Long
+    Public Function Create(characterTypeName As String, health As Long, damageDice As String, armorDice As String) As Long
         Initialize()
         ExecuteNonQuery(
             $"INSERT INTO [{TableName}]
             (
                 [{CharacterTypeNameColumn}],
                 [{HealthColumn}],
-                [{DamageDiceColumn}]
+                [{DamageDiceColumn}],
+                [{ArmorDiceColumn}]
             ) 
             VALUES
             (
                 @{CharacterTypeNameColumn},
                 @{HealthColumn},
-                @{DamageDiceColumn}
+                @{DamageDiceColumn},
+                @{ArmorDiceColumn}
             );",
             MakeParameter($"@{CharacterTypeNameColumn}", characterTypeName),
             MakeParameter($"@{HealthColumn}", health),
-            MakeParameter($"@{DamageDiceColumn}", damageDice))
+            MakeParameter($"@{DamageDiceColumn}", damageDice),
+            MakeParameter($"@{ArmorDiceColumn}", armorDice))
         Return LastInsertRowId
     End Function
 

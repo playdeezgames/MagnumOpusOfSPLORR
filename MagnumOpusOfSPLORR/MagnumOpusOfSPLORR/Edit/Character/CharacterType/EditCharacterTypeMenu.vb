@@ -1,11 +1,13 @@
 ﻿Module EditCharacterTypeMenu
     Private Const ChangeHealthText = "Change Health..."
     Private Const ChangeDamageDiceText = "Change Damage Dice..."
+    Private Const ChangeArmorDiceText = "Change Armor Dice..."
     Private Sub ShowStatus(characterType As CharacterType)
         AnsiConsole.MarkupLine($"Id: {characterType.Id}")
         AnsiConsole.MarkupLine($"Name: {characterType.Name}")
         AnsiConsole.MarkupLine($"Health: {characterType.Health}")
         AnsiConsole.MarkupLine($"Damage: {characterType.DamageDice}")
+        AnsiConsole.MarkupLine($"Damage: {characterType.ArmorDice}")
     End Sub
     Private Function CreatePrompt(characterType As CharacterType) As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
@@ -13,6 +15,7 @@
         prompt.AddChoice(ChangeNameText)
         prompt.AddChoice(ChangeHealthText)
         prompt.AddChoice(ChangeDamageDiceText)
+        prompt.AddChoice(ChangeArmorDiceText)
         If characterType.CanDestroy Then
             prompt.AddChoice(DestroyText)
         End If
@@ -32,6 +35,8 @@
                     HandleChangeHealth(characterType)
                 Case ChangeDamageDiceText
                     HandleChangeDamageDice(characterType)
+                Case ChangeArmorDiceText
+                    HandleChangeArmorDice(characterType)
                 Case DestroyText
                     characterType.Destroy()
                     done = True
@@ -40,11 +45,12 @@
             End Select
         End While
     End Sub
-
+    Private Sub HandleChangeArmorDice(characterType As CharacterType)
+        characterType.ArmorDice = CommonMenu.ChooseValidDice("New Armor Dice:")
+    End Sub
     Private Sub HandleChangeDamageDice(characterType As CharacterType)
         characterType.DamageDice = CommonMenu.ChooseValidDice("New Damage Dice:")
     End Sub
-
     Private Sub HandleChangeHealth(characterType As CharacterType)
         characterType.Health = AnsiConsole.Ask(Of Long)("[olive]New Health:[/]")
     End Sub

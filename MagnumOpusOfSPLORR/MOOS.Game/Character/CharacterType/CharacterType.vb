@@ -37,6 +37,16 @@
             Return Not CharacterData.ReadForCharacterType(Id).Any
         End Get
     End Property
+
+    Public Property ArmorDice As String
+        Get
+            Return CharacterTypeData.ReadArmorDice(Id)
+        End Get
+        Set(value As String)
+            CharacterTypeData.WriteArmorDice(Id, value)
+        End Set
+    End Property
+
     Public Sub Destroy()
         If CanDestroy Then
             CharacterTypeData.Clear(Id)
