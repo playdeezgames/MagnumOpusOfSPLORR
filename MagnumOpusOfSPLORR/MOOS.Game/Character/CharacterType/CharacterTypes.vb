@@ -7,7 +7,7 @@
     Function FindCharacterTypeByUniqueName(characterTypeName As String) As CharacterType
         Return AllCharacterTypes.SingleOrDefault(Function(x) x.UniqueName = characterTypeName)
     End Function
-    Function CreateCharacterType(characterTypeName As String) As CharacterType
-        Return New CharacterType(CharacterTypeData.Create(characterTypeName))
+    Function CreateCharacterType(characterTypeName As String, health As Long) As CharacterType
+        Return New CharacterType(CharacterTypeData.Create(characterTypeName, health))
     End Function
 End Module

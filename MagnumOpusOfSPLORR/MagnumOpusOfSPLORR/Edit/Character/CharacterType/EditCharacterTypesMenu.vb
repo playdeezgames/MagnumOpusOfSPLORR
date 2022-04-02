@@ -28,7 +28,8 @@
     Private Sub HandleCreateCharacterType()
         Dim name = AnsiConsole.Ask("[olive]New Character Type Name:[/]", "")
         If Not String.IsNullOrWhiteSpace(name) Then
-            EditCharacterTypeMenu.Run(CreateCharacterType(name))
+            Dim health = AnsiConsole.Ask(Of Long)("[olive]Health:[/]")
+            EditCharacterTypeMenu.Run(CreateCharacterType(name, health))
         End If
     End Sub
 End Module

@@ -2,12 +2,14 @@
     Friend Const TableName = "CharacterTypes"
     Friend Const CharacterTypeIdColumn = "CharacterTypeId"
     Friend Const CharacterTypeNameColumn = "CharacterTypeName"
+    Friend Const HealthColumn = "Health"
     Friend Sub Initialize()
         ExecuteNonQuery(
             $"CREATE TABLE IF NOT EXISTS [{TableName}]
             (
                 [{CharacterTypeIdColumn}] INTEGER PRIMARY KEY AUTOINCREMENT,
-                [{CharacterTypeNameColumn}] TEXT NOT NULL
+                [{CharacterTypeNameColumn}] TEXT NOT NULL,
+                [{HealthColumn}] INT NOT NULL
             );")
     End Sub
 
@@ -20,6 +22,14 @@
             CharacterTypeNameColumn,
             characterTypeName)
     End Sub
+
+    Public Sub WriteHealth(characterTypeId As Long, health As Long)
+        WriteColumnValue(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, HealthColumn, health)
+    End Sub
+
+    Public Function ReadHealth(characterTypeId As Long) As Long?
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, HealthColumn)
+    End Function
 
     Public Sub Clear(characterTypeId As Long)
         Initialize()
@@ -40,11 +50,21 @@
         End Get
     End Property
 
-    Public Function Create(characterTypeName As String) As Long
+    Public Function Create(characterTypeName As String, health As Long) As Long
         Initialize()
         ExecuteNonQuery(
-            $"INSERT INTO [{TableName}]([{CharacterTypeNameColumn}]) VALUES(@{CharacterTypeNameColumn});",
-            MakeParameter($"@{CharacterTypeNameColumn}", characterTypeName))
+            $"INSERT INTO [{TableName}]
+            (
+                [{CharacterTypeNameColumn}],
+                [{HealthColumn}]
+            ) 
+            VALUES
+            (
+                @{CharacterTypeNameColumn},
+                @{HealthColumn}
+            );",
+            MakeParameter($"@{CharacterTypeNameColumn}", characterTypeName),
+            MakeParameter($"@{HealthColumn}", health))
         Return LastInsertRowId
     End Function
 

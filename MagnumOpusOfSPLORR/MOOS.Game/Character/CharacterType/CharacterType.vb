@@ -16,6 +16,14 @@
             CharacterTypeData.WriteName(Id, value)
         End Set
     End Property
+    Property Health As Long
+        Get
+            Return CharacterTypeData.ReadHealth(Id).Value
+        End Get
+        Set(value As Long)
+            CharacterTypeData.WriteHealth(Id, value)
+        End Set
+    End Property
     ReadOnly Property CanDestroy As Boolean
         Get
             Return Not CharacterData.ReadForCharacterType(Id).Any

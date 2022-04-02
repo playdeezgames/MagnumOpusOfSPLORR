@@ -64,7 +64,7 @@ Public Module Game
         Directions.CreateDirection("west")
     End Sub
     Private Sub CreatePlayerCharacter()
-        Dim characterType = CharacterTypes.CreateCharacterType("PC")
+        Dim characterType = CharacterTypes.CreateCharacterType("PC", 10)
         Dim location = RNG.FromList(Locations.AllLocations.Where(Function(x) x.Routes.Count = 1 AndAlso Not x.IsWinningLocation).ToList)
         Dim character = Characters.CreateCharacter("Tagon", location, characterType)
         character.SetAsPlayerCharacter()
