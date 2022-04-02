@@ -18,10 +18,16 @@
                 Case GoBackText
                     done = True
                 Case CreateDirectionText
-                    EditDirectionMenu.Run(Directions.CreateDirection("New Direction"))
+                    HandleCreateDirection()
                 Case Else
                     EditDirectionMenu.Run(FindDirectionByUniqueName(answer))
             End Select
         End While
+    End Sub
+    Private Sub HandleCreateDirection()
+        Dim name = AnsiConsole.Ask("[olive]New Direction Name:[/]", "")
+        If Not String.IsNullOrEmpty(name) Then
+            EditDirectionMenu.Run(Directions.CreateDirection(name))
+        End If
     End Sub
 End Module

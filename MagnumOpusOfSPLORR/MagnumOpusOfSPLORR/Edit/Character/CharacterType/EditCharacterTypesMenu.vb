@@ -26,6 +26,9 @@
     End Sub
 
     Private Sub HandleCreateCharacterType()
-        EditCharacterTypeMenu.Run(CreateCharacterType("New Character Type"))
+        Dim name = AnsiConsole.Ask("[olive]New Character Type Name:[/]", "")
+        If Not String.IsNullOrWhiteSpace(name) Then
+            EditCharacterTypeMenu.Run(CreateCharacterType(name))
+        End If
     End Sub
 End Module

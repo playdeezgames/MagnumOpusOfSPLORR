@@ -27,6 +27,9 @@
     Private Sub HandleCreateCharacter()
         Dim location = ChooseLocation("What Location?", False)
         Dim characterType = ChooseCharacterType("What Character Type?", False)
-        EditCharacterMenu.Run(Characters.CreateCharacter("New Character", location, characterType))
+        Dim name = AnsiConsole.Ask("[olive]New Character Name:[/]", "")
+        If Not String.IsNullOrWhiteSpace(name) Then
+            EditCharacterMenu.Run(Characters.CreateCharacter(name, location, characterType))
+        End If
     End Sub
 End Module
