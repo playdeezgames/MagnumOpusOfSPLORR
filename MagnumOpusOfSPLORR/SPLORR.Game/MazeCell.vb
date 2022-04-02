@@ -17,7 +17,7 @@
         _neighbors.TryGetValue(direction, cell)
         Return cell
     End Function
-    Friend Function GetDoor(direction As TDirection) As MazeDoor
+    Function GetDoor(direction As TDirection) As MazeDoor
         Dim door As MazeDoor = Nothing
         _doors.TryGetValue(direction, door)
         Return door

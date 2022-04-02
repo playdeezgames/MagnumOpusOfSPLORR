@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 
-Module RNG
+Public Module RNG
     Private ReadOnly random As New Random
     Function FromGenerator(Of TGenerated)(table As Dictionary(Of TGenerated, Integer)) As TGenerated
         Dim generated = random.Next(table.Values.Sum)
@@ -34,7 +34,7 @@ Module RNG
         Return items(FromRange(0, items.Count - 1))
     End Function
 End Module
-Module DictionaryExtensions
+Public Module DictionaryExtensions
     <Extension()>
     Function CombineGenerator(first As Dictionary(Of Integer, Integer), second As Dictionary(Of Integer, Integer)) As Dictionary(Of Integer, Integer)
         Dim result As New Dictionary(Of Integer, Integer)

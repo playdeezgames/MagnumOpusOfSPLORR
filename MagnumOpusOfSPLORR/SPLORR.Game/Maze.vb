@@ -33,7 +33,7 @@
             cell.Reset()
         Next
     End Sub
-    Friend Sub Generate()
+    Sub Generate()
         Reset()
         Dim cell = GetCell(RNG.FromRange(0, CInt(Columns) - 1), RNG.FromRange(0, CInt(Rows) - 1))
         Dim inside As New List(Of MazeCell(Of TDirection)) From {cell}
