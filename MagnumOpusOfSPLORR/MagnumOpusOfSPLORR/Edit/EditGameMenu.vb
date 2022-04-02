@@ -4,7 +4,6 @@
     Private Const DirectionsText = "Directions..."
     Private Const ItemTypesText = "Item Types..."
     Private Const CharacterTypesText = "Character Types..."
-
     Sub Run()
         Dim done = False
         While Not done

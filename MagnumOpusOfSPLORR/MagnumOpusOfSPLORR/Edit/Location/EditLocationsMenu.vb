@@ -18,11 +18,16 @@
                 Case GoBackText
                     done = True
                 Case CreateLocationText
-                    EditLocationMenu.Run(CreateLocation("New Location"))
+                    HandleCreateLocation()
                 Case Else
                     EditLocationMenu.Run(FindLocationByUniqueName(answer))
             End Select
         End While
-
+    End Sub
+    Private Sub HandleCreateLocation()
+        Dim name = AnsiConsole.Ask("[olive]New Location Name:[/]", "")
+        If Not String.IsNullOrWhiteSpace(name) Then
+            EditLocationMenu.Run(CreateLocation(name))
+        End If
     End Sub
 End Module

@@ -15,10 +15,12 @@
     End Function
     Sub Purge()
         Initialize()
+        CharacterInventoryData.Initialize()
+        LocationInventoryData.Initialize()
         Dim inventoryIds = ExecuteReader(
             Function(reader) CLng(reader(InventoryIdColumn)),
             $"SELECT 
-                [{InventoryIdColumn}] 
+                i.[{InventoryIdColumn}] 
             FROM 
                 [{TableName}] i 
                 LEFT JOIN [{CharacterInventoryData.TableName}] c ON c.[{CharacterInventoryData.InventoryIdColumn}]=i.[{InventoryIdColumn}]
