@@ -72,8 +72,4 @@ Public Module Game
     Sub Finish()
         Store.ShutDown()
     End Sub
-    Public Event PlaySfx As Action(Of Sfx)
-    Sub Play(sfx As Sfx)
-        RaiseEvent PlaySfx(sfx)
-    End Sub
 End Module

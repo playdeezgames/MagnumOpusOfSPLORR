@@ -93,7 +93,7 @@ Module Program
     End Function
 
     Sub Main(args As String())
-        AddHandler Game.PlaySfx, AddressOf HandleSfx
+        AddHandler SfxPlayer.PlaySfx, AddressOf HandleSfx
         Console.Title = "Magnum Opus of SPLORR!!"
         Welcome()
         MainMenu()
