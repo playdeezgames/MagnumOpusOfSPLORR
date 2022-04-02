@@ -24,6 +24,14 @@
             CharacterTypeData.WriteHealth(Id, value)
         End Set
     End Property
+    Property DamageDice As String
+        Get
+            Return CharacterTypeData.ReadDamageDice(Id)
+        End Get
+        Set(value As String)
+            CharacterTypeData.WriteDamageDice(Id, value)
+        End Set
+    End Property
     ReadOnly Property CanDestroy As Boolean
         Get
             Return Not CharacterData.ReadForCharacterType(Id).Any

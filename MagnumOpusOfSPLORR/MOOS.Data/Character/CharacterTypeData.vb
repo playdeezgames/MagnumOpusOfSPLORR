@@ -3,13 +3,15 @@
     Friend Const CharacterTypeIdColumn = "CharacterTypeId"
     Friend Const CharacterTypeNameColumn = "CharacterTypeName"
     Friend Const HealthColumn = "Health"
+    Friend Const DamageDiceColumn = "DamageDice"
     Friend Sub Initialize()
         ExecuteNonQuery(
             $"CREATE TABLE IF NOT EXISTS [{TableName}]
             (
                 [{CharacterTypeIdColumn}] INTEGER PRIMARY KEY AUTOINCREMENT,
                 [{CharacterTypeNameColumn}] TEXT NOT NULL,
-                [{HealthColumn}] INT NOT NULL
+                [{HealthColumn}] INT NOT NULL,
+                [{DamageDiceColumn}] TEXT NOT NULL
             );")
     End Sub
 
@@ -21,6 +23,14 @@
             characterTypeId,
             CharacterTypeNameColumn,
             characterTypeName)
+    End Sub
+
+    Public Function ReadDamageDice(characterTypeId As Long) As String
+        Return ReadColumnString(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, DamageDiceColumn)
+    End Function
+
+    Public Sub WriteDamageDice(characterTypeId As Long, damageDice As String)
+        WriteColumnValue(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, DamageDiceColumn, damageDice)
     End Sub
 
     Public Sub WriteHealth(characterTypeId As Long, health As Long)
@@ -50,21 +60,24 @@
         End Get
     End Property
 
-    Public Function Create(characterTypeName As String, health As Long) As Long
+    Public Function Create(characterTypeName As String, health As Long, damageDice As String) As Long
         Initialize()
         ExecuteNonQuery(
             $"INSERT INTO [{TableName}]
             (
                 [{CharacterTypeNameColumn}],
-                [{HealthColumn}]
+                [{HealthColumn}],
+                [{DamageDiceColumn}]
             ) 
             VALUES
             (
                 @{CharacterTypeNameColumn},
-                @{HealthColumn}
+                @{HealthColumn},
+                @{DamageDiceColumn}
             );",
             MakeParameter($"@{CharacterTypeNameColumn}", characterTypeName),
-            MakeParameter($"@{HealthColumn}", health))
+            MakeParameter($"@{HealthColumn}", health),
+            MakeParameter($"@{DamageDiceColumn}", damageDice))
         Return LastInsertRowId
     End Function
 

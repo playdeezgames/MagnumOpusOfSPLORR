@@ -94,4 +94,11 @@
                 Return FindItemTypeByUniqueName(answer)
         End Select
     End Function
+    Friend Function ChooseValidDice(title As String) As String
+        Dim damageDice As String
+        Do
+            damageDice = AnsiConsole.Ask(Of String)($"[olive]{title}[/]")
+        Loop Until RNG.ValidateDice(damageDice)
+        Return damageDice
+    End Function
 End Module
