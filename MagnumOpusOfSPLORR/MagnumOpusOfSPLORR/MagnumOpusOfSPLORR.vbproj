@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Spectre.Console" Version="0.43.0" />
+    <PackageReference Include="Spectre.Console" Version="0.44.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +41,7 @@
     <Import Include="MOOS.Data" />
     <Import Include="MOOS.Game" />
     <Import Include="Spectre.Console" />
+    <Import Include="SPLORR.Data" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>MOOS.Data</RootNamespace>
+    <RootNamespace>SPLORR.Data</RootNamespace>
     <TargetFramework>netstandard2.1</TargetFramework>
     <OptionStrict>On</OptionStrict>
   </PropertyGroup>
@@ -20,18 +20,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\SPLORR.Data\SPLORR.Data.vbproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Utility\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Import Include="SPLORR.Data" />
   </ItemGroup>
 
 </Project>

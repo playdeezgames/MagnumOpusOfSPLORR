@@ -82,20 +82,20 @@ Public Module Store
         End If
         Return Nothing
     End Function
-    Friend Function ReadColumnValue(Of TColumn As Structure)(initializer As Action, tableName As String, idColumnName As String, idColumnValue As Long, columnName As String) As TColumn?
+    Public Function ReadColumnValue(Of TColumn As Structure)(initializer As Action, tableName As String, idColumnName As String, idColumnValue As Long, columnName As String) As TColumn?
         initializer()
         Return ExecuteScalar(Of TColumn)(
             $"SELECT [{columnName}] FROM [{tableName}] WHERE [{idColumnName}]=@{idColumnName};",
             MakeParameter($"@{idColumnName}", idColumnValue))
     End Function
-    Friend Function ReadColumnString(initializer As Action, tableName As String, idColumnName As String, idColumnValue As Long, columnName As String) As String
+    Public Function ReadColumnString(initializer As Action, tableName As String, idColumnName As String, idColumnValue As Long, columnName As String) As String
         initializer()
         Return ExecuteScalar(
             Function(o) CStr(o),
             $"SELECT [{columnName}] FROM [{tableName}] WHERE [{idColumnName}]=@{idColumnName};",
             MakeParameter($"@{idColumnName}", idColumnValue))
     End Function
-    Friend Sub WriteColumnValue(Of TColumn)(initializer As Action, tableName As String, idColumnName As String, idColumnValue As Long, columnName As String, columnValue As TColumn)
+    Public Sub WriteColumnValue(Of TColumn)(initializer As Action, tableName As String, idColumnName As String, idColumnValue As Long, columnName As String, columnValue As TColumn)
         initializer()
         ExecuteNonQuery(
             $"UPDATE 

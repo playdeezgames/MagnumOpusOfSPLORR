@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Import Include="MOOS.Data" />
+    <Import Include="SPLORR.Data" />
   </ItemGroup>
 
 </Project>
