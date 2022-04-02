@@ -21,10 +21,15 @@
             Return Not CharacterData.ReadForCharacterType(Id).Any
         End Get
     End Property
-
     Public Sub Destroy()
         If CanDestroy Then
             CharacterTypeData.Clear(Id)
         End If
     End Sub
+    Public Shared Operator =(first As CharacterType, second As CharacterType) As Boolean
+        Return first.Id = second.Id
+    End Operator
+    Public Shared Operator <>(first As CharacterType, second As CharacterType) As Boolean
+        Return first.Id <> second.Id
+    End Operator
 End Class

@@ -16,4 +16,10 @@
             CounterData.WriteCounterValue(Id, value)
         End Set
     End Property
+    Public Shared Operator =(first As Counter, second As Counter) As Boolean
+        Return first.Id = second.Id
+    End Operator
+    Public Shared Operator <>(first As Counter, second As Counter) As Boolean
+        Return first.Id <> second.Id
+    End Operator
 End Class
