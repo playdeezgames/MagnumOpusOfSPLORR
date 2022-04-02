@@ -15,12 +15,9 @@
             );")
     End Sub
     Function Read(locationId As Long) As Long?
-        Initialize()
-        Return ExecuteScalar(Of Long)(
-            $"SELECT [{InventoryIdColumn}] FROM [{TableName}] WHERE [{LocationIdColumn}]=@{LocationIdColumn};",
-            MakeParameter($"@{LocationIdColumn}", locationId))
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, LocationIdColumn, locationId, InventoryIdColumn)
     End Function
-    Sub Write(locationId As Long, inventoryId As Long)
+    Sub Write(locationId As Long, inventoryId As Long) 'TODO: this is a REPLACE
         Initialize()
         ExecuteNonQuery(
             $"REPLACE INTO [{TableName}]([{LocationIdColumn}],[{InventoryIdColumn}]) VALUES (@{LocationIdColumn},@{InventoryIdColumn});",

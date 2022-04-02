@@ -18,11 +18,7 @@
         Return LastInsertRowId
     End Function
     Public Sub WriteName(directionId As Long, directionName As String)
-        Initialize()
-        ExecuteNonQuery(
-            $"UPDATE [{TableName}] SET [{DirectionNameColumn}]=@{DirectionNameColumn} WHERE [{DirectionIdColumn}]=@{DirectionIdColumn};",
-            MakeParameter($"@{DirectionIdColumn}", directionId),
-            MakeParameter($"@{DirectionNameColumn}", directionName))
+        WriteColumnValue(AddressOf Initialize, TableName, DirectionIdColumn, directionId, DirectionNameColumn, directionName)
     End Sub
     Public Sub Clear(directionId As Long)
         Initialize()
@@ -39,16 +35,7 @@
         End Get
     End Property
     Function ReadName(directionId As Long) As String
-        Initialize()
-        Return ExecuteScalar(
-            Function(x) CStr(x),
-            $"SELECT 
-                [{DirectionNameColumn}] 
-            FROM 
-                [{TableName}] 
-            WHERE 
-                [{DirectionIdColumn}]=@{DirectionIdColumn};",
-            MakeParameter($"@{DirectionIdColumn}", directionId))
+        Return ReadColumnString(AddressOf Initialize, TableName, DirectionIdColumn, directionId, DirectionNameColumn)
     End Function
     Function ReadForName(directionName As String) As List(Of Long)
         Initialize()

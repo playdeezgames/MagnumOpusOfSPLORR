@@ -33,18 +33,10 @@
         End Get
     End Property
     Function ReadName(locationId As Long) As String
-        Initialize()
-        Return ExecuteScalar(
-            Function(x) CStr(x),
-            $"SELECT [{LocationNameColumn}] FROM [{TableName}] WHERE [{LocationIdColumn}]=@{LocationIdColumn};",
-            MakeParameter($"@{LocationIdColumn}", locationId))
+        Return ReadColumnString(AddressOf Initialize, TableName, LocationIdColumn, locationId, LocationNameColumn)
     End Function
     Sub WriteName(locationId As Long, locationName As String)
-        Initialize()
-        ExecuteNonQuery(
-            $"UPDATE [{TableName}] SET [{LocationNameColumn}]=@{LocationNameColumn} WHERE [{LocationIdColumn}]=@{LocationIdColumn};",
-            MakeParameter($"@{LocationIdColumn}", locationId),
-            MakeParameter($"@{LocationNameColumn}", locationName))
+        WriteColumnValue(AddressOf Initialize, TableName, LocationIdColumn, locationId, LocationNameColumn, locationName)
     End Sub
     Sub Clear(locationId As Long)
         Initialize()

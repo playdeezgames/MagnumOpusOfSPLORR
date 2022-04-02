@@ -56,59 +56,36 @@
     End Property
 
     Public Function ReadItemType(barrierId As Long) As Long?
-        Initialize()
-        Return ExecuteScalar(Of Long)(
-            $"SELECT [{ItemTypeIdColumn}] FROM [{TableName}] WHERE [{BarrierIdColumn}]=@{BarrierIdColumn};",
-            MakeParameter($"@{BarrierIdColumn}", barrierId))
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, BarrierIdColumn, barrierId, ItemTypeIdColumn)
     End Function
 
     Public Sub WriteItemType(barrierId As Long, itemTypeId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"UPDATE [{TableName}] SET [{ItemTypeIdColumn}]=@{ItemTypeIdColumn} WHERE [{BarrierIdColumn}]=@{BarrierIdColumn};",
-            MakeParameter($"@{BarrierIdColumn}", barrierId),
-            MakeParameter($"@{ItemTypeIdColumn}", itemTypeId))
+        WriteColumnValue(AddressOf Initialize, TableName, BarrierIdColumn, barrierId, ItemTypeIdColumn, itemTypeId)
     End Sub
 
     Public Function ReadDestroysItem(barrierId As Long) As Boolean?
-        Dim result = ExecuteScalar(Of Long)(
-            $"SELECT [{DestroyItemColumn}] FROM [{TableName}] WHERE [{BarrierIdColumn}]=@{BarrierIdColumn};",
-            MakeParameter($"@{BarrierIdColumn}", barrierId))
+        Dim result = ReadColumnValue(Of Long)(AddressOf Initialize, TableName, BarrierIdColumn, barrierId, DestroyItemColumn)
         Return If(result.HasValue, CBool(result.Value), Nothing)
     End Function
 
     Public Sub WriteDestroysItem(barrierId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"UPDATE [{TableName}] SET [{DestroyItemColumn}]=1 WHERE [{BarrierIdColumn}]=@{BarrierIdColumn};",
-            MakeParameter($"@{BarrierIdColumn}", barrierId))
+        WriteColumnValue(Of Long)(AddressOf Initialize, TableName, BarrierIdColumn, barrierId, DestroyItemColumn, 1)
     End Sub
 
     Public Sub ClearDestroysItem(barrierId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"UPDATE [{TableName}] SET [{DestroyItemColumn}]=0 WHERE [{BarrierIdColumn}]=@{BarrierIdColumn};",
-            MakeParameter($"@{BarrierIdColumn}", barrierId))
+        WriteColumnValue(Of Long)(AddressOf Initialize, TableName, BarrierIdColumn, barrierId, DestroyItemColumn, 0)
     End Sub
 
     Public Function ReadSelfDestructs(barrierId As Long) As Boolean?
-        Dim result = ExecuteScalar(Of Long)(
-            $"SELECT [{SelfDestructsColumn}] FROM [{TableName}] WHERE [{BarrierIdColumn}]=@{BarrierIdColumn};",
-            MakeParameter($"@{BarrierIdColumn}", barrierId))
+        Dim result = ReadColumnValue(Of Long)(AddressOf Initialize, TableName, BarrierIdColumn, barrierId, SelfDestructsColumn)
         Return If(result.HasValue, CBool(result.Value), Nothing)
     End Function
 
     Public Sub WriteSelfDestructs(barrierId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"UPDATE [{TableName}] SET [{SelfDestructsColumn}]=1 WHERE [{BarrierIdColumn}]=@{BarrierIdColumn};",
-            MakeParameter($"@{BarrierIdColumn}", barrierId))
+        WriteColumnValue(Of Long)(AddressOf Initialize, TableName, BarrierIdColumn, barrierId, SelfDestructsColumn, 1)
     End Sub
 
     Public Sub ClearSelfDestructs(barrierId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"UPDATE [{TableName}] SET [{SelfDestructsColumn}]=0 WHERE [{BarrierIdColumn}]=@{BarrierIdColumn};",
-            MakeParameter($"@{BarrierIdColumn}", barrierId))
+        WriteColumnValue(Of Long)(AddressOf Initialize, TableName, BarrierIdColumn, barrierId, SelfDestructsColumn, 0)
     End Sub
 End Module
