@@ -43,23 +43,11 @@
     End Sub
 
     Public Sub WriteInventory(itemId As Long, inventoryId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"UPDATE 
-                [{TableName}] 
-            SET 
-                [{InventoryIdColumn}]=@{InventoryIdColumn} 
-            WHERE 
-                [{ItemIdColumn}]=@{ItemIdColumn};",
-            MakeParameter($"@{ItemIdColumn}", itemId),
-            MakeParameter($"@{InventoryIdColumn}", inventoryId))
+        WriteColumnValue(AddressOf Initialize, TableName, ItemIdColumn, itemId, InventoryIdColumn, inventoryId)
     End Sub
 
     Function ReadItemType(itemId As Long) As Long?
-        Initialize()
-        Return ExecuteScalar(Of Long)(
-            $"SELECT [{ItemTypeIdColumn}] FROM [{TableName}] WHERE [{ItemIdColumn}]=@{ItemIdColumn};",
-            MakeParameter($"@{ItemIdColumn}", itemId))
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, ItemIdColumn, itemId, ItemTypeIdColumn)
     End Function
     Function ReadForInventory(inventoryId As Long) As List(Of Long)
         Initialize()
