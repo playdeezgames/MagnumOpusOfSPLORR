@@ -50,24 +50,15 @@
     End Sub
 
     Public Function ReadFromLocation(routeId As Long) As Long?
-        Initialize()
-        Return ExecuteScalar(Of Long)(
-            $"SELECT [{FromLocationIdColumn}] FROM [{TableName}] WHERE [{RouteIdColumn}] = @{RouteIdColumn};",
-            MakeParameter($"@{RouteIdColumn}", routeId))
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, RouteIdColumn, routeId, FromLocationIdColumn)
     End Function
 
     Public Function ReadToLocation(routeId As Long) As Long?
-        Initialize()
-        Return ExecuteScalar(Of Long)(
-            $"SELECT [{ToLocationIdColumn}] FROM [{TableName}] WHERE [{RouteIdColumn}] = @{RouteIdColumn};",
-            MakeParameter($"@{RouteIdColumn}", routeId))
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, RouteIdColumn, routeId, ToLocationIdColumn)
     End Function
 
     Public Function ReadDirection(routeId As Long) As Long?
-        Initialize()
-        Return ExecuteScalar(Of Long)(
-            $"SELECT [{DirectionIdColumn}] FROM [{TableName}] WHERE [{RouteIdColumn}] = @{RouteIdColumn};",
-            MakeParameter($"@{RouteIdColumn}", routeId))
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, RouteIdColumn, routeId, DirectionIdColumn)
     End Function
 
     Function ReadForLocation(locationId As Long) As List(Of Long)
