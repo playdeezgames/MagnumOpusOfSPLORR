@@ -4,7 +4,6 @@ Public Module Game
             {"east", New MazeDirection(Of String)("west", 1, 0)},
             {"south", New MazeDirection(Of String)("north", 0, 1)},
             {"west", New MazeDirection(Of String)("east", -1, 0)}}
-
     Sub NewGame(mazeColumns As Long, mazeRows As Long)
         Store.Reset()
         CreateDirections()
@@ -13,13 +12,11 @@ Public Module Game
         CreateWorld(maze)
         CreatePlayerCharacter()
     End Sub
-
     Private Function GenerateMaze(mazeColumns As Long, mazeRows As Long) As Maze(Of String)
         Dim maze As New Maze(Of String)(mazeColumns, mazeRows, walker)
         maze.Generate()
         Return maze
     End Function
-
     Private Sub CreateItemTypes()
         CreateItemType("key")
     End Sub
@@ -60,14 +57,12 @@ Public Module Game
         CreateWinningLocation()
         PlaceKey()
     End Sub
-
     Private Sub CreateDirections()
         Directions.CreateDirection("north")
         Directions.CreateDirection("east")
         Directions.CreateDirection("south")
         Directions.CreateDirection("west")
     End Sub
-
     Private Sub CreatePlayerCharacter()
         Dim characterType = CharacterTypes.CreateCharacterType("PC")
         Dim location = RNG.FromList(Locations.AllLocations.Where(Function(x) x.Routes.Count = 1 AndAlso Not x.IsWinningLocation).ToList)
