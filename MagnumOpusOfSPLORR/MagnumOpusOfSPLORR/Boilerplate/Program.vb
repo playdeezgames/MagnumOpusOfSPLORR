@@ -1,9 +1,15 @@
 Module Program
     Private Sub Welcome()
         AnsiConsole.Clear()
-        AnsiConsole.MarkupLine("[aqua]***************************[/]")
-        AnsiConsole.MarkupLine("[aqua]* Magnum Opus of SPLORR!! *[/]")
-        AnsiConsole.MarkupLine("[aqua]***************************[/]")
+        Dim figlet = New FigletText("Magnum Opus").Centered()
+        figlet.Color = Color.Aqua
+        AnsiConsole.Write(figlet)
+        figlet = New FigletText("of").Centered()
+        figlet.Color = Color.Aqua
+        AnsiConsole.Write(figlet)
+        figlet = New FigletText("SPLORR!!").Centered()
+        figlet.Color = Color.Aqua
+        AnsiConsole.Write(figlet)
         AnsiConsole.MarkupLine("[gray]A Production of TheGrumpyGameDev[/]")
         AnsiConsole.MarkupLine("[gray]...With ""help"" from his ""friends""[/]")
         Dim prompt = New SelectionPrompt(Of String) With {.Title = ""}
