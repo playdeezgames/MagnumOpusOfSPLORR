@@ -1,9 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>MagnumOpusOfSPLORR</RootNamespace>
-    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>MOOS.Player</RootNamespace>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <OptionStrict>On</OptionStrict>
   </PropertyGroup>
 
@@ -20,31 +19,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove=".itch.toml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include=".itch.toml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Spectre.Console" Version="0.44.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MOOS.Editor\MOOS.Editor.vbproj" />
     <ProjectReference Include="..\MOOS.Game\MOOS.Game.vbproj" />
-    <ProjectReference Include="..\MOOS.Player\MOOS.Player.vbproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Import Include="MOOS.Data" />
-    <Import Include="MOOS.Game" />
-    <Import Include="Spectre.Console" />
-    <Import Include="SPLORR.Data" />
-    <Import Include="SPLORR.Game" />
   </ItemGroup>
 
 </Project>

@@ -19,6 +19,10 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SPLORR.Data", "SPLORR.Data\
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SPLORR.Game", "SPLORR.Game\SPLORR.Game.vbproj", "{50F70EE5-FBE0-4E98-8016-A79E5EB0F217}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MOOS.Player", "MOOS.Player\MOOS.Player.vbproj", "{298FC57A-8532-4C39-9D93-216639CD1671}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MOOS.Editor", "MOOS.Editor\MOOS.Editor.vbproj", "{60403EC8-2457-40D4-AEFF-73EAB2EE52B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{50F70EE5-FBE0-4E98-8016-A79E5EB0F217}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50F70EE5-FBE0-4E98-8016-A79E5EB0F217}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50F70EE5-FBE0-4E98-8016-A79E5EB0F217}.Release|Any CPU.Build.0 = Release|Any CPU
+		{298FC57A-8532-4C39-9D93-216639CD1671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{298FC57A-8532-4C39-9D93-216639CD1671}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{298FC57A-8532-4C39-9D93-216639CD1671}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{298FC57A-8532-4C39-9D93-216639CD1671}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60403EC8-2457-40D4-AEFF-73EAB2EE52B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60403EC8-2457-40D4-AEFF-73EAB2EE52B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60403EC8-2457-40D4-AEFF-73EAB2EE52B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60403EC8-2457-40D4-AEFF-73EAB2EE52B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
