@@ -82,7 +82,7 @@
                     Case PickUpText
                         HandlePickUp(character)
                     Case AttackText
-                        AttackMenu.Run(character)
+                        done = AttackMenu.Run(character)
                     Case InventoryText
                         InventoryMenu.Run(character)
                     Case Else
