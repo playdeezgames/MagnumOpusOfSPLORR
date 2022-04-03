@@ -24,12 +24,12 @@
             CharacterTypeData.WriteHealth(Id, value)
         End Set
     End Property
-    Property DamageDice As String
+    Property AttackDice As String
         Get
-            Return CharacterTypeData.ReadDamageDice(Id)
+            Return CharacterTypeData.ReadAttackDice(Id)
         End Get
         Set(value As String)
-            CharacterTypeData.WriteDamageDice(Id, value)
+            CharacterTypeData.WriteAttackDice(Id, value)
         End Set
     End Property
     ReadOnly Property CanDestroy As Boolean
@@ -38,12 +38,12 @@
         End Get
     End Property
 
-    Public Property ArmorDice As String
+    Public Property DefendDice As String
         Get
-            Return CharacterTypeData.ReadArmorDice(Id)
+            Return CharacterTypeData.ReadDefendDice(Id)
         End Get
         Set(value As String)
-            CharacterTypeData.WriteArmorDice(Id, value)
+            CharacterTypeData.WriteDefendDice(Id, value)
         End Set
     End Property
 

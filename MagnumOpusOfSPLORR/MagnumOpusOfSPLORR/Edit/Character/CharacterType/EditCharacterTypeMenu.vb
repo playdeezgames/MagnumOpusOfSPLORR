@@ -6,8 +6,8 @@
         AnsiConsole.MarkupLine($"Id: {characterType.Id}")
         AnsiConsole.MarkupLine($"Name: {characterType.Name}")
         AnsiConsole.MarkupLine($"Health: {characterType.Health}")
-        AnsiConsole.MarkupLine($"Damage: {characterType.DamageDice}")
-        AnsiConsole.MarkupLine($"Damage: {characterType.ArmorDice}")
+        AnsiConsole.MarkupLine($"Damage: {characterType.AttackDice}")
+        AnsiConsole.MarkupLine($"Damage: {characterType.DefendDice}")
     End Sub
     Private Function CreatePrompt(characterType As CharacterType) As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
@@ -46,10 +46,10 @@
         End While
     End Sub
     Private Sub HandleChangeArmorDice(characterType As CharacterType)
-        characterType.ArmorDice = CommonMenu.ChooseValidDice("New Armor Dice:")
+        characterType.DefendDice = CommonMenu.ChooseValidDice("New Armor Dice:")
     End Sub
     Private Sub HandleChangeDamageDice(characterType As CharacterType)
-        characterType.DamageDice = CommonMenu.ChooseValidDice("New Damage Dice:")
+        characterType.AttackDice = CommonMenu.ChooseValidDice("New Damage Dice:")
     End Sub
     Private Sub HandleChangeHealth(characterType As CharacterType)
         characterType.Health = AnsiConsole.Ask(Of Long)("[olive]New Health:[/]")

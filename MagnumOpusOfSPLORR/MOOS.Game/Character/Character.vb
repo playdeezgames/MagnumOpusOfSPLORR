@@ -30,10 +30,10 @@
         End Get
     End Property
     Public Function RollAttack() As Integer
-        Return RNG.RollDice(CharacterType.DamageDice)
+        Return RNG.RollDice(CharacterType.AttackDice)
     End Function
     Public Function RollDefense() As Integer
-        Return RNG.RollDice(CharacterType.ArmorDice)
+        Return RNG.RollDice(CharacterType.DefendDice)
     End Function
     ReadOnly Property UniqueName As String
         Get

@@ -3,8 +3,8 @@
     Friend Const CharacterTypeIdColumn = "CharacterTypeId"
     Friend Const CharacterTypeNameColumn = "CharacterTypeName"
     Friend Const HealthColumn = "Health"
-    Friend Const DamageDiceColumn = "DamageDice"
-    Friend Const ArmorDiceColumn = "ArmorDice"
+    Friend Const AttackDiceColumn = "AttackDice"
+    Friend Const DefendDiceColumn = "DefendDice"
     Friend Sub Initialize()
         ExecuteNonQuery(
             $"CREATE TABLE IF NOT EXISTS [{TableName}]
@@ -12,8 +12,8 @@
                 [{CharacterTypeIdColumn}] INTEGER PRIMARY KEY AUTOINCREMENT,
                 [{CharacterTypeNameColumn}] TEXT NOT NULL,
                 [{HealthColumn}] INT NOT NULL,
-                [{DamageDiceColumn}] TEXT NOT NULL,
-                [{ArmorDiceColumn}] TEXT NOT NULL
+                [{AttackDiceColumn}] TEXT NOT NULL,
+                [{DefendDiceColumn}] TEXT NOT NULL
             );")
     End Sub
 
@@ -26,18 +26,17 @@
             CharacterTypeNameColumn,
             characterTypeName)
     End Sub
-
-    Public Function ReadDamageDice(characterTypeId As Long) As String
-        Return ReadColumnString(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, DamageDiceColumn)
+    Public Function ReadAttackDice(characterTypeId As Long) As String
+        Return ReadColumnString(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, AttackDiceColumn)
     End Function
-    Public Sub WriteDamageDice(characterTypeId As Long, damageDice As String)
-        WriteColumnValue(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, DamageDiceColumn, damageDice)
+    Public Sub WriteAttackDice(characterTypeId As Long, damageDice As String)
+        WriteColumnValue(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, AttackDiceColumn, damageDice)
     End Sub
-    Public Sub WriteArmorDice(characterTypeId As Long, armorDice As String)
-        WriteColumnValue(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, ArmorDiceColumn, armorDice)
+    Public Sub WriteDefendDice(characterTypeId As Long, armorDice As String)
+        WriteColumnValue(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, DefendDiceColumn, armorDice)
     End Sub
-    Public Function ReadArmorDice(characterTypeId As Long) As String
-        Return ReadColumnString(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, ArmorDiceColumn)
+    Public Function ReadDefendDice(characterTypeId As Long) As String
+        Return ReadColumnString(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, DefendDiceColumn)
     End Function
     Public Sub WriteHealth(characterTypeId As Long, health As Long)
         WriteColumnValue(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId, HealthColumn, health)
@@ -73,20 +72,20 @@
             (
                 [{CharacterTypeNameColumn}],
                 [{HealthColumn}],
-                [{DamageDiceColumn}],
-                [{ArmorDiceColumn}]
+                [{AttackDiceColumn}],
+                [{DefendDiceColumn}]
             ) 
             VALUES
             (
                 @{CharacterTypeNameColumn},
                 @{HealthColumn},
-                @{DamageDiceColumn},
-                @{ArmorDiceColumn}
+                @{AttackDiceColumn},
+                @{DefendDiceColumn}
             );",
             MakeParameter($"@{CharacterTypeNameColumn}", characterTypeName),
             MakeParameter($"@{HealthColumn}", health),
-            MakeParameter($"@{DamageDiceColumn}", damageDice),
-            MakeParameter($"@{ArmorDiceColumn}", armorDice))
+            MakeParameter($"@{AttackDiceColumn}", damageDice),
+            MakeParameter($"@{DefendDiceColumn}", armorDice))
         Return LastInsertRowId
     End Function
 
