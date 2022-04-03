@@ -1,4 +1,4 @@
-﻿Module InPlayMenu
+﻿Public Module InPlayMenu
     Private Const MainMenuText = "Main Menu"
     Private Const EndTestText = "End Test"
     Private Const GoText = "Go..."

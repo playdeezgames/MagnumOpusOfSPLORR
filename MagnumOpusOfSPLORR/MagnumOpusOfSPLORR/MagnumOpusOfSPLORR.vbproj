@@ -42,9 +42,15 @@
   <ItemGroup>
     <Import Include="MOOS.Data" />
     <Import Include="MOOS.Game" />
+    <Import Include="MOOS.Player" />
     <Import Include="Spectre.Console" />
     <Import Include="SPLORR.Data" />
     <Import Include="SPLORR.Game" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Player\" />
+    <Folder Include="Utility\" />
   </ItemGroup>
 
 </Project>

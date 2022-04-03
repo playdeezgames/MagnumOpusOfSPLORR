@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>MOOS.Player</RootNamespace>
@@ -24,6 +24,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MOOS.Game\MOOS.Game.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Import Include="MOOS.Game" />
+    <Import Include="Spectre.Console" />
+    <Import Include="SPLORR.Data" />
+    <Import Include="SPLORR.Game" />
   </ItemGroup>
 
 </Project>

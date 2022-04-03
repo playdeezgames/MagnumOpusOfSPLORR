@@ -1,14 +1,14 @@
-﻿Module CommonMenu
-    Friend Const NeverMindText = "Never Mind"
-    Friend Const GoBackText = "Go Back"
-    Friend Const ChangeNameText = "Change Name"
-    Friend Const DestroyText = "Destroy"
-    Friend Const InventoryText = "Inventory..."
-    Friend Const CountersText = "Counters..."
-    Friend Const AddItemText = "Add Item..."
-    Friend Const RemoveItemText = "Remove Item..."
-    Friend Const BarriersText = "Barriers..."
-    Friend Const RemoveText = "Remove"
+﻿Public Module CommonMenu
+    Public Const NeverMindText = "Never Mind"
+    Public Const GoBackText = "Go Back"
+    Public Const ChangeNameText = "Change Name"
+    Public Const DestroyText = "Destroy"
+    Public Const InventoryText = "Inventory..."
+    Public Const CountersText = "Counters..."
+    Public Const AddItemText = "Add Item..."
+    Public Const RemoveItemText = "Remove Item..."
+    Public Const BarriersText = "Barriers..."
+    Public Const RemoveText = "Remove"
     Friend Const OkText = "Ok"
     Function ChooseLocation(title As String, canCancel As Boolean) As Location
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
@@ -62,7 +62,7 @@
         Return ChooseDirection(title, AllDirections, canCancel)
     End Function
 
-    Friend Function ChooseEquipSlot(title As String, canCancel As Boolean) As EquipSlot
+    Public Function ChooseEquipSlot(title As String, canCancel As Boolean) As EquipSlot
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then
             prompt.AddChoice(NeverMindText)
@@ -79,7 +79,7 @@
         End Select
     End Function
 
-    Friend Function ChooseItemTypeNameFromInventory(title As String, canCancel As Boolean, inventory As Inventory) As ItemType
+    Public Function ChooseItemTypeNameFromInventory(title As String, canCancel As Boolean, inventory As Inventory) As ItemType
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then
             prompt.AddChoice(NeverMindText)
@@ -97,7 +97,7 @@
         End Select
     End Function
 
-    Friend Function ChooseItemType(title As String, canCancel As Boolean) As ItemType
+    Public Function ChooseItemType(title As String, canCancel As Boolean) As ItemType
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then
             prompt.AddChoice(NeverMindText)
@@ -113,14 +113,14 @@
                 Return FindItemTypeByUniqueName(answer)
         End Select
     End Function
-    Friend Function ChooseValidDice(title As String) As String
+    Public Function ChooseValidDice(title As String) As String
         Dim damageDice As String
         Do
             damageDice = AnsiConsole.Ask(Of String)($"[olive]{title}[/]")
         Loop Until RNG.ValidateDice(damageDice)
         Return damageDice
     End Function
-    Friend Sub OkPrompt()
+    Public Sub OkPrompt()
         Dim prompt As New SelectionPrompt(Of String) With {.Title = ""}
         prompt.AddChoice(OkText)
         AnsiConsole.Prompt(prompt)
