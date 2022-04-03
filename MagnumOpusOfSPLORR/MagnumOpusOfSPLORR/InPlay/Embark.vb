@@ -4,6 +4,7 @@
     Private Const GoText = "Go..."
     Private Const AttackText = "Attack..."
     Private Const PickUpText = "Pick Up..."
+    Private Const HealText = "Heal..."
     Private Sub ShowStatus(character As Character)
         AnsiConsole.WriteLine()
         AnsiConsole.MarkupLine("You exist!")
@@ -48,6 +49,9 @@
         If Not character.Inventory.IsEmpty Then
             prompt.AddChoice(InventoryText)
         End If
+        If character.CanHeal Then
+            prompt.AddChoice(HealText)
+        End If
         If isTest Then
             prompt.AddChoice(EndTestText)
         Else
@@ -81,6 +85,8 @@
                         MoveMenu.Run(character, character.Location.Routes)
                     Case PickUpText
                         HandlePickUp(character)
+                    Case HealText
+                        HandleHeal(character)
                     Case AttackText
                         done = AttackMenu.Run(character)
                     Case InventoryText
@@ -93,6 +99,9 @@
         If isTest Then
             Store.Load(tempfile)
         End If
+    End Sub
+    Private Sub HandleHeal(character As PlayerCharacter)
+        Throw New NotImplementedException()
     End Sub
     Private Sub HandlePickUp(character As PlayerCharacter)
         Dim itemType As ItemType = CommonMenu.ChooseItemTypeNameFromInventory("Pick up what?", True, character.Location.Inventory)

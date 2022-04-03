@@ -8,6 +8,19 @@
             Return $"{Name}(#{Id})"
         End Get
     End Property
+    ReadOnly Property CanHeal As Boolean
+        Get
+            Return Not String.IsNullOrEmpty(HealDice)
+        End Get
+    End Property
+    Property HealDice As String
+        Get
+            Return ItemTypeData.ReadHealDice(Id)
+        End Get
+        Set(value As String)
+            ItemTypeData.WriteHealDice(Id, value)
+        End Set
+    End Property
     Property Name As String
         Get
             Return ItemTypeData.ReadName(Id)

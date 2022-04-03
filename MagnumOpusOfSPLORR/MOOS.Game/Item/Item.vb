@@ -21,6 +21,11 @@
     Public Sub Destroy()
         ItemData.Clear(Id)
     End Sub
+    ReadOnly Property CanHeal As Boolean
+        Get
+            Return ItemType.CanHeal
+        End Get
+    End Property
     Public Shared Operator =(first As Item, second As Item) As Boolean
         Return first.Id = second.Id
     End Operator

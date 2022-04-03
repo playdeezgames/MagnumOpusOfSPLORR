@@ -195,7 +195,11 @@
             Return Wounds >= CharacterType.Health
         End Get
     End Property
-
+    ReadOnly Property CanHeal As Boolean
+        Get
+            Return Wounds > 0 AndAlso Inventory.Items.Any(Function(x) x.CanHeal)
+        End Get
+    End Property
     Public Shared Operator =(first As Character, second As Character) As Boolean
         Return first.Id = second.Id
     End Operator

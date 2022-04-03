@@ -2,12 +2,14 @@
     Friend Const TableName = "ItemTypes"
     Friend Const ItemTypeIdColumn = "ItemTypeId"
     Friend Const ItemTypeNameColumn = "ItemTypeName"
+    Friend Const HealDiceColumn = "HealDice"
     Friend Sub Initialize()
         ExecuteNonQuery(
             $"CREATE TABLE IF NOT EXISTS [{TableName}]
             (
                 [{ItemTypeIdColumn}] INTEGER PRIMARY KEY AUTOINCREMENT,
-                [{ItemTypeNameColumn}] TEXT NOT NULL
+                [{ItemTypeNameColumn}] TEXT NOT NULL,
+                [{HealDiceColumn}] TEXT NULL
             );")
     End Sub
     ReadOnly Property All As List(Of Long)
@@ -18,6 +20,14 @@
                 $"SELECT [{ItemTypeIdColumn}] FROM [{TableName}];")
         End Get
     End Property
+
+    Public Sub WriteHealDice(itemTypeId As Long, healDice As String)
+        WriteColumnValue(AddressOf Initialize, TableName, ItemTypeIdColumn, itemTypeId, HealDiceColumn, healDice)
+    End Sub
+
+    Public Function ReadHealDice(itemTypeId As Long) As String
+        Return ReadColumnString(AddressOf Initialize, TableName, ItemTypeIdColumn, itemTypeId, HealDiceColumn)
+    End Function
 
     Public Sub WriteName(itemTypeId As Long, itemTypeName As String)
         WriteColumnValue(AddressOf Initialize, TableName, ItemTypeIdColumn, itemTypeId, ItemTypeNameColumn, itemTypeName)
