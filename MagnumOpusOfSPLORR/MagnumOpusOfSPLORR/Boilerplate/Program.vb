@@ -12,9 +12,7 @@ Module Program
         AnsiConsole.Write(figlet)
         AnsiConsole.MarkupLine("[gray]A Production of TheGrumpyGameDev[/]")
         AnsiConsole.MarkupLine("[gray]...With ""help"" from his ""friends""[/]")
-        Dim prompt = New SelectionPrompt(Of String) With {.Title = ""}
-        prompt.AddChoice(OkText)
-        AnsiConsole.Prompt(prompt)
+        OkPrompt()
     End Sub
     Private Const NewGameText = "New Game"
     Private Const LoadGameText = "Load Game..."

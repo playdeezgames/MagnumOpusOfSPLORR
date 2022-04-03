@@ -25,9 +25,7 @@
         AnsiConsole.Clear()
         AnsiConsole.MarkupLine($"Yer dead!")
         AnsiConsole.MarkupLine($"Game over!")
-        Dim prompt As New SelectionPrompt(Of String) With {.Title = ""}
-        prompt.AddChoice(OkText)
-        AnsiConsole.Prompt(prompt)
+        OkPrompt()
     End Sub
     Private Function Strike(attacker As Character, defender As Character) As Boolean
         AnsiConsole.Clear()
@@ -52,17 +50,13 @@
     End Function
     Private Sub HandleAttack(character As Character, enemy As Character)
         Dim killedEnemy = Strike(character, enemy)
-        Dim prompt As New SelectionPrompt(Of String) With {.Title = ""}
-        prompt.AddChoice(OkText)
-        AnsiConsole.Prompt(prompt)
+        OkPrompt()
         If Not killedEnemy Then
             HandleCounterAttack(character, enemy)
         End If
     End Sub
     Private Sub HandleCounterAttack(character As Character, enemy As Character)
         Strike(enemy, character)
-        Dim prompt As New SelectionPrompt(Of String) With {.Title = ""}
-        prompt.AddChoice(OkText)
-        AnsiConsole.Prompt(prompt)
+        OkPrompt()
     End Sub
 End Module

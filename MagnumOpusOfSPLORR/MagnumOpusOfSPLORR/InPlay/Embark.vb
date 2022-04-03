@@ -86,7 +86,7 @@
                     Case PickUpText
                         HandlePickUp(character)
                     Case HealText
-                        HandleHeal(character)
+                        HealMenu.Run(character)
                     Case AttackText
                         done = AttackMenu.Run(character)
                     Case InventoryText
@@ -99,9 +99,6 @@
         If isTest Then
             Store.Load(tempfile)
         End If
-    End Sub
-    Private Sub HandleHeal(character As PlayerCharacter)
-        Throw New NotImplementedException()
     End Sub
     Private Sub HandlePickUp(character As PlayerCharacter)
         Dim itemType As ItemType = CommonMenu.ChooseItemTypeNameFromInventory("Pick up what?", True, character.Location.Inventory)
