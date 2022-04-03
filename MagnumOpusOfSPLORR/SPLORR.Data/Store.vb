@@ -91,7 +91,7 @@ Public Module Store
     Public Function ReadColumnString(initializer As Action, tableName As String, idColumnName As String, idColumnValue As Long, columnName As String) As String
         initializer()
         Return ExecuteScalar(
-            Function(o) CStr(o),
+            Function(o) If(o Is Nothing OrElse TypeOf o Is DBNull, Nothing, CStr(o)),
             $"SELECT [{columnName}] FROM [{tableName}] WHERE [{idColumnName}]=@{idColumnName};",
             MakeParameter($"@{idColumnName}", idColumnValue))
     End Function

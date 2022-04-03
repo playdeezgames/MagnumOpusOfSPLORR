@@ -1,12 +1,17 @@
 ﻿Module EditItemTypeMenu
+    Private Const ChangeHealDiceText = "Change Heal Dice..."
     Private Sub ShowStatus(itemType As ItemType)
         AnsiConsole.MarkupLine($"Id: {itemType.Id}")
         AnsiConsole.MarkupLine($"Name: {itemType.Name}")
+        If itemType.CanHeal Then
+            AnsiConsole.MarkupLine($"Heal Dice: {itemType.HealDice}")
+        End If
     End Sub
     Private Function CreatePrompt(itemType As ItemType) As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
         prompt.AddChoice(GoBackText)
         prompt.AddChoice(ChangeNameText)
+        prompt.AddChoice(ChangeHealDiceText)
         If itemType.CanDestroy Then
             prompt.AddChoice(DestroyText)
         End If
@@ -25,10 +30,15 @@
                     done = True
                 Case ChangeNameText
                     HandleChangeName(itemType)
+                Case ChangeHealDiceText
+                    HandleChangeHealDice(itemType)
                 Case Else
                     Throw New NotImplementedException
             End Select
         End While
+    End Sub
+    Private Sub HandleChangeHealDice(itemType As ItemType)
+        itemType.HealDice = AnsiConsole.Ask("[olive]Heal Dice:[/]", "")
     End Sub
     Private Sub HandleChangeName(itemType As ItemType)
         Dim newName = AnsiConsole.Ask(Of String)("New Item Type Name:")
