@@ -29,6 +29,12 @@
             Return Id = PlayerData.Read.Value
         End Get
     End Property
+    Public Function RollAttack() As Integer
+        Return RNG.RollDice(CharacterType.DamageDice)
+    End Function
+    Public Function RollDefense() As Integer
+        Return RNG.RollDice(CharacterType.ArmorDice)
+    End Function
     ReadOnly Property UniqueName As String
         Get
             Dim result = $"{Name}(#{Id})"
@@ -38,6 +44,12 @@
             Return result
         End Get
     End Property
+    Public Sub Kill()
+        For Each item In Inventory.Items
+            Location.Inventory.Add(item)
+        Next
+        Destroy()
+    End Sub
     Public Sub SetCounter(counterType As CounterType, counterValue As Long)
         Dim counter = Counters.SingleOrDefault(Function(x) x.CounterType = counterType)
         If counter Is Nothing Then
@@ -123,6 +135,13 @@
             CharacterData.WriteWounds(Id, value)
         End Set
     End Property
+
+    Public ReadOnly Property IsDead As Boolean
+        Get
+            Return Wounds >= CharacterType.Health
+        End Get
+    End Property
+
     Public Shared Operator =(first As Character, second As Character) As Boolean
         Return first.Id = second.Id
     End Operator

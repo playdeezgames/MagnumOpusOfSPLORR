@@ -2,19 +2,33 @@
     Private Const MainMenuText = "Main Menu"
     Private Const EndTestText = "End Test"
     Private Const GoText = "Go..."
+    Private Const AttackText = "Attack..."
     Private Const PickUpText = "Pick Up..."
     Private Sub ShowStatus(character As Character)
         AnsiConsole.WriteLine()
         AnsiConsole.MarkupLine("You exist!")
         Dim location = character.Location
         AnsiConsole.MarkupLine($"Location: {location.Name}")
-        Dim routes = location.Routes
-        If routes.Any Then
-            AnsiConsole.MarkupLine($"Exits: {String.Join(", ", routes.Select(Function(r) r.Direction.Name))}")
+        ShowRoutes(location)
+        ShowInventory(location)
+        ShowCharacters(character)
+    End Sub
+    Private Sub ShowCharacters(character As Character)
+        Dim characters = character.Location.Enemies(character)
+        If characters.Any Then
+            AnsiConsole.MarkupLine($"Enemies: {String.Join(", ", characters.Select(Function(c) $"{c.Name}"))}")
         End If
+    End Sub
+    Private Sub ShowInventory(location As Location)
         Dim locationItemStacks = location.Inventory.StackedItems
         If locationItemStacks.Any Then
             AnsiConsole.MarkupLine($"Items: {String.Join(", ", locationItemStacks.Select(Function(s) $"{s.Key.Name}(x{s.Value.Count})"))}")
+        End If
+    End Sub
+    Private Sub ShowRoutes(location As Location)
+        Dim routes = location.Routes
+        If routes.Any Then
+            AnsiConsole.MarkupLine($"Exits: {String.Join(", ", routes.Select(Function(r) r.Direction.Name))}")
         End If
     End Sub
     Private Function CreatePrompt(character As Character, isTest As Boolean) As SelectionPrompt(Of String)
@@ -24,6 +38,9 @@
                 }
         If character.Location.Routes.Any Then
             prompt.AddChoice(GoText)
+        End If
+        If character.Location.Enemies(character).Any Then
+            prompt.AddChoice(AttackText)
         End If
         If Not character.Location.Inventory.IsEmpty Then
             prompt.AddChoice(PickUpText)
@@ -64,6 +81,8 @@
                         MoveMenu.Run(character, character.Location.Routes)
                     Case PickUpText
                         HandlePickUp(character)
+                    Case AttackText
+                        AttackMenu.Run(character)
                     Case InventoryText
                         InventoryMenu.Run(character)
                     Case Else

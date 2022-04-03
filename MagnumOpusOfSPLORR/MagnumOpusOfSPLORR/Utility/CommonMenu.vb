@@ -9,6 +9,7 @@
     Friend Const RemoveItemText = "Remove Item..."
     Friend Const BarriersText = "Barriers..."
     Friend Const RemoveText = "Remove"
+    Friend Const OkText = "Ok"
     Function ChooseLocation(title As String, canCancel As Boolean) As Location
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then

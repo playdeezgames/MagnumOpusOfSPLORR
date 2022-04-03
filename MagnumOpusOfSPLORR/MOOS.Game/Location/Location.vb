@@ -29,6 +29,9 @@
             Return CharacterData.ReadForLocation(Id).Select(Function(x) New Character(x)).ToList
         End Get
     End Property
+    Function Enemies(character As Character) As List(Of Character)
+        Return Characters.Where(Function(x) x <> character).ToList
+    End Function
     ReadOnly Property Routes As List(Of Route)
         Get
             Return RouteData.ReadForLocation(Id).Select(Function(id) New Route(id)).ToList
