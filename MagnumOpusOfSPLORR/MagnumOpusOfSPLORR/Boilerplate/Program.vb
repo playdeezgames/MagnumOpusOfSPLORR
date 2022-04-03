@@ -55,9 +55,9 @@ Module Program
                 Case QuitText
                     done = ConfirmQuit()
                 Case EmbarkText
-                    Embark.Run(False)
+                    InPlayMenu.Run(False)
                 Case TestText
-                    Embark.Run(True)
+                    InPlayMenu.Run(True)
             End Select
         End While
         Play("L500;C4;L250;G3;G3;L500;G#3;G3;R500;B3;C4;R500")
