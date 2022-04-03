@@ -29,29 +29,29 @@
         prompt.AddChoice(OkText)
         AnsiConsole.Prompt(prompt)
     End Sub
-    Private Function KillEnemy(character As Character, enemy As Character) As Boolean
+    Private Function Strike(attacker As Character, defender As Character) As Boolean
         AnsiConsole.Clear()
-        AnsiConsole.MarkupLine($"You attack {enemy.Name}!")
-        Dim attack = character.RollAttack()
-        AnsiConsole.MarkupLine($"You roll {attack} for attack!")
-        Dim defend = enemy.RollDefense()
-        AnsiConsole.MarkupLine($"{enemy.Name} rolls {defend} for defense!")
+        AnsiConsole.MarkupLine($"{attacker.DisplayName} {attacker.AttackVerb} {defender.DisplayName}!")
+        Dim attack = attacker.RollAttack()
+        AnsiConsole.MarkupLine($"{attacker.DisplayName} {attacker.RollVerb} {attack} for attack!")
+        Dim defend = defender.RollDefense()
+        AnsiConsole.MarkupLine($"{defender.DisplayName} {defender.RollVerb} {defend} for defense!")
         If attack > defend Then
             Dim damage = attack - defend
-            AnsiConsole.MarkupLine($"You hit for {damage} damage!")
-            enemy.Wounds += damage
-            If enemy.IsDead Then
-                AnsiConsole.MarkupLine($"You kill {enemy.Name}!")
-                enemy.Kill()
+            AnsiConsole.MarkupLine($"{attacker.DisplayName} {attacker.HitVerb} for {damage} damage!")
+            defender.Wounds += damage
+            If defender.IsDead Then
+                AnsiConsole.MarkupLine($"{attacker.DisplayName} {attacker.KillVerb} {defender.DisplayName}!")
+                defender.Kill()
                 Return True
             End If
         Else
-            AnsiConsole.MarkupLine("You miss!")
+            AnsiConsole.MarkupLine($"{attacker.DisplayName} {attacker.MissVerb}!")
         End If
         Return False
     End Function
     Private Sub HandleAttack(character As Character, enemy As Character)
-        Dim killedEnemy = KillEnemy(character, enemy)
+        Dim killedEnemy = Strike(character, enemy)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = ""}
         prompt.AddChoice(OkText)
         AnsiConsole.Prompt(prompt)
@@ -60,23 +60,7 @@
         End If
     End Sub
     Private Sub HandleCounterAttack(character As Character, enemy As Character)
-        AnsiConsole.Clear()
-        AnsiConsole.MarkupLine($"{enemy.Name} attacks you!")
-        Dim attack = enemy.RollAttack()
-        AnsiConsole.MarkupLine($"{enemy.Name} rolls {attack} for attack!")
-        Dim defend = character.RollDefense()
-        AnsiConsole.MarkupLine($"You roll {defend} for defense!")
-        If attack > defend Then
-            Dim damage = attack - defend
-            AnsiConsole.MarkupLine($"{enemy.Name} hits for {damage} damage!")
-            character.Wounds += damage
-            If character.IsDead Then
-                AnsiConsole.MarkupLine($"{enemy.Name} kills you!")
-                character.Kill()
-            End If
-        Else
-            AnsiConsole.MarkupLine($"{enemy.Name} misses!")
-        End If
+        Strike(enemy, character)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = ""}
         prompt.AddChoice(OkText)
         AnsiConsole.Prompt(prompt)

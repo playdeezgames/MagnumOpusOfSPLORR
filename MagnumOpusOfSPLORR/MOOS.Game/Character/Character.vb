@@ -66,6 +66,60 @@
             CharacterData.WriteName(Id, value)
         End Set
     End Property
+    ReadOnly Property DisplayName As String
+        Get
+            If IsPlayerCharacter Then
+                Return "You"
+            Else
+                Return Name
+            End If
+        End Get
+    End Property
+    ReadOnly Property AttackVerb As String
+        Get
+            If IsPlayerCharacter Then
+                Return "attack"
+            Else
+                Return "attacks"
+            End If
+        End Get
+    End Property
+    ReadOnly Property RollVerb As String
+        Get
+            If IsPlayerCharacter Then
+                Return "roll"
+            Else
+                Return "rolls"
+            End If
+        End Get
+    End Property
+    ReadOnly Property HitVerb As String
+        Get
+            If IsPlayerCharacter Then
+                Return "hit"
+            Else
+                Return "hits"
+            End If
+        End Get
+    End Property
+    ReadOnly Property KillVerb As String
+        Get
+            If IsPlayerCharacter Then
+                Return "kill"
+            Else
+                Return "kills"
+            End If
+        End Get
+    End Property
+    ReadOnly Property MissVerb As String
+        Get
+            If IsPlayerCharacter Then
+                Return "miss"
+            Else
+                Return "misses"
+            End If
+        End Get
+    End Property
     Public Sub SetAsPlayerCharacter()
         PlayerData.Write(Id)
     End Sub
