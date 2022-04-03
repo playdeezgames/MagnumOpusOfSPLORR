@@ -29,6 +29,24 @@
             ItemTypeData.WriteName(Id, value)
         End Set
     End Property
+    ReadOnly Property HasEquipSlot As Boolean
+        Get
+            Return EquipSlot IsNot Nothing
+        End Get
+    End Property
+    Property EquipSlot As EquipSlot
+        Get
+            Dim equipSlotId = ItemTypeEquipSlotData.Read(Id)
+            Return If(equipSlotId.HasValue, New EquipSlot(equipSlotId.Value), Nothing)
+        End Get
+        Set(value As EquipSlot)
+            If value Is Nothing Then
+                ItemTypeEquipSlotData.Clear(Id)
+            Else
+                ItemTypeEquipSlotData.Write(Id, value.Id)
+            End If
+        End Set
+    End Property
     ReadOnly Property CanDestroy As Boolean
         Get
             Return ItemData.ReadCountForItemType(Id) = 0

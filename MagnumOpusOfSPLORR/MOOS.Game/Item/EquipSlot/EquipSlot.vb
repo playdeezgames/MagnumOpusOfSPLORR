@@ -18,10 +18,16 @@
     End Property
     ReadOnly Property CanDestroy As Boolean
         Get
-            Return True
+            Return ItemTypeEquipSlotData.ReadCountForEquipSlot(Id) = 0
         End Get
     End Property
     Sub Destroy()
         EquipSlotData.Clear(Id)
     End Sub
+    Public Shared Operator =(first As EquipSlot, second As EquipSlot) As Boolean
+        Return first.Id = second.Id
+    End Operator
+    Public Shared Operator <>(first As EquipSlot, second As EquipSlot) As Boolean
+        Return first.Id <> second.Id
+    End Operator
 End Class

@@ -61,6 +61,24 @@
     Function ChooseDirection(title As String, canCancel As Boolean) As Direction
         Return ChooseDirection(title, AllDirections, canCancel)
     End Function
+
+    Friend Function ChooseEquipSlot(title As String, canCancel As Boolean) As EquipSlot
+        Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
+        If canCancel Then
+            prompt.AddChoice(NeverMindText)
+        End If
+        For Each equipSlot In AllEquipSlots
+            prompt.AddChoices(equipSlot.UniqueName)
+        Next
+        Dim answer = AnsiConsole.Prompt(prompt)
+        Select Case answer
+            Case NeverMindText
+                Return Nothing
+            Case Else
+                Return FindEquipSlotByUniqueName(answer)
+        End Select
+    End Function
+
     Friend Function ChooseItemTypeNameFromInventory(title As String, canCancel As Boolean, inventory As Inventory) As ItemType
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then
