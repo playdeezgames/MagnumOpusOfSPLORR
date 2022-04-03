@@ -9,7 +9,7 @@
       "MagnumOpusOfSPLORR/1.0.0": {
         "dependencies": {
           "MOOS.Game": "1.0.0",
-          "Spectre.Console": "0.43.0"
+          "Spectre.Console": "0.44.0"
         },
         "runtime": {
           "MagnumOpusOfSPLORR.dll": {}
@@ -32,11 +32,11 @@
           }
         }
       },
-      "Spectre.Console/0.43.0": {
+      "Spectre.Console/0.44.0": {
         "runtime": {
           "lib/net5.0/Spectre.Console.dll": {
             "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.43.0.0"
+            "fileVersion": "0.44.0.0"
           }
         }
       },
@@ -157,7 +157,8 @@
       "System.Memory/4.5.3": {},
       "MOOS.Data/1.0.0": {
         "dependencies": {
-          "Microsoft.Data.Sqlite": "6.0.3"
+          "Microsoft.Data.Sqlite": "6.0.3",
+          "SPLORR.Data": "1.0.0"
         },
         "runtime": {
           "MOOS.Data.dll": {}
@@ -165,10 +166,24 @@
       },
       "MOOS.Game/1.0.0": {
         "dependencies": {
-          "MOOS.Data": "1.0.0"
+          "MOOS.Data": "1.0.0",
+          "SPLORR.Game": "1.0.0"
         },
         "runtime": {
           "MOOS.Game.dll": {}
+        }
+      },
+      "SPLORR.Data/1.0.0": {
+        "dependencies": {
+          "Microsoft.Data.Sqlite": "6.0.3"
+        },
+        "runtime": {
+          "SPLORR.Data.dll": {}
+        }
+      },
+      "SPLORR.Game/1.0.0": {
+        "runtime": {
+          "SPLORR.Game.dll": {}
         }
       }
     }
@@ -193,12 +208,12 @@
       "path": "microsoft.data.sqlite.core/6.0.3",
       "hashPath": "microsoft.data.sqlite.core.6.0.3.nupkg.sha512"
     },
-    "Spectre.Console/0.43.0": {
+    "Spectre.Console/0.44.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-TyfzVxx3jHr1FeeI9Z6Jn6QTnP7KduV14dn9GTYc0v/t2h4L6WJ0Kc2DOnOJUlGBQ/qXK4P+HITIR/JTHcKYLg==",
-      "path": "spectre.console/0.43.0",
-      "hashPath": "spectre.console.0.43.0.nupkg.sha512"
+      "sha512": "sha512-QMpKtn5QV1j2nklqDwuRE/XwbDn5jxww+Mt5J6Jn3EeQIzaLcuLyUhCLh/mS8giN6uXbqOV1ep5HlUGxrV1ujQ==",
+      "path": "spectre.console/0.44.0",
+      "hashPath": "spectre.console.0.44.0.nupkg.sha512"
     },
     "SQLitePCLRaw.bundle_e_sqlite3/2.0.6": {
       "type": "package",
@@ -241,6 +256,16 @@
       "sha512": ""
     },
     "MOOS.Game/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SPLORR.Data/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SPLORR.Game/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
