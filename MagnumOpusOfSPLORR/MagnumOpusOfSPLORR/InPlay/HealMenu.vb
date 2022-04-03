@@ -18,6 +18,7 @@
         AnsiConsole.Clear()
         AnsiConsole.MarkupLine($"You heal {healing} wounds.")
         character.Wounds -= healing
+        character.Inventory.Items.First(Function(x) x.ItemType = itemType).Destroy()
         OkPrompt()
     End Sub
 End Module
