@@ -107,4 +107,10 @@ Public Module Store
             MakeParameter($"@{idColumnName}", idColumnValue),
             MakeParameter($"@{columnName}", columnValue))
     End Sub
+    Function ReadAllIds(initializer As Action, tableName As String, idColumnName As String) As List(Of Long)
+        initializer()
+        Return ExecuteReader(
+            Function(reader) CLng(reader($"{idColumnName}")),
+            $"SELECT [{idColumnName}] FROM [{tableName}]")
+    End Function
 End Module

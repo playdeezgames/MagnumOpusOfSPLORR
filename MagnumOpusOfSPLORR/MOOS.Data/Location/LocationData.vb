@@ -26,10 +26,7 @@
     End Function
     ReadOnly Property All As List(Of Long)
         Get
-            Initialize()
-            Return ExecuteReader(
-                Function(reader) CLng(reader($"{LocationIdColumn}")),
-                $"SELECT [{LocationIdColumn}] FROM [{TableName}];")
+            Return ReadAllIds(AddressOf Initialize, TableName, LocationIdColumn)
         End Get
     End Property
     Function ReadName(locationId As Long) As String

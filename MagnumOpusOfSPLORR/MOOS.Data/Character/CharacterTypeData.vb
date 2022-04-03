@@ -58,10 +58,7 @@
     End Sub
     ReadOnly Property All As List(Of Long)
         Get
-            Initialize()
-            Return ExecuteReader(
-                Function(reader) CLng(reader(CharacterTypeIdColumn)),
-                $"SELECT [{CharacterTypeIdColumn}] FROM [{TableName}];")
+            Return ReadAllIds(AddressOf Initialize, TableName, CharacterTypeIdColumn)
         End Get
     End Property
 
