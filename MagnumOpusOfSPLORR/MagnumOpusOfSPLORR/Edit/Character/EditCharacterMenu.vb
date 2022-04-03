@@ -1,6 +1,7 @@
 ﻿Module EditCharacterMenu
-    Private Const ChangeLocationText = "Change Location"
-    Private Const ChangeCharacterTypeText = "Change Character Type"
+    Private Const ChangeLocationText = "Change Location..."
+    Private Const ChangeCharacterTypeText = "Change Character Type..."
+    Private Const ChangeWoundsText = "Change Wounds..."
     Private Const AssignPlayerCharacterText = "Make this the player character"
     Private Sub ShowStatus(character As Character)
         If character.IsPlayerCharacter Then
@@ -10,6 +11,7 @@
         AnsiConsole.MarkupLine($"Name: {character.Name}")
         AnsiConsole.MarkupLine($"Location: {character.Location.UniqueName}")
         AnsiConsole.MarkupLine($"Character Type: {character.CharacterType.UniqueName}")
+        AnsiConsole.MarkupLine($"Wounds: {character.Wounds}")
         ShowCounters(character)
         Dim itemStacks = character.Inventory.StackedItems
         If itemStacks.Any Then
@@ -32,6 +34,7 @@
         prompt.AddChoice(ChangeNameText)
         prompt.AddChoice(ChangeLocationText)
         prompt.AddChoice(ChangeCharacterTypeText)
+        prompt.AddChoice(ChangeWoundsText)
         prompt.AddChoice(InventoryText)
         prompt.AddChoice(CountersText)
         If Not character.IsPlayerCharacter Then
@@ -56,6 +59,8 @@
                     HandleChangeLocation(character)
                 Case ChangeCharacterTypeText
                     HandleChangeCharacterType(character)
+                Case ChangeWoundsText
+                    HandleChangeWounds(character)
                 Case AssignPlayerCharacterText
                     character.SetAsPlayerCharacter()
                 Case InventoryText
@@ -69,6 +74,9 @@
                     Throw New NotImplementedException
             End Select
         End While
+    End Sub
+    Private Sub HandleChangeWounds(character As Character)
+        character.Wounds = AnsiConsole.Ask(Of Long)("[olive]New Wounds:[/]")
     End Sub
     Private Sub HandleChangeLocation(character As Character)
         Dim newLocation = ChooseLocation("Which Location", True)

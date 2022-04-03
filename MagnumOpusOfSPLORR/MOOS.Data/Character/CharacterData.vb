@@ -2,6 +2,7 @@
     Friend Const TableName = "Characters"
     Friend Const CharacterIdColumn = "CharacterId"
     Friend Const CharacterNameColumn = "CharacterName"
+    Friend Const WoundsColumn = "Wounds"
     Friend Const LocationIdColumn = LocationData.LocationIdColumn
     Friend Const CharacterTypeIdColumn = CharacterTypeData.CharacterTypeIdColumn
 
@@ -28,28 +29,32 @@
                 [{LocationIdColumn}] INT NOT NULL,
                 [{CharacterTypeIdColumn}] INT NOT NULL,
                 [{CharacterNameColumn}] TEXT NOT NULL,
+                [{WoundsColumn}] INT NOT NULL,
                 FOREIGN KEY([{LocationIdColumn}]) REFERENCES [{LocationData.TableName}]([{LocationData.LocationIdColumn}]),
                 FOREIGN KEY([{CharacterTypeIdColumn}]) REFERENCES [{CharacterTypeData.TableName}]([{CharacterTypeData.CharacterTypeIdColumn}])
             );")
     End Sub
-    Function Create(locationId As Long, characterName As String, characterTypeId As Long) As Long
+    Function Create(locationId As Long, characterName As String, characterTypeId As Long, wounds As Long) As Long
         Initialize()
         ExecuteNonQuery(
             $"INSERT INTO [{TableName}]
             (
                 [{LocationIdColumn}],
                 [{CharacterNameColumn}],
-                [{CharacterTypeIdColumn}]
+                [{CharacterTypeIdColumn}],
+                [{WoundsColumn}]
             ) 
             VALUES
             (
                 @{LocationIdColumn},
                 @{CharacterNameColumn},
-                @{CharacterTypeIdColumn}
+                @{CharacterTypeIdColumn},
+                @{WoundsColumn}
             );",
             MakeParameter($"@{LocationIdColumn}", locationId),
             MakeParameter($"@{CharacterNameColumn}", characterName),
-            MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId))
+            MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId),
+            MakeParameter($"@{WoundsColumn}", wounds))
         Return LastInsertRowId
     End Function
     Function ReadLocation(characterId As Long) As Long?
@@ -91,6 +96,12 @@
                 [{LocationIdColumn}]=@{LocationIdColumn};",
             MakeParameter($"@{LocationIdColumn}", locationId))
     End Sub
+    Public Sub WriteWounds(characterId As Long, wounds As Long)
+        WriteColumnValue(AddressOf Initialize, TableName, CharacterIdColumn, characterId, WoundsColumn, wounds)
+    End Sub
+    Public Function ReadWounds(characterId As Long) As Long?
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, CharacterIdColumn, characterId, WoundsColumn)
+    End Function
     ReadOnly Property All As List(Of Long)
         Get
             Initialize()

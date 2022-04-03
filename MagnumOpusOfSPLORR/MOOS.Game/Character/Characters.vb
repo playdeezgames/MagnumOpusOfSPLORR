@@ -5,6 +5,6 @@
         End Get
     End Property
     Function CreateCharacter(characterName As String, location As Location, characterType As CharacterType) As Character
-        Return New Character(CharacterData.Create(location.Id, characterName, characterType.Id))
+        Return New Character(CharacterData.Create(location.Id, characterName, characterType.Id, 0))
     End Function
 End Module

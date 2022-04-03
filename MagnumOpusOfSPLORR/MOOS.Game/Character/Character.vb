@@ -115,6 +115,14 @@
             CounterData.Create(Id, CounterType.Movement, 1)
         End If
     End Sub
+    Property Wounds As Long
+        Get
+            Return CharacterData.ReadWounds(Id).Value
+        End Get
+        Set(value As Long)
+            CharacterData.WriteWounds(Id, value)
+        End Set
+    End Property
     Public Shared Operator =(first As Character, second As Character) As Boolean
         Return first.Id = second.Id
     End Operator
