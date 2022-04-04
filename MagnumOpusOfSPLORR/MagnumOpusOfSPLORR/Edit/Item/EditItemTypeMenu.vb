@@ -68,10 +68,12 @@
         End While
     End Sub
     Private Sub HandleChangeDefendDice(itemType As ItemType)
-        itemType.DefendDice = AnsiConsole.Ask("[olive]Defend Dice:[/]", "")
+        Dim dice = AnsiConsole.Ask("[olive]Defend Dice:[/]", "")
+        itemType.DefendDice = If(RNG.ValidateDice(dice), dice, Nothing)
     End Sub
     Private Sub HandleChangeAttackDice(itemType As ItemType)
-        itemType.AttackDice = AnsiConsole.Ask("[olive]Attack Dice:[/]", "")
+        Dim dice = AnsiConsole.Ask("[olive]Attack Dice:[/]", "")
+        itemType.AttackDice = If(RNG.ValidateDice(dice), dice, Nothing)
     End Sub
     Private Sub HandlRemoveEquipSlot(itemType As ItemType)
         itemType.EquipSlot = Nothing
@@ -83,7 +85,8 @@
         End If
     End Sub
     Private Sub HandleChangeHealDice(itemType As ItemType)
-        itemType.HealDice = AnsiConsole.Ask("[olive]Heal Dice:[/]", "")
+        Dim dice = AnsiConsole.Ask("[olive]Heal Dice:[/]", "")
+        itemType.HealDice = If(RNG.ValidateDice(dice), dice, Nothing)
     End Sub
     Private Sub HandleChangeName(itemType As ItemType)
         Dim newName = AnsiConsole.Ask(Of String)("New Item Type Name:")

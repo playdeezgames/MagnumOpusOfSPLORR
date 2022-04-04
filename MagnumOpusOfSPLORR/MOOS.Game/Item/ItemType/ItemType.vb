@@ -28,7 +28,11 @@
             Return ItemTypeData.ReadHealDice(Id)
         End Get
         Set(value As String)
-            ItemTypeData.WriteHealDice(Id, value)
+            If value Is Nothing Then
+                ItemTypeData.ClearHealDice(Id)
+            Else
+                ItemTypeData.WriteHealDice(Id, value)
+            End If
         End Set
     End Property
     Property AttackDice As String
@@ -36,7 +40,11 @@
             Return ItemTypeData.ReadAttackDice(Id)
         End Get
         Set(value As String)
-            ItemTypeData.WriteAttackDice(Id, value)
+            If value Is Nothing Then
+                ItemTypeData.ClearAttackDice(Id)
+            Else
+                ItemTypeData.WriteAttackDice(Id, value)
+            End If
         End Set
     End Property
     Property DefendDice As String
@@ -44,7 +52,11 @@
             Return ItemTypeData.ReadDefendDice(Id)
         End Get
         Set(value As String)
-            ItemTypeData.WriteDefendDice(Id, value)
+            If value Is Nothing Then
+                ItemTypeData.ClearDefendDice(Id)
+            Else
+                ItemTypeData.WriteDefendDice(Id, value)
+            End If
         End Set
     End Property
     Property Name As String

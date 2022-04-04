@@ -22,6 +22,13 @@
         End Get
     End Property
 
+    Public Sub ClearHealDice(itemTypeId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            $"UPDATE [{TableName}] SET [{HealDiceColumn}]=NULL WHERE [{ItemTypeIdColumn}]=@{ItemTypeIdColumn};",
+            MakeParameter($"@{ItemTypeIdColumn}", itemTypeId))
+    End Sub
+
     Public Sub WriteHealDice(itemTypeId As Long, healDice As String)
         WriteColumnValue(AddressOf Initialize, TableName, ItemTypeIdColumn, itemTypeId, HealDiceColumn, healDice)
     End Sub
@@ -30,8 +37,22 @@
         Return ReadColumnString(AddressOf Initialize, TableName, ItemTypeIdColumn, itemTypeId, HealDiceColumn)
     End Function
 
+    Public Sub ClearAttackDice(itemTypeId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            $"UPDATE [{TableName}] SET [{AttackDiceColumn}]=NULL WHERE [{ItemTypeIdColumn}]=@{ItemTypeIdColumn};",
+            MakeParameter($"@{ItemTypeIdColumn}", itemTypeId))
+    End Sub
+
     Public Sub WriteAttackDice(itemTypeId As Long, attackDice As String)
         WriteColumnValue(AddressOf Initialize, TableName, ItemTypeIdColumn, itemTypeId, AttackDiceColumn, attackDice)
+    End Sub
+
+    Public Sub ClearDefendDice(itemTypeId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            $"UPDATE [{TableName}] SET [{DefendDiceColumn}]=NULL WHERE [{ItemTypeIdColumn}]=@{ItemTypeIdColumn};",
+            MakeParameter($"@{ItemTypeIdColumn}", itemTypeId))
     End Sub
 
     Public Function ReadDefendDice(itemTypeId As Long) As String
