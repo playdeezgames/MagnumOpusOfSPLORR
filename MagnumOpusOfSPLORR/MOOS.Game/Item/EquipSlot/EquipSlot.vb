@@ -18,7 +18,7 @@
     End Property
     ReadOnly Property CanDestroy As Boolean
         Get
-            Return ItemTypeEquipSlotData.ReadCountForEquipSlot(Id) = 0
+            Return ItemTypeEquipSlotData.ReadCountForEquipSlot(Id) = 0 AndAlso CharacterTypeEquipSlotData.ReadCountForEquipSlot(Id) = 0
         End Get
     End Property
     Sub Destroy()

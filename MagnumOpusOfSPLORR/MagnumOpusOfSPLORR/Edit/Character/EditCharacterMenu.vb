@@ -20,14 +20,12 @@
                     itemStacks.Select(Function(x) $"{x.Key.Name}(x{x.Value.Count})"))}")
         End If
     End Sub
-
     Friend Sub ShowCounters(character As Character)
         Dim counters = character.Counters
         If counters.Any Then
             AnsiConsole.MarkupLine($"Counters: {String.Join(", ", counters.Select(Function(x) $"{x.CounterType.Name}({x.Value})"))}")
         End If
     End Sub
-
     Private Function CreatePrompt(character As Character) As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
         prompt.AddChoice(GoBackText)

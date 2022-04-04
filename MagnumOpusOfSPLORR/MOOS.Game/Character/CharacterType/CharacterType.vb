@@ -8,6 +8,22 @@
             Return $"{Name}(#{Id})"
         End Get
     End Property
+    ReadOnly Property EquipSlots As List(Of EquipSlot)
+        Get
+            Return CharacterTypeEquipSlotData.ReadForCharacterType(Id).Select(Function(x) New EquipSlot(x)).ToList
+        End Get
+    End Property
+    ReadOnly Property AvailableEquipSlots As List(Of EquipSlot)
+        Get
+            Dim current As New HashSet(Of Long)(CharacterTypeEquipSlotData.ReadForCharacterType(Id))
+            Return EquipSlotData.All.Where(Function(x) Not current.Contains(x)).Select(Function(x) New EquipSlot(x)).ToList
+        End Get
+    End Property
+    ReadOnly Property HasEquipSlots As Boolean
+        Get
+            Return EquipSlots.Any
+        End Get
+    End Property
     Property Name As String
         Get
             Return CharacterTypeData.ReadName(Id)
