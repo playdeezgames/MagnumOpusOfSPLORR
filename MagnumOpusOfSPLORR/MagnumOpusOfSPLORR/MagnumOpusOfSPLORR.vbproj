@@ -47,8 +47,4 @@
     <Import Include="SPLORR.Game" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Player\" />
-  </ItemGroup>
-
 </Project>

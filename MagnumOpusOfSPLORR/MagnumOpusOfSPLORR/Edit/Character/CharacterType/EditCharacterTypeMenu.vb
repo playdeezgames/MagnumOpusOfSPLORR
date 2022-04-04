@@ -6,8 +6,8 @@
         AnsiConsole.MarkupLine($"Id: {characterType.Id}")
         AnsiConsole.MarkupLine($"Name: {characterType.Name}")
         AnsiConsole.MarkupLine($"Health: {characterType.Health}")
-        AnsiConsole.MarkupLine($"Damage: {characterType.AttackDice}")
-        AnsiConsole.MarkupLine($"Damage: {characterType.DefendDice}")
+        AnsiConsole.MarkupLine($"Attack: {characterType.AttackDice}")
+        AnsiConsole.MarkupLine($"Defend: {characterType.DefendDice}")
     End Sub
     Private Function CreatePrompt(characterType As CharacterType) As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now what?[/]"}
