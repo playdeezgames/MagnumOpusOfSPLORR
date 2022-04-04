@@ -9,6 +9,7 @@
       "MagnumOpusOfSPLORR/1.0.0": {
         "dependencies": {
           "MOOS.Game": "1.0.0",
+          "MOOS.Player": "1.0.0",
           "Spectre.Console": "0.44.0"
         },
         "runtime": {
@@ -173,6 +174,15 @@
           "MOOS.Game.dll": {}
         }
       },
+      "MOOS.Player/1.0.0": {
+        "dependencies": {
+          "MOOS.Game": "1.0.0",
+          "Spectre.Console": "0.44.0"
+        },
+        "runtime": {
+          "MOOS.Player.dll": {}
+        }
+      },
       "SPLORR.Data/1.0.0": {
         "dependencies": {
           "Microsoft.Data.Sqlite": "6.0.3"
@@ -256,6 +266,11 @@
       "sha512": ""
     },
     "MOOS.Game/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MOOS.Player/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
