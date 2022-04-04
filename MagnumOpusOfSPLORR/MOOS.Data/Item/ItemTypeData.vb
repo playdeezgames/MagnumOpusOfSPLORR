@@ -3,13 +3,17 @@
     Friend Const ItemTypeIdColumn = "ItemTypeId"
     Friend Const ItemTypeNameColumn = "ItemTypeName"
     Friend Const HealDiceColumn = "HealDice"
+    Friend Const AttackDiceColumn = "AttackDice"
+    Friend Const DefendDiceColumn = "DefendDice"
     Friend Sub Initialize()
         ExecuteNonQuery(
             $"CREATE TABLE IF NOT EXISTS [{TableName}]
             (
                 [{ItemTypeIdColumn}] INTEGER PRIMARY KEY AUTOINCREMENT,
                 [{ItemTypeNameColumn}] TEXT NOT NULL,
-                [{HealDiceColumn}] TEXT NULL
+                [{HealDiceColumn}] TEXT NULL,
+                [{AttackDiceColumn}] TEXT NULL,
+                [{DefendDiceColumn}] TEXT NULL
             );")
     End Sub
     ReadOnly Property All As List(Of Long)
@@ -24,6 +28,22 @@
 
     Public Function ReadHealDice(itemTypeId As Long) As String
         Return ReadColumnString(AddressOf Initialize, TableName, ItemTypeIdColumn, itemTypeId, HealDiceColumn)
+    End Function
+
+    Public Sub WriteAttackDice(itemTypeId As Long, attackDice As String)
+        WriteColumnValue(AddressOf Initialize, TableName, ItemTypeIdColumn, itemTypeId, AttackDiceColumn, attackDice)
+    End Sub
+
+    Public Function ReadDefendDice(itemTypeId As Long) As String
+        Return ReadColumnString(AddressOf Initialize, TableName, ItemTypeIdColumn, itemTypeId, DefendDiceColumn)
+    End Function
+
+    Public Sub WriteDefendDice(itemTypeId As Long, defendDice As String)
+        WriteColumnValue(AddressOf Initialize, TableName, ItemTypeIdColumn, itemTypeId, DefendDiceColumn, defendDice)
+    End Sub
+
+    Public Function ReadAttackDice(itemTypeId As Long) As String
+        Return ReadColumnString(AddressOf Initialize, TableName, ItemTypeIdColumn, itemTypeId, AttackDiceColumn)
     End Function
 
     Public Sub WriteName(itemTypeId As Long, itemTypeName As String)

@@ -1,5 +1,7 @@
 ﻿Module EditItemTypeMenu
     Private Const ChangeHealDiceText = "Change Heal Dice..."
+    Private Const ChangeAttackDiceText = "Change Attack Dice..."
+    Private Const ChangeDefendDiceText = "Change Defend Dice..."
     Private Const AddEquipSlotText = "Add Equip Slot..."
     Private Const ChangeEquipSlotText = "Change Equip Slot..."
     Private Const RemoveEquipSlotText = "Remove Equip Slot"
@@ -8,6 +10,12 @@
         AnsiConsole.MarkupLine($"Name: {itemType.Name}")
         If itemType.CanHeal Then
             AnsiConsole.MarkupLine($"Heal Dice: {itemType.HealDice}")
+        End If
+        If itemType.CanAttack Then
+            AnsiConsole.MarkupLine($"Attack Dice: {itemType.AttackDice}")
+        End If
+        If itemType.CanDefend Then
+            AnsiConsole.MarkupLine($"Defend Dice: {itemType.DefendDice}")
         End If
         If itemType.HasEquipSlot Then
             AnsiConsole.MarkupLine($"Equip Slot: {itemType.EquipSlot.UniqueName}")
@@ -18,6 +26,8 @@
         prompt.AddChoice(GoBackText)
         prompt.AddChoice(ChangeNameText)
         prompt.AddChoice(ChangeHealDiceText)
+        prompt.AddChoice(ChangeAttackDiceText)
+        prompt.AddChoice(ChangeDefendDiceText)
         If itemType.CanDestroy Then
             prompt.AddChoice(DestroyText)
         End If
@@ -44,6 +54,10 @@
                     HandleChangeName(itemType)
                 Case ChangeHealDiceText
                     HandleChangeHealDice(itemType)
+                Case ChangeAttackDiceText
+                    HandleChangeAttackDice(itemType)
+                Case ChangeDefendDiceText
+                    HandleChangeDefendDice(itemType)
                 Case AddEquipSlotText, ChangeEquipSlotText
                     HandleChangeEquipSlot(itemType)
                 Case RemoveEquipSlotText
@@ -53,18 +67,21 @@
             End Select
         End While
     End Sub
-
+    Private Sub HandleChangeDefendDice(itemType As ItemType)
+        itemType.DefendDice = AnsiConsole.Ask("[olive]Defend Dice:[/]", "")
+    End Sub
+    Private Sub HandleChangeAttackDice(itemType As ItemType)
+        itemType.AttackDice = AnsiConsole.Ask("[olive]Attack Dice:[/]", "")
+    End Sub
     Private Sub HandlRemoveEquipSlot(itemType As ItemType)
         itemType.EquipSlot = Nothing
     End Sub
-
     Private Sub HandleChangeEquipSlot(itemType As ItemType)
         Dim equipSlot = CommonEditorMenu.ChooseEquipSlot("New Equip Slot:", True, AllEquipSlots)
         If equipSlot IsNot Nothing Then
             itemType.EquipSlot = equipSlot
         End If
     End Sub
-
     Private Sub HandleChangeHealDice(itemType As ItemType)
         itemType.HealDice = AnsiConsole.Ask("[olive]Heal Dice:[/]", "")
     End Sub

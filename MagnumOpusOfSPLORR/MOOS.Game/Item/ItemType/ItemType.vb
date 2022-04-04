@@ -13,12 +13,38 @@
             Return Not String.IsNullOrEmpty(HealDice)
         End Get
     End Property
+    ReadOnly Property CanAttack As Boolean
+        Get
+            Return Not String.IsNullOrEmpty(AttackDice)
+        End Get
+    End Property
+    ReadOnly Property CanDefend As Boolean
+        Get
+            Return Not String.IsNullOrEmpty(DefendDice)
+        End Get
+    End Property
     Property HealDice As String
         Get
             Return ItemTypeData.ReadHealDice(Id)
         End Get
         Set(value As String)
             ItemTypeData.WriteHealDice(Id, value)
+        End Set
+    End Property
+    Property AttackDice As String
+        Get
+            Return ItemTypeData.ReadAttackDice(Id)
+        End Get
+        Set(value As String)
+            ItemTypeData.WriteAttackDice(Id, value)
+        End Set
+    End Property
+    Property DefendDice As String
+        Get
+            Return ItemTypeData.ReadDefendDice(Id)
+        End Get
+        Set(value As String)
+            ItemTypeData.WriteDefendDice(Id, value)
         End Set
     End Property
     Property Name As String
