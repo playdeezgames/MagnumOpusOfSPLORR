@@ -7,11 +7,18 @@ Public Module Game
     Sub NewGame(mazeColumns As Long, mazeRows As Long)
         Store.Reset()
         CreateDirections()
+        CreateEquipSlots()
         CreateItemTypes()
         Dim maze = GenerateMaze(mazeColumns, mazeRows)
         CreateWorld(maze)
         CreatePlayerCharacter()
     End Sub
+
+    Private Sub CreateEquipSlots()
+        EquipSlots.CreateEquipSlot("weapon")
+        EquipSlots.CreateEquipSlot("shield")
+    End Sub
+
     Private Function GenerateMaze(mazeColumns As Long, mazeRows As Long) As Maze(Of String)
         Dim maze As New Maze(Of String)(mazeColumns, mazeRows, walker)
         maze.Generate()
@@ -19,6 +26,17 @@ Public Module Game
     End Function
     Private Sub CreateItemTypes()
         CreateItemType("key")
+
+        Dim sword = CreateItemType("shortsword")
+        sword.AttackDice = "1d2/2+1d2/2"
+        sword.EquipSlot = FindEquipSlotByName("weapon").Single
+
+        Dim shield = CreateItemType("shield")
+        shield.DefendDice = "1d3/3"
+        shield.EquipSlot = FindEquipSlotByName("shield").Single
+
+        Dim food = CreateItemType("hardtack")
+        food.HealDice = "1d1"
     End Sub
     Private Sub CreateLocations(columns As Long, rows As Long)
         For column = 0 To columns - 1
@@ -56,6 +74,10 @@ Public Module Game
         CreateRoutes(maze)
         CreateWinningLocation()
         PlaceKey()
+        'TODO: place sword?
+        'TODO: place shield?
+        'TODO: place food?
+        'TODO: place enemies?
     End Sub
     Private Sub CreateDirections()
         Directions.CreateDirection("north")

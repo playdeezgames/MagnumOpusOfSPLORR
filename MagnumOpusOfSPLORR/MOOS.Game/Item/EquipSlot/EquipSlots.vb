@@ -7,6 +7,9 @@
     Function FindEquipSlotByUniqueName(uniqueName As String) As EquipSlot
         Return AllEquipSlots.Single(Function(x) x.UniqueName = uniqueName)
     End Function
+    Function FindEquipSlotByName(name As String) As List(Of EquipSlot)
+        Return AllEquipSlots.Where(Function(x) x.Name = name).ToList
+    End Function
     Function CreateEquipSlot(equipSlotName As String) As EquipSlot
         Return New EquipSlot(EquipSlotData.Create(equipSlotName))
     End Function
