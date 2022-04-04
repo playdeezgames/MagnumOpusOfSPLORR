@@ -101,7 +101,7 @@
         End If
     End Sub
     Private Sub HandlePickUp(character As PlayerCharacter)
-        Dim itemType As ItemType = CommonMenu.ChooseItemTypeNameFromInventory("Pick up what?", True, character.Location.Inventory)
+        Dim itemType As ItemType = CommonPlayerMenu.ChooseItemTypeNameFromInventory("Pick up what?", True, character.Location.Inventory)
         If itemType IsNot Nothing Then
             Dim items = character.Location.Inventory.StackedItems.Single(Function(x) x.Key = itemType).Value
             Dim quantity = If(items.Count = 1, 1, AnsiConsole.Ask(Of Integer)("[olive]How Many?[/]", 0))

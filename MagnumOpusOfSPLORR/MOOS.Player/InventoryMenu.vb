@@ -26,7 +26,7 @@
         End While
     End Sub
     Private Sub HandleDrop(character As Character)
-        Dim itemType = CommonMenu.ChooseItemTypeNameFromInventory("Drop what?", True, character.Inventory)
+        Dim itemType = CommonPlayerMenu.ChooseItemTypeNameFromInventory("Drop what?", True, character.Inventory)
         If itemType IsNot Nothing Then
             Dim items = character.Inventory.StackedItems.Single(Function(x) x.Key = itemType).Value
             Dim quantity = If(items.Count = 1, 1, AnsiConsole.Ask(Of Integer)("[olive]How Many?[/]", 0))

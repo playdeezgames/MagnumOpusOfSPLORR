@@ -59,7 +59,7 @@
     End Sub
 
     Private Sub HandleChangeEquipSlot(itemType As ItemType)
-        Dim equipSlot = CommonMenu.ChooseEquipSlot("New Equip Slot:", True)
+        Dim equipSlot = CommonEditorMenu.ChooseEquipSlot("New Equip Slot:", True)
         If equipSlot IsNot Nothing Then
             itemType.EquipSlot = equipSlot
         End If

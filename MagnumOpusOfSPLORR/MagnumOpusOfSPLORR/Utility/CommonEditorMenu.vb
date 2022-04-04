@@ -1,16 +1,13 @@
-﻿Public Module CommonMenu
-    Public Const NeverMindText = "Never Mind"
-    Public Const GoBackText = "Go Back"
-    Public Const ChangeNameText = "Change Name"
-    Public Const DestroyText = "Destroy"
-    Public Const InventoryText = "Inventory..."
-    Public Const CountersText = "Counters..."
-    Public Const AddItemText = "Add Item..."
-    Public Const RemoveItemText = "Remove Item..."
-    Public Const BarriersText = "Barriers..."
-    Public Const RemoveText = "Remove"
-    Friend Const OkText = "Ok"
-    Function ChooseLocation(title As String, canCancel As Boolean) As Location
+﻿Public Module CommonEditorMenu
+    Public Const GoBackText = "Go Back" 'editor
+    Public Const ChangeNameText = "Change Name" 'editor
+    Public Const DestroyText = "Destroy" 'editor
+    Public Const CountersText = "Counters..." 'editor
+    Public Const AddItemText = "Add Item..." 'editor
+    Public Const RemoveItemText = "Remove Item..." 'editor
+    Public Const BarriersText = "Barriers..." 'editor
+    Public Const RemoveText = "Remove" 'editor
+    Function ChooseLocation(title As String, canCancel As Boolean) As Location 'editor
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then
             prompt.AddChoice(NeverMindText)
@@ -26,7 +23,7 @@
                 Return FindLocationByUniqueName(answer)
         End Select
     End Function
-    Function ChooseCharacterType(title As String, canCancel As Boolean) As CharacterType
+    Function ChooseCharacterType(title As String, canCancel As Boolean) As CharacterType 'editor
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then
             prompt.AddChoice(NeverMindText)
@@ -42,7 +39,7 @@
                 Return FindCharacterTypeByUniqueName(answer)
         End Select
     End Function
-    Function ChooseDirection(title As String, candidates As List(Of Direction), canCancel As Boolean) As Direction
+    Function ChooseDirection(title As String, candidates As List(Of Direction), canCancel As Boolean) As Direction 'editor
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then
             prompt.AddChoice(NeverMindText)
@@ -58,11 +55,7 @@
                 Return FindDirectionByUniqueName(answer)
         End Select
     End Function
-    Function ChooseDirection(title As String, canCancel As Boolean) As Direction
-        Return ChooseDirection(title, AllDirections, canCancel)
-    End Function
-
-    Public Function ChooseEquipSlot(title As String, canCancel As Boolean) As EquipSlot
+    Public Function ChooseEquipSlot(title As String, canCancel As Boolean) As EquipSlot 'editor
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then
             prompt.AddChoice(NeverMindText)
@@ -78,26 +71,7 @@
                 Return FindEquipSlotByUniqueName(answer)
         End Select
     End Function
-
-    Public Function ChooseItemTypeNameFromInventory(title As String, canCancel As Boolean, inventory As Inventory) As ItemType
-        Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
-        If canCancel Then
-            prompt.AddChoice(NeverMindText)
-        End If
-        Dim groups = inventory.Items.GroupBy(Function(x) x.ItemType.UniqueName)
-        For Each itemType In groups
-            prompt.AddChoices(itemType.Key)
-        Next
-        Dim answer = AnsiConsole.Prompt(prompt)
-        Select Case answer
-            Case NeverMindText
-                Return Nothing
-            Case Else
-                Return FindItemTypeByUniqueName(groups.FirstOrDefault(Function(x) x.Key = answer).Key)
-        End Select
-    End Function
-
-    Public Function ChooseItemType(title As String, canCancel As Boolean) As ItemType
+    Public Function ChooseItemType(title As String, canCancel As Boolean) As ItemType 'editor
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then
             prompt.AddChoice(NeverMindText)
@@ -113,16 +87,11 @@
                 Return FindItemTypeByUniqueName(answer)
         End Select
     End Function
-    Public Function ChooseValidDice(title As String) As String
+    Public Function ChooseValidDice(title As String) As String 'editor
         Dim damageDice As String
         Do
             damageDice = AnsiConsole.Ask(Of String)($"[olive]{title}[/]")
         Loop Until RNG.ValidateDice(damageDice)
         Return damageDice
     End Function
-    Public Sub OkPrompt()
-        Dim prompt As New SelectionPrompt(Of String) With {.Title = ""}
-        prompt.AddChoice(OkText)
-        AnsiConsole.Prompt(prompt)
-    End Sub
 End Module

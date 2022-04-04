@@ -46,10 +46,10 @@
         End While
     End Sub
     Private Sub HandleChangeArmorDice(characterType As CharacterType)
-        characterType.DefendDice = CommonMenu.ChooseValidDice("New Armor Dice:")
+        characterType.DefendDice = CommonEditorMenu.ChooseValidDice("New Armor Dice:")
     End Sub
     Private Sub HandleChangeDamageDice(characterType As CharacterType)
-        characterType.AttackDice = CommonMenu.ChooseValidDice("New Damage Dice:")
+        characterType.AttackDice = CommonEditorMenu.ChooseValidDice("New Damage Dice:")
     End Sub
     Private Sub HandleChangeHealth(characterType As CharacterType)
         characterType.Health = AnsiConsole.Ask(Of Long)("[olive]New Health:[/]")

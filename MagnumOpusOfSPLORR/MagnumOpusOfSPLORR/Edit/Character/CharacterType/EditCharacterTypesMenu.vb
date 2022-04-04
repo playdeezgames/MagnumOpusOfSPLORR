@@ -29,8 +29,8 @@
         Dim name = AnsiConsole.Ask("[olive]New Character Type Name:[/]", "")
         If Not String.IsNullOrWhiteSpace(name) Then
             Dim health = AnsiConsole.Ask(Of Long)("[olive]Health:[/]")
-            Dim damageDice = CommonMenu.ChooseValidDice("Damage Dice:")
-            Dim armorDice = CommonMenu.ChooseValidDice("Armor Dice:")
+            Dim damageDice = CommonEditorMenu.ChooseValidDice("Damage Dice:")
+            Dim armorDice = CommonEditorMenu.ChooseValidDice("Armor Dice:")
             EditCharacterTypeMenu.Run(CreateCharacterType(name, health, damageDice, armorDice))
         End If
     End Sub

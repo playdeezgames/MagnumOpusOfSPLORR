@@ -31,8 +31,8 @@
         End While
     End Sub
     Private Sub HandleAddRoute(fromLocation As Location)
-        Dim toLocation = CommonMenu.ChooseLocation("Route to where?", False)
-        Dim direction = CommonMenu.ChooseDirection("Direction of route?", fromLocation.AvailableDirections, False) 'TODO: limit to available directions!
+        Dim toLocation = CommonEditorMenu.ChooseLocation("Route to where?", False)
+        Dim direction = CommonEditorMenu.ChooseDirection("Direction of route?", fromLocation.AvailableDirections, False) 'TODO: limit to available directions!
         Routes.CreateRoute(fromLocation, toLocation, direction)
     End Sub
 End Module
