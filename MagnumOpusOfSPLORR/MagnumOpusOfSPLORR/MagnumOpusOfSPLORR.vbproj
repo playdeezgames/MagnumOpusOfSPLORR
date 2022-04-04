@@ -34,7 +34,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MOOS.Editor\MOOS.Editor.vbproj" />
     <ProjectReference Include="..\MOOS.Game\MOOS.Game.vbproj" />
     <ProjectReference Include="..\MOOS.Player\MOOS.Player.vbproj" />
   </ItemGroup>
