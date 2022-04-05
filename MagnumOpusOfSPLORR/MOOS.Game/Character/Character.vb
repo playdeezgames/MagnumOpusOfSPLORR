@@ -149,6 +149,10 @@
         End If
     End Sub
 
+    Public Sub Unequip(equipSlot As EquipSlot)
+        EquippedItemData.Clear(Id, equipSlot.Id)
+    End Sub
+
     Public Sub EquipItemType(equipSlot As EquipSlot, itemType As ItemType)
         EquippedItemData.Write(Id, equipSlot.Id, itemType.Id)
     End Sub

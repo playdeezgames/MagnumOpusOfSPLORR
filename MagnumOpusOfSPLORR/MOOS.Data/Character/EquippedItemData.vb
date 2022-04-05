@@ -43,4 +43,12 @@
             MakeParameter($"@{EquipSlotIdColumn}", equipSlotId),
             MakeParameter($"@{ItemTypeIdColumn}", itemTypeId))
     End Sub
+
+    Public Sub Clear(characterId As Long, equipSlotId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            $"DELETE FROM [{TableName}] WHERE [{CharacterIdColumn}]=@{CharacterIdColumn} AND [{EquipSlotIdColumn}]=@{EquipSlotIdColumn};",
+            MakeParameter($"@{CharacterIdColumn}", characterId),
+            MakeParameter($"@{EquipSlotIdColumn}", equipSlotId))
+    End Sub
 End Module
