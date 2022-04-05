@@ -13,7 +13,7 @@
                 [{CharacterIdColumn}] INT NOT NULL,
                 [{EquipSlotIdColumn}] INT NOT NULL,
                 [{ItemTypeIdColumn}] INT NOT NULL,
-                UNIQUE([CharacterIdColumn],[EquipSlotIdColumn]),
+                UNIQUE([{CharacterIdColumn}],[{EquipSlotIdColumn}]),
                 FOREIGN KEY ([{CharacterIdColumn}]) REFERENCES [{CharacterData.TableName}]([{CharacterData.CharacterIdColumn}]),
                 FOREIGN KEY ([{EquipSlotIdColumn}]) REFERENCES [{EquipSlotData.TableName}]([{EquipSlotData.EquipSlotIdColumn}]),
                 FOREIGN KEY ([{ItemTypeIdColumn}]) REFERENCES [{ItemTypeData.TableName}]([{ItemTypeData.ItemTypeIdColumn}])
@@ -34,4 +34,13 @@
             MakeParameter($"@{CharacterIdColumn}", characterId),
             MakeParameter($"@{EquipSlotIdColumn}", equipSlotId))
     End Function
+
+    Public Sub Write(characterId As Long, equipSlotId As Long, itemTypeId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            $"REPLACE INTO [{TableName}]([{CharacterIdColumn}],[{EquipSlotIdColumn}],[{ItemTypeIdColumn}]) VALUES(@{CharacterIdColumn},@{EquipSlotIdColumn},@{ItemTypeIdColumn});",
+            MakeParameter($"@{CharacterIdColumn}", characterId),
+            MakeParameter($"@{EquipSlotIdColumn}", equipSlotId),
+            MakeParameter($"@{ItemTypeIdColumn}", itemTypeId))
+    End Sub
 End Module

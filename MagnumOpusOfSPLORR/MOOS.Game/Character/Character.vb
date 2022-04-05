@@ -16,6 +16,11 @@
             CharacterData.WriteCharacterType(Id, value.Id)
         End Set
     End Property
+    ReadOnly Property HasAvailableEquipSlot As Boolean
+        Get
+            Return CharacterType.EquipSlots.Any(Function(x) Not EquippedItems.Keys.Contains(x))
+        End Get
+    End Property
     ReadOnly Property EquippedItems As Dictionary(Of EquipSlot, ItemType)
         Get
             Dim equipSlotIds = EquippedItemData.ReadEquippedSlotsForCharacter(Id)
@@ -143,6 +148,15 @@
             CharacterData.Clear(Id)
         End If
     End Sub
+
+    Public Sub EquipItemType(equipSlot As EquipSlot, itemType As ItemType)
+        EquippedItemData.Write(Id, equipSlot.Id, itemType.Id)
+    End Sub
+    ReadOnly Property AvailableEquipSlots As List(Of EquipSlot)
+        Get
+            Return CharacterType.EquipSlots.Where(Function(x) Not EquippedItems.Keys.Contains(x)).ToList
+        End Get
+    End Property
     ReadOnly Property Inventory As Inventory
         Get
             Dim inventoryId = CharacterInventoryData.Read(Id)
