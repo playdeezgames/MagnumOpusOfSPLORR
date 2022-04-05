@@ -74,4 +74,7 @@
     Public Shared Operator <>(first As CharacterType, second As CharacterType) As Boolean
         Return first.Id <> second.Id
     End Operator
+    Public Sub AddEquipSlot(equipSlot As EquipSlot)
+        CharacterTypeEquipSlotData.Write(Id, equipSlot.Id)
+    End Sub
 End Class

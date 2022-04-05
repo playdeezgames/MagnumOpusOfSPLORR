@@ -71,12 +71,12 @@
                 Return FindEquipSlotByUniqueName(answer)
         End Select
     End Function
-    Public Function ChooseItemType(title As String, canCancel As Boolean) As ItemType
+    Public Function ChooseItemType(title As String, canCancel As Boolean, itemTypes As IEnumerable(Of ItemType)) As ItemType
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then
             prompt.AddChoice(NeverMindText)
         End If
-        For Each itemType In AllItemTypes
+        For Each itemType In itemTypes
             prompt.AddChoices(itemType.UniqueName)
         Next
         Dim answer = AnsiConsole.Prompt(prompt)

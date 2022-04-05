@@ -99,7 +99,7 @@
         If equipSlot Is Nothing Then
             Return
         End If
-        Dim itemType = ChooseItemType("Which Item Type?", True)
+        Dim itemType = ChooseItemType("Which Item Type?", True, AllItemTypes.Where(Function(x) x.EquipSlot IsNot Nothing AndAlso x.EquipSlot = equipSlot))
         If itemType Is Nothing Then
             Return
         End If

@@ -47,7 +47,7 @@
         End If
     End Sub
     Private Sub HandleAddItem(inventory As Inventory)
-        Dim itemType = CommonEditorMenu.ChooseItemType("", True)
+        Dim itemType = CommonEditorMenu.ChooseItemType("", True, AllItemTypes)
         If itemType IsNot Nothing Then
             Dim quantity = AnsiConsole.Ask(Of Long)("[olive]How many?[/]", 0)
             While quantity > 0
