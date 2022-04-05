@@ -1,5 +1,6 @@
 ﻿Module InventoryMenu
     Private Const DropText = "Drop..."
+    Private Const EquipText = "Equip..."
     Sub Run(character As Character)
         Dim done = False
         While Not done
@@ -10,6 +11,9 @@
             End If
             Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]What now?[/]"}
             prompt.AddChoice(NeverMindText)
+            If itemStacks.Any(Function(x) x.Key.HasEquipSlot) Then
+                prompt.AddChoice(EquipText)
+            End If
             If itemStacks.Any Then
                 prompt.AddChoice(DropText)
             End If
@@ -17,6 +21,8 @@
             Select Case answer
                 Case NeverMindText
                     done = True
+                Case EquipText
+                    HandleEquip(character)
                 Case DropText
                     HandleDrop(character)
                     done = character.Inventory.IsEmpty
@@ -24,6 +30,16 @@
                     Throw New NotImplementedException
             End Select
         End While
+    End Sub
+    Private Sub HandleEquip(character As Character)
+        Dim itemType = ChooseItemTypeNameFromInventory("Equip What?", True, character.Inventory)
+        If itemType IsNot Nothing And itemType.HasEquipSlot Then
+            If character.EquippedItems.Keys.Any(Function(x) x = itemType.EquipSlot) Then
+                'create item of already equipped item type and place it into inventory
+                Throw New NotImplementedException
+            End If
+            character.EquipItemType(itemType.EquipSlot, itemType)
+        End If
     End Sub
     Private Sub HandleDrop(character As Character)
         Dim itemType = CommonPlayerMenu.ChooseItemTypeNameFromInventory("Drop what?", True, character.Inventory)
