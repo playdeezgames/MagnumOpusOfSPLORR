@@ -16,12 +16,12 @@
             CharacterData.WriteCharacterType(Id, value.Id)
         End Set
     End Property
-    ReadOnly Property EquippedItems As Dictionary(Of EquipSlot, Item)
+    ReadOnly Property EquippedItems As Dictionary(Of EquipSlot, ItemType)
         Get
             Dim equipSlotIds = EquippedItemData.ReadEquippedSlotsForCharacter(Id)
-            Dim result As New Dictionary(Of EquipSlot, Item)
+            Dim result As New Dictionary(Of EquipSlot, ItemType)
             For Each equipSlotId In equipSlotIds
-                result(New EquipSlot(equipSlotId)) = New Item(EquippedItemData.ReadItemForCharacterEquipSlot(Id, equipSlotId).Value)
+                result(New EquipSlot(equipSlotId)) = New ItemType(EquippedItemData.ReadItemTypeForCharacterEquipSlot(Id, equipSlotId).Value)
             Next
             Return result
         End Get
