@@ -16,6 +16,16 @@
             CharacterData.WriteCharacterType(Id, value.Id)
         End Set
     End Property
+    ReadOnly Property EquippedItems As Dictionary(Of EquipSlot, Item)
+        Get
+            Dim equipSlotIds = EquippedItemData.ReadEquippedSlotsForCharacter(Id)
+            Dim result As New Dictionary(Of EquipSlot, Item)
+            For Each equipSlotId In equipSlotIds
+                result(New EquipSlot(equipSlotId)) = New Item(EquippedItemData.ReadItemForCharacterEquipSlot(Id, equipSlotId).Value)
+            Next
+            Return result
+        End Get
+    End Property
     Property Location As Location
         Get
             Return New Location(CharacterData.ReadLocation(Id).Value)

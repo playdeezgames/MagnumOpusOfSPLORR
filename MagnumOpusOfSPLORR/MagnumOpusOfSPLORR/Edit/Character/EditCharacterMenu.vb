@@ -13,6 +13,21 @@
         AnsiConsole.MarkupLine($"Character Type: {character.CharacterType.UniqueName}")
         AnsiConsole.MarkupLine($"Wounds: {character.Wounds}")
         ShowCounters(character)
+        ShowInventory(character)
+        ShowEquippedItems(character)
+    End Sub
+
+    Private Sub ShowEquippedItems(character As Character)
+        Dim equipment = character.EquippedItems
+        If equipment.Any Then
+            AnsiConsole.MarkupLine($"Equipment:")
+            For Each entry In equipment
+                AnsiConsole.MarkupLine($"{entry.Key.UniqueName}: {entry.Value.UniqueName}")
+            Next
+        End If
+    End Sub
+
+    Private Sub ShowInventory(character As Character)
         Dim itemStacks = character.Inventory.StackedItems
         If itemStacks.Any Then
             AnsiConsole.MarkupLine($"Items: {String.Join(
