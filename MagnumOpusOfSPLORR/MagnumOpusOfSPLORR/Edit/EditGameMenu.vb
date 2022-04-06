@@ -5,6 +5,7 @@
     Private Const ItemTypesText = "Item Types..."
     Private Const CharacterTypesText = "Character Types..."
     Private Const EquipSlotsText = "Equip Slots..."
+    Private Const SpawnersText = "Spawners..."
     Sub Run()
         Dim done = False
         While Not done
@@ -21,6 +22,7 @@
             prompt.AddChoice(ItemTypesText)
             prompt.AddChoice(BarriersText)
             prompt.AddChoice(EquipSlotsText)
+            prompt.AddChoice(SpawnersText)
             Select Case AnsiConsole.Prompt(prompt)
                 Case LocationsText
                     EditLocationsMenu.Run()
@@ -36,6 +38,8 @@
                     EditCharacterTypesMenu.Run()
                 Case EquipSlotsText
                     EditEquipSlotsMenu.Run()
+                Case SpawnersText
+                    EditSpawnersMenu.Run()
                 Case GoBackText
                     done = True
                 Case Else
