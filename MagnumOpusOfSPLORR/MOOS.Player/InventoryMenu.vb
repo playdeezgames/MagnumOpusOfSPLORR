@@ -35,10 +35,12 @@
         Dim itemType = ChooseItemTypeNameFromInventory("Equip What?", True, character.Inventory)
         If itemType IsNot Nothing And itemType.HasEquipSlot Then
             If character.EquippedItems.Keys.Any(Function(x) x = itemType.EquipSlot) Then
-                'create item of already equipped item type and place it into inventory
-                Throw New NotImplementedException
+                Dim entry = character.EquippedItems.Single(Function(x) x.Key = itemType.EquipSlot)
+                CreateItem(entry.Value, character.Inventory)
             End If
             character.EquipItemType(itemType.EquipSlot, itemType)
+            Dim item = character.Inventory.Items.First(Function(x) x.ItemType = itemType)
+            item.Destroy()
         End If
     End Sub
     Private Sub HandleDrop(character As Character)
