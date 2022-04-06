@@ -45,7 +45,16 @@
         End Get
     End Property
     Public Function RollAttack() As Integer
-        Return RNG.RollDice(CharacterType.AttackDice)
+        Dim weapons = EquippedItems.Values.Where(Function(x) x.CanAttack)
+        If weapons.Any Then
+            Dim tally = 0
+            For Each weapon In weapons
+                tally += RNG.RollDice(weapon.AttackDice)
+            Next
+            Return tally
+        Else
+            Return RNG.RollDice(CharacterType.AttackDice)
+        End If
     End Function
     Public Function RollDefense() As Integer
         Return RNG.RollDice(CharacterType.DefendDice)
