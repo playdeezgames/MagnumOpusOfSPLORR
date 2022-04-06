@@ -46,7 +46,7 @@
         If Not character.Location.Inventory.IsEmpty Then
             prompt.AddChoice(PickUpText)
         End If
-        If Not character.Inventory.IsEmpty Then
+        If Not character.Inventory.IsEmpty OrElse character.EquippedItems.Any Then
             prompt.AddChoice(InventoryText)
         End If
         If character.CanHeal Then

@@ -1,6 +1,7 @@
 ﻿Module InventoryMenu
     Private Const DropText = "Drop..."
     Private Const EquipText = "Equip..."
+    Private Const UnequipText = "Unequip..."
     Private Sub ShowInventoryStacks(character As Character)
         Dim itemStacks = character.Inventory.StackedItems
         If itemStacks.Any Then
@@ -13,6 +14,9 @@
         prompt.AddChoice(NeverMindText)
         If itemStacks.Any(Function(x) x.Key.HasEquipSlot) Then
             prompt.AddChoice(EquipText)
+        End If
+        If character.EquippedItems.Any Then
+            prompt.AddChoice(UnequipText)
         End If
         If itemStacks.Any Then
             prompt.AddChoice(DropText)
@@ -33,11 +37,28 @@
                     HandleEquip(character)
                 Case DropText
                     HandleDrop(character)
-                    done = character.Inventory.IsEmpty
+                    done = character.Inventory.IsEmpty AndAlso Not character.EquippedItems.Any
+                Case UnequipText
+                    HandleUnequip(character)
                 Case Else
                     Throw New NotImplementedException
             End Select
         End While
+    End Sub
+    Private Sub HandleUnequip(character As Character)
+        Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Unequip From?[/]"}
+        prompt.AddChoice(NeverMindText)
+        Dim equippedItems = character.EquippedItems
+        For Each entry In equippedItems
+            prompt.AddChoice(entry.Key.Name)
+        Next
+        Dim answer = AnsiConsole.Prompt(prompt)
+        Dim equipSlot = equippedItems.Keys.SingleOrDefault(Function(x) x.Name = answer)
+        If equipSlot IsNot Nothing Then
+            Dim itemType = equippedItems.Single(Function(x) x.Key = equipSlot).Value
+            CreateItem(itemType, character.Inventory)
+            character.Unequip(equipSlot)
+        End If
     End Sub
     Private Sub ShowEquipment(character As Character)
         Dim equippedItems = character.EquippedItems
