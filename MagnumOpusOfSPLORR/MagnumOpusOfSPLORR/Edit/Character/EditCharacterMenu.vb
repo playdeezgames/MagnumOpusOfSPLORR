@@ -24,7 +24,7 @@
         If equipment.Any Then
             AnsiConsole.MarkupLine($"Equipment:")
             For Each entry In equipment
-                AnsiConsole.MarkupLine($"{entry.Key.UniqueName}: {entry.Value.UniqueName}")
+                AnsiConsole.MarkupLine($"- {entry.Key.UniqueName}: {entry.Value.UniqueName}")
             Next
         End If
     End Sub
