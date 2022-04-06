@@ -57,7 +57,13 @@
         End If
     End Function
     Public Function RollDefense() As Integer
-        Return RNG.RollDice(CharacterType.DefendDice)
+        Dim tally = RNG.RollDice(CharacterType.DefendDice)
+        Dim items = EquippedItems.Values
+        Dim armors = EquippedItems.Values.Where(Function(x) x.CanDefend)
+        For Each armor In armors
+            tally += RNG.RollDice(armor.DefendDice)
+        Next
+        Return tally
     End Function
     ReadOnly Property UniqueName As String
         Get
