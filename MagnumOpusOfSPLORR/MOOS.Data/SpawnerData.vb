@@ -14,14 +14,18 @@
         Return ReadColumnString(AddressOf Initialize, TableName, SpawnerIdColumn, spawnerId, SpawnerNameColumn)
     End Function
     Public Function Create(spawnerName As String) As Long
-        Throw New NotImplementedException()
+        Initialize()
+        ExecuteNonQuery(
+            $"INSERT INTO [{TableName}]([{SpawnerNameColumn}]) VALUES(@{SpawnerNameColumn});",
+            MakeParameter($"@{SpawnerNameColumn}", spawnerName))
+        Return LastInsertRowId
     End Function
     Public Sub WriteName(spawnerId As Long, spawnerName As String)
         WriteColumnValue(AddressOf Initialize, TableName, SpawnerIdColumn, spawnerId, SpawnerNameColumn, spawnerName)
     End Sub
     ReadOnly Property All As List(Of Long)
         Get
-            Throw New NotImplementedException
+            Return ReadAllIds(AddressOf Initialize, TableName, SpawnerIdColumn)
         End Get
     End Property
     Public Sub Clear(spawnerId As Long)

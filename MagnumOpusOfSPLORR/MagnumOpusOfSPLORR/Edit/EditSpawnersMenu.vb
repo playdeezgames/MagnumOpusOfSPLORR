@@ -3,6 +3,7 @@
     Sub Run()
         Dim done = False
         While Not done
+            AnsiConsole.Clear()
             Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Spawners:[/]"}
             prompt.AddChoice(GoBackText)
             prompt.AddChoice(CreateSpawnerText)
