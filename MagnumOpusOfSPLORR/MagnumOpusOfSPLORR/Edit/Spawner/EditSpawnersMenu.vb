@@ -24,7 +24,9 @@
     Private Sub HandleCreateSpawner()
         Dim spawnerName = AnsiConsole.Ask("[olive]Spawner Name:[/]", "")
         If Not String.IsNullOrWhiteSpace(spawnerName) Then
-            EditSpawnerMenu.Run(CreateSpawner(spawnerName))
+            Dim spawnNothingWeight = AnsiConsole.Ask(Of Long)("[olive]Spawn Nothing Weight:[/]")
+            Dim cooldown = AnsiConsole.Ask(Of Long)("[olive]Cooldown:[/]")
+            EditSpawnerMenu.Run(CreateSpawner(spawnerName, spawnNothingWeight, cooldown))
         End If
     End Sub
 End Module

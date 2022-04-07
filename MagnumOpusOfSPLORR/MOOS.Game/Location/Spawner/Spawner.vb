@@ -11,6 +11,22 @@
             SpawnerData.WriteName(Id, value)
         End Set
     End Property
+    Property SpawnNothingWeight As Long
+        Get
+            Return SpawnerData.ReadSpawnNothingWeight(Id).Value
+        End Get
+        Set(value As Long)
+            SpawnerData.WriteSpawnNothingWeight(Id, value)
+        End Set
+    End Property
+    Property Cooldown As Long
+        Get
+            Return SpawnerData.ReadCooldown(Id).Value
+        End Get
+        Set(value As Long)
+            SpawnerData.WriteCooldown(Id, value)
+        End Set
+    End Property
     ReadOnly Property UniqueName As String
         Get
             Return $"{Name}(#{Id})"

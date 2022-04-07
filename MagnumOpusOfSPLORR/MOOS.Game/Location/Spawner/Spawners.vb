@@ -1,6 +1,6 @@
 ﻿Public Module Spawners
-    Function CreateSpawner(spawnerName As String) As Spawner
-        Return New Spawner(SpawnerData.Create(spawnerName))
+    Function CreateSpawner(spawnerName As String, spawnNothingWeight As Long, cooldown As Long) As Spawner
+        Return New Spawner(SpawnerData.Create(spawnerName, spawnNothingWeight, cooldown))
     End Function
     ReadOnly Property AllSpawners As List(Of Spawner)
         Get

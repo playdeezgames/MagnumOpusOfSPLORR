@@ -2,6 +2,8 @@
     Private Sub ShowStatus(spawner As Spawner)
         AnsiConsole.MarkupLine($"Id: {spawner.Id}")
         AnsiConsole.MarkupLine($"Name: {spawner.Name}")
+        AnsiConsole.MarkupLine($"Spawn Nothing Weight: {spawner.SpawnNothingWeight}")
+        AnsiConsole.MarkupLine($"Cooldown: {spawner.Cooldown}")
     End Sub
     Private Function CreatePrompt(spawner As Spawner) As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now What?[/]"}
