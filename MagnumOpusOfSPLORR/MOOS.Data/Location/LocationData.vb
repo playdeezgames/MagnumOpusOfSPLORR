@@ -36,19 +36,12 @@
         WriteColumnValue(AddressOf Initialize, TableName, LocationIdColumn, locationId, LocationNameColumn, locationName)
     End Sub
     Sub Clear(locationId As Long)
-        Initialize()
         CharacterData.ClearForLocation(locationId)
         RouteData.ClearForLocation(locationId)
         LocationInventoryData.Clear(locationId)
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{LocationIdColumn}]=@{LocationIdColumn};",
-            MakeParameter($"@{LocationIdColumn}", locationId))
+        ClearForColumnValue(AddressOf Initialize, TableName, LocationIdColumn, locationId)
     End Sub
     Function ReadForName(locationName As String) As List(Of Long)
-        Initialize()
-        Return ExecuteReader(
-            Function(reader) CLng(reader(LocationIdColumn)),
-            $"SELECT [{LocationIdColumn}] FROM [{TableName}] WHERE [{LocationNameColumn}]=@{LocationNameColumn};",
-            MakeParameter($"@{LocationNameColumn}", locationName))
+        Return ReadIdsWithColumnValue(AddressOf Initialize, TableName, LocationIdColumn, LocationNameColumn, locationName)
     End Function
 End Module

@@ -5,19 +5,12 @@
         LocationData.Initialize()
         ExecuteNonQuery($"CREATE TABLE IF NOT EXISTS [{TableName}]([{LocationIdColumn}] INT NOT NULL UNIQUE);")
     End Sub
-    Function Read(locationId As Long) As Boolean 'TODO: this is a READER
-        Initialize()
-        Return ExecuteReader(Of Long)(
-            Function(reader) CLng(reader($"{LocationIdColumn}")),
-            $"SELECT [{LocationIdColumn}] FROM [{TableName}] WHERE [{LocationIdColumn}]=@{LocationIdColumn};",
-            MakeParameter($"@{LocationIdColumn}", locationId)).Any
+    Function Read(locationId As Long) As Boolean
+        Return ReadIdsWithColumnValue(AddressOf Initialize, TableName, LocationIdColumn, LocationIdColumn, locationId).Any
     End Function
 
     Public Sub Clear(locationId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{LocationIdColumn}]=@{LocationIdColumn};",
-            MakeParameter($"@{LocationIdColumn}", locationId))
+        ClearForColumnValue(AddressOf Initialize, TableName, LocationIdColumn, locationId)
     End Sub
 
     Public Sub Write(locationId As Long) 'TODO: this is a REPLACE

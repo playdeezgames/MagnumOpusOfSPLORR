@@ -25,10 +25,7 @@
             MakeParameter($"@{InventoryIdColumn}", inventoryId))
     End Sub
     Friend Sub Clear(locationId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{LocationIdColumn}]=@{LocationIdColumn};",
-            MakeParameter($"@{LocationIdColumn}", locationId))
+        ClearForColumnValue(AddressOf Initialize, TableName, LocationIdColumn, locationId)
         InventoryData.Purge()
     End Sub
 End Module

@@ -63,9 +63,6 @@
         End Get
     End Property
     Public Sub Clear(spawnerId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{SpawnerIdColumn}]=@{SpawnerIdColumn};",
-            MakeParameter($"@{SpawnerIdColumn}", spawnerId))
+        ClearForColumnValue(AddressOf Initialize, TableName, SpawnerIdColumn, spawnerId)
     End Sub
 End Module
