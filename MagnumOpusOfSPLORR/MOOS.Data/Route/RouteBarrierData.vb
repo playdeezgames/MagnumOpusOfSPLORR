@@ -56,10 +56,7 @@
     End Function
 
     Friend Sub ClearForBarrier(barrierId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{BarrierIdColumn}]=@{BarrierIdColumn};",
-            MakeParameter($"@{BarrierIdColumn}", barrierId))
+        ClearForColumnValue(AddressOf Initialize, TableName, BarrierIdColumn, barrierId)
     End Sub
 
     Public Sub Write(routeId As Long, barrierId As Long)
@@ -71,9 +68,6 @@
     End Sub
 
     Friend Sub ClearForRoute(routeId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{RouteIdColumn}]=@{RouteIdColumn};",
-            MakeParameter($"@{RouteIdColumn}", routeId))
+        ClearForColumnValue(AddressOf Initialize, TableName, RouteIdColumn, routeId)
     End Sub
 End Module

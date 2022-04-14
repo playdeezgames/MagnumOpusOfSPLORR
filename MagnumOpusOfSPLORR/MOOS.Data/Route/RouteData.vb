@@ -42,11 +42,8 @@
     End Function
 
     Public Sub Clear(routeId As Long)
-        Initialize()
         RouteBarrierData.ClearForRoute(routeId)
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{RouteIdColumn}]=@{RouteIdColumn};",
-            MakeParameter($"@{RouteIdColumn}", routeId))
+        ClearForColumnValue(AddressOf Initialize, TableName, RouteIdColumn, routeId)
     End Sub
 
     Public Function ReadFromLocation(routeId As Long) As Long?
@@ -62,11 +59,7 @@
     End Function
 
     Function ReadForLocation(locationId As Long) As List(Of Long)
-        Initialize()
-        Return ExecuteReader(
-            Function(reader) CLng(reader($"{RouteIdColumn}")),
-            $"SELECT [{RouteIdColumn}] FROM [{TableName}] WHERE [{FromLocationIdColumn}]=@{FromLocationIdColumn};",
-            MakeParameter($"@{FromLocationIdColumn}", locationId))
+        Return ReadIdsWithColumnValue(AddressOf Initialize, TableName, RouteIdColumn, FromLocationIdColumn, locationId)
     End Function
     Friend Sub ClearForLocation(locationId As Long)
         Initialize()

@@ -21,10 +21,7 @@
         WriteColumnValue(AddressOf Initialize, TableName, DirectionIdColumn, directionId, DirectionNameColumn, directionName)
     End Sub
     Public Sub Clear(directionId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{DirectionIdColumn}]=@{DirectionIdColumn};",
-            MakeParameter($"@{DirectionIdColumn}", directionId))
+        ClearForColumnValue(AddressOf Initialize, TableName, DirectionIdColumn, directionId)
     End Sub
     ReadOnly Property All As List(Of Long)
         Get
@@ -35,10 +32,6 @@
         Return ReadColumnString(AddressOf Initialize, TableName, DirectionIdColumn, directionId, DirectionNameColumn)
     End Function
     Function ReadForName(directionName As String) As List(Of Long)
-        Initialize()
-        Return ExecuteReader(
-            Function(reader) CLng(reader(DirectionIdColumn)),
-            $"SELECT [{DirectionIdColumn}] FROM [{TableName}] WHERE [{DirectionNameColumn}]=@{DirectionNameColumn};",
-            MakeParameter($"@{DirectionNameColumn}", directionName))
+        Return ReadIdsWithColumnValue(AddressOf Initialize, TableName, DirectionIdColumn, DirectionNameColumn, directionName)
     End Function
 End Module

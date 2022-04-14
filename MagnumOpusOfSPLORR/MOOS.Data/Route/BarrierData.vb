@@ -39,11 +39,7 @@
     End Function
 
     Public Sub Clear(barrierId As Long)
-        Initialize()
-        RouteBarrierData.ClearForBarrier(barrierId)
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{BarrierIdColumn}]=@{BarrierIdColumn};",
-            MakeParameter($"@{BarrierIdColumn}", barrierId))
+        ClearForColumnValue(AddressOf Initialize, TableName, BarrierIdColumn, barrierId)
     End Sub
 
     ReadOnly Property All As List(Of Long)
