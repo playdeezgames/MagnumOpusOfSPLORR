@@ -71,12 +71,12 @@
                 Return FindEquipSlotByUniqueName(answer)
         End Select
     End Function
-    Public Function ChooseItemType(title As String, canCancel As Boolean) As ItemType
+    Public Function ChooseItemType(title As String, canCancel As Boolean, itemTypes As IEnumerable(Of ItemType)) As ItemType
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then
             prompt.AddChoice(NeverMindText)
         End If
-        For Each itemType In AllItemTypes
+        For Each itemType In itemTypes
             prompt.AddChoices(itemType.UniqueName)
         Next
         Dim answer = AnsiConsole.Prompt(prompt)
@@ -93,5 +93,22 @@
             damageDice = AnsiConsole.Ask(Of String)($"[olive]{title}[/]")
         Loop Until RNG.ValidateDice(damageDice)
         Return damageDice
+    End Function
+    Public Function ChooseItemTypeUniqueNameFromInventory(title As String, canCancel As Boolean, inventory As Inventory) As ItemType 'both
+        Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
+        If canCancel Then
+            prompt.AddChoice(NeverMindText)
+        End If
+        Dim groups = inventory.Items.GroupBy(Function(x) x.ItemType.UniqueName)
+        For Each itemType In groups
+            prompt.AddChoices(itemType.Key)
+        Next
+        Dim answer = AnsiConsole.Prompt(prompt)
+        Select Case answer
+            Case NeverMindText
+                Return Nothing
+            Case Else
+                Return FindItemTypeByUniqueName(groups.FirstOrDefault(Function(x) x.Key = answer).Key)
+        End Select
     End Function
 End Module

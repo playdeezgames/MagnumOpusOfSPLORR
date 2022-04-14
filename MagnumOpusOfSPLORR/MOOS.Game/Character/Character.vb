@@ -16,6 +16,21 @@
             CharacterData.WriteCharacterType(Id, value.Id)
         End Set
     End Property
+    ReadOnly Property HasAvailableEquipSlot As Boolean
+        Get
+            Return CharacterType.EquipSlots.Any(Function(x) Not EquippedItems.Keys.Contains(x))
+        End Get
+    End Property
+    ReadOnly Property EquippedItems As Dictionary(Of EquipSlot, ItemType)
+        Get
+            Dim equipSlotIds = EquippedItemData.ReadEquippedSlotsForCharacter(Id)
+            Dim result As New Dictionary(Of EquipSlot, ItemType)
+            For Each equipSlotId In equipSlotIds
+                result(New EquipSlot(equipSlotId)) = New ItemType(EquippedItemData.ReadItemTypeForCharacterEquipSlot(Id, equipSlotId).Value)
+            Next
+            Return result
+        End Get
+    End Property
     Property Location As Location
         Get
             Return New Location(CharacterData.ReadLocation(Id).Value)
@@ -30,10 +45,25 @@
         End Get
     End Property
     Public Function RollAttack() As Integer
-        Return RNG.RollDice(CharacterType.AttackDice)
+        Dim weapons = EquippedItems.Values.Where(Function(x) x.CanAttack)
+        If weapons.Any Then
+            Dim tally = 0
+            For Each weapon In weapons
+                tally += RNG.RollDice(weapon.AttackDice)
+            Next
+            Return tally
+        Else
+            Return RNG.RollDice(CharacterType.AttackDice)
+        End If
     End Function
     Public Function RollDefense() As Integer
-        Return RNG.RollDice(CharacterType.DefendDice)
+        Dim tally = RNG.RollDice(CharacterType.DefendDice)
+        Dim items = EquippedItems.Values
+        Dim armors = EquippedItems.Values.Where(Function(x) x.CanDefend)
+        For Each armor In armors
+            tally += RNG.RollDice(armor.DefendDice)
+        Next
+        Return tally
     End Function
     ReadOnly Property UniqueName As String
         Get
@@ -133,6 +163,19 @@
             CharacterData.Clear(Id)
         End If
     End Sub
+
+    Public Sub Unequip(equipSlot As EquipSlot)
+        EquippedItemData.Clear(Id, equipSlot.Id)
+    End Sub
+
+    Public Sub EquipItemType(equipSlot As EquipSlot, itemType As ItemType)
+        EquippedItemData.Write(Id, equipSlot.Id, itemType.Id)
+    End Sub
+    ReadOnly Property AvailableEquipSlots As List(Of EquipSlot)
+        Get
+            Return CharacterType.EquipSlots.Where(Function(x) Not EquippedItems.Keys.Contains(x)).ToList
+        End Get
+    End Property
     ReadOnly Property Inventory As Inventory
         Get
             Dim inventoryId = CharacterInventoryData.Read(Id)

@@ -73,7 +73,7 @@
     Private Sub HandleAddEquipSlot(characterType As CharacterType)
         Dim equipSlot = CommonEditorMenu.ChooseEquipSlot("Add which?", True, characterType.AvailableEquipSlots)
         If equipSlot IsNot Nothing Then
-            CharacterTypeEquipSlotData.Write(characterType.Id, equipSlot.Id)
+            characterType.AddEquipSlot(equipSlot)
         End If
     End Sub
     Private Sub HandleChangeArmorDice(characterType As CharacterType)

@@ -12,7 +12,7 @@
         If canCancel Then
             prompt.AddChoice(NeverMindText)
         End If
-        Dim groups = inventory.Items.GroupBy(Function(x) x.ItemType.UniqueName)
+        Dim groups = inventory.Items.GroupBy(Function(x) x.ItemType.Name)
         For Each itemType In groups
             prompt.AddChoices(itemType.Key)
         Next
@@ -21,7 +21,7 @@
             Case NeverMindText
                 Return Nothing
             Case Else
-                Return FindItemTypeByUniqueName(groups.FirstOrDefault(Function(x) x.Key = answer).Key)
+                Return FindItemTypeByName(groups.FirstOrDefault(Function(x) x.Key = answer).Key).First
         End Select
     End Function
 End Module

@@ -3,6 +3,8 @@
     Private Const ChangeCharacterTypeText = "Change Character Type..."
     Private Const ChangeWoundsText = "Change Wounds..."
     Private Const AssignPlayerCharacterText = "Make this the player character"
+    Private Const EquipItemTypeText = "Equip Item Type..."
+    Private Const UnequipText = "Unequip..."
     Private Sub ShowStatus(character As Character)
         If character.IsPlayerCharacter Then
             AnsiConsole.MarkupLine("[aqua]This is the player character[/]")
@@ -13,6 +15,21 @@
         AnsiConsole.MarkupLine($"Character Type: {character.CharacterType.UniqueName}")
         AnsiConsole.MarkupLine($"Wounds: {character.Wounds}")
         ShowCounters(character)
+        ShowInventory(character)
+        ShowEquippedItems(character)
+    End Sub
+
+    Private Sub ShowEquippedItems(character As Character)
+        Dim equipment = character.EquippedItems
+        If equipment.Any Then
+            AnsiConsole.MarkupLine($"Equipment:")
+            For Each entry In equipment
+                AnsiConsole.MarkupLine($"- {entry.Key.UniqueName}: {entry.Value.UniqueName}")
+            Next
+        End If
+    End Sub
+
+    Private Sub ShowInventory(character As Character)
         Dim itemStacks = character.Inventory.StackedItems
         If itemStacks.Any Then
             AnsiConsole.MarkupLine($"Items: {String.Join(
@@ -35,6 +52,12 @@
         prompt.AddChoice(ChangeWoundsText)
         prompt.AddChoice(InventoryText)
         prompt.AddChoice(CountersText)
+        If character.HasAvailableEquipSlot Then
+            prompt.AddChoice(EquipItemTypeText)
+        End If
+        If character.EquippedItems.Any Then
+            prompt.AddChoice(UnequipText)
+        End If
         If Not character.IsPlayerCharacter Then
             prompt.AddChoice(AssignPlayerCharacterText)
         End If
@@ -61,6 +84,10 @@
                     HandleChangeWounds(character)
                 Case AssignPlayerCharacterText
                     character.SetAsPlayerCharacter()
+                Case EquipItemTypeText
+                    HandleEquipItemType(character)
+                Case UnequipText
+                    HandleUnequip(character)
                 Case InventoryText
                     EditInventoryMenu.Run("Character Inventory:", character.Inventory)
                 Case CountersText
@@ -72,6 +99,23 @@
                     Throw New NotImplementedException
             End Select
         End While
+    End Sub
+    Private Sub HandleUnequip(character As Character)
+        Dim equipSlot = ChooseEquipSlot("Which Equip Slot?", True, character.EquippedItems.Keys)
+        If equipSlot IsNot Nothing Then
+            character.Unequip(equipSlot)
+        End If
+    End Sub
+    Private Sub HandleEquipItemType(character As Character)
+        Dim equipSlot = ChooseEquipSlot("Which Equip Slot?", True, character.AvailableEquipSlots)
+        If equipSlot Is Nothing Then
+            Return
+        End If
+        Dim itemType = ChooseItemType("Which Item Type?", True, AllItemTypes.Where(Function(x) x.EquipSlot IsNot Nothing AndAlso x.EquipSlot = equipSlot))
+        If itemType Is Nothing Then
+            Return
+        End If
+        character.EquipItemType(equipSlot, itemType)
     End Sub
     Private Sub HandleChangeWounds(character As Character)
         character.Wounds = AnsiConsole.Ask(Of Long)("[olive]New Wounds:[/]")

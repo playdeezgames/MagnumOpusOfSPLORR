@@ -25,7 +25,7 @@
         End While
     End Sub
     Private Sub HandleCreateBarrier()
-        Dim itemType = CommonEditorMenu.ChooseItemType("Item Type:", False)
+        Dim itemType = CommonEditorMenu.ChooseItemType("Item Type:", False, AllItemTypes)
         Dim destroysItem = AnsiConsole.Confirm("Destroys Item?", False)
         Dim selfDestructs = AnsiConsole.Confirm("Self Destructs?", False)
         Barriers.CreateBarrier(itemType, destroysItem, selfDestructs)

@@ -34,7 +34,7 @@
         End While
     End Sub
     Private Sub HandleRemoveItem(inventory As Inventory)
-        Dim itemType = CommonPlayerMenu.ChooseItemTypeNameFromInventory("Remove which item?", True, inventory)
+        Dim itemType = CommonEditorMenu.ChooseItemTypeUniqueNameFromInventory("Remove which item?", True, inventory)
         If itemType IsNot Nothing Then
             Dim items = inventory.StackedItems.Single(Function(x) x.Key = itemType).Value
             Dim quantity = If(items.Count = 1, 1, AnsiConsole.Ask(Of Integer)("[olive]How Many?[/]", 0))
@@ -47,7 +47,7 @@
         End If
     End Sub
     Private Sub HandleAddItem(inventory As Inventory)
-        Dim itemType = CommonEditorMenu.ChooseItemType("", True)
+        Dim itemType = CommonEditorMenu.ChooseItemType("", True, AllItemTypes)
         If itemType IsNot Nothing Then
             Dim quantity = AnsiConsole.Ask(Of Long)("[olive]How many?[/]", 0)
             While quantity > 0

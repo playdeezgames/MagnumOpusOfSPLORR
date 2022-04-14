@@ -87,6 +87,8 @@ Public Module Game
     End Sub
     Private Sub CreatePlayerCharacter()
         Dim characterType = CharacterTypes.CreateCharacterType("PC", 5, "1d3/3", "1d3/3+1d3/3")
+        characterType.AddEquipSlot(EquipSlots.FindEquipSlotByName("weapon").First)
+        characterType.AddEquipSlot(EquipSlots.FindEquipSlotByName("shield").First)
         Dim location = RNG.FromList(Locations.AllLocations.Where(Function(x) x.Routes.Count = 1 AndAlso Not x.IsWinningLocation).ToList)
         Dim character = Characters.CreateCharacter("Tagon", location, characterType)
         character.SetAsPlayerCharacter()
