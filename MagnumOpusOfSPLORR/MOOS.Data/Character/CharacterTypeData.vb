@@ -47,14 +47,11 @@
     End Function
 
     Public Sub Clear(characterTypeId As Long)
-        Initialize()
         Dim characterIds = CharacterData.ReadForCharacterType(characterTypeId)
         For Each characterId In characterIds
             CharacterData.Clear(characterId)
         Next
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{CharacterTypeIdColumn}]=@{CharacterTypeIdColumn};",
-            MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId))
+        ClearForColumnValue(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId)
     End Sub
     ReadOnly Property All As List(Of Long)
         Get

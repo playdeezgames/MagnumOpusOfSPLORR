@@ -23,11 +23,7 @@
     End Sub
 
     Function ReadForCharacter(characterId As Long) As List(Of Long)
-        Initialize()
-        Return ExecuteReader(
-            Function(reader) CLng(reader(CounterIdColumn)),
-            $"SELECT [{CounterIdColumn}] FROM [{TableName}] WHERE [{CharacterIdColumn}]=@{CharacterIdColumn};",
-            MakeParameter($"@{CharacterIdColumn}", characterId))
+        Return ReadIdsWithColumnValue(AddressOf Initialize, TableName, CounterIdColumn, CharacterIdColumn, characterId)
     End Function
 
     Public Function ReadCounterType(counterId As Long) As Long?

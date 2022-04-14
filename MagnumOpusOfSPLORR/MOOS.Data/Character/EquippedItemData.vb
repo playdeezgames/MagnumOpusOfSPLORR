@@ -20,11 +20,7 @@
             );")
     End Sub
     Public Function ReadEquippedSlotsForCharacter(characterId As Long) As List(Of Long)
-        Initialize()
-        Return ExecuteReader(Of Long)(
-            Function(reader) CLng(reader(EquipSlotIdColumn)),
-            $"SELECT [{EquipSlotIdColumn}] FROM [{TableName}] WHERE [{CharacterIdColumn}]=@{CharacterIdColumn};",
-            MakeParameter($"@{CharacterIdColumn}", characterId))
+        Return ReadIdsWithColumnValue(AddressOf Initialize, TableName, EquipSlotIdColumn, CharacterIdColumn, characterId)
     End Function
 
     Public Function ReadItemTypeForCharacterEquipSlot(characterId As Long, equipSlotId As Long) As Long?

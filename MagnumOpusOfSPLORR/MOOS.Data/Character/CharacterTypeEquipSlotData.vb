@@ -22,11 +22,7 @@
     End Function
 
     Public Function ReadForCharacterType(characterTypeId As Long) As List(Of Long)
-        Initialize()
-        Return ExecuteReader(Of Long)(
-            Function(reader) CLng(reader(EquipSlotIdColumn)),
-            $"SELECT [{EquipSlotIdColumn}] FROM [{TableName}] WHERE [{CharacterTypeIdColumn}]=@{CharacterTypeIdColumn};",
-            MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId))
+        Return ReadIdsWithColumnValue(AddressOf Initialize, TableName, EquipSlotIdColumn, CharacterTypeIdColumn, characterTypeId)
     End Function
 
     Public Sub Clear(characterTypeId As Long, equipSlotId As Long)
