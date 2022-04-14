@@ -12,6 +12,7 @@ Public Module RNG
         Next
         Throw New NotImplementedException()
     End Function
+
     Function FromGenerator(Of TGenerated)(hashSet As HashSet(Of TGenerated)) As TGenerated
         Dim table As New Dictionary(Of TGenerated, Integer)
         For Each item In hashSet
@@ -19,9 +20,11 @@ Public Module RNG
         Next
         Return FromGenerator(table)
     End Function
+
     Function FromRange(minimum As Integer, maximum As Integer) As Integer
         Return random.Next(maximum - minimum + 1) + minimum
     End Function
+
     Function RollXDY(dieCount As Integer, dieSize As Integer) As Integer
         Dim total = 0
         While dieCount > 0
@@ -30,6 +33,7 @@ Public Module RNG
         End While
         Return total
     End Function
+
     Function ValidateDice(diceText As String) As Boolean
         Try
             RollDice(diceText)
@@ -38,6 +42,7 @@ Public Module RNG
             Return False
         End Try
     End Function
+
     Function RollDice(diceText As String) As Integer
         Dim diceSets = diceText.Split("+")
         Dim tally = 0
@@ -60,11 +65,12 @@ Public Module RNG
         Next
         Return tally
     End Function
+
     Function FromList(Of TItem)(items As List(Of TItem)) As TItem
         Return items(FromRange(0, items.Count - 1))
     End Function
 End Module
-Public Module DictionaryExtensions
+Public Module RNGDictionaryExtensions
     <Extension()>
     Function CombineGenerator(first As Dictionary(Of Integer, Integer), second As Dictionary(Of Integer, Integer)) As Dictionary(Of Integer, Integer)
         Dim result As New Dictionary(Of Integer, Integer)

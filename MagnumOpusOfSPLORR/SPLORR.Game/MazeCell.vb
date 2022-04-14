@@ -2,8 +2,9 @@
     Private ReadOnly _neighbors As New Dictionary(Of TDirection, MazeCell(Of TDirection))
     Private ReadOnly _doors As New Dictionary(Of TDirection, MazeDoor)
     Sub New()
-
+        'do nothing
     End Sub
+
     Friend Function HasNeighbor(direction As TDirection) As Boolean
         Return _neighbors.ContainsKey(direction)
     End Function
@@ -12,21 +13,25 @@
         _neighbors.Remove(direction)
         _neighbors.Add(direction, nextCell)
     End Sub
+
     Friend Function GetNeighbor(direction As TDirection) As MazeCell(Of TDirection)
         Dim cell As MazeCell(Of TDirection) = Nothing
         _neighbors.TryGetValue(direction, cell)
         Return cell
     End Function
+
     Function GetDoor(direction As TDirection) As MazeDoor
         Dim door As MazeDoor = Nothing
         _doors.TryGetValue(direction, door)
         Return door
     End Function
+
     ReadOnly Property Neighbors As List(Of MazeCell(Of TDirection))
         Get
             Return _neighbors.Select(Function(x) x.Value).ToList
         End Get
     End Property
+
     ReadOnly Property Directions As List(Of TDirection)
         Get
             Return _neighbors.Select(Function(x) x.Key).ToList
