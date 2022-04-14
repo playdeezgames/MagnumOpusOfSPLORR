@@ -11,11 +11,7 @@
     End Function
 
     Public Function ReadForCharacterType(characterTypeId As Long) As List(Of Long)
-        Initialize()
-        Return ExecuteReader(
-            Function(reader) CLng(reader(CharacterIdColumn)),
-            $"SELECT [{CharacterIdColumn}] FROM [{TableName}] WHERE [{CharacterTypeIdColumn}]=@{CharacterTypeIdColumn};",
-            MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId))
+        Return ReadIdsWithColumnValue(AddressOf Initialize, TableName, CharacterIdColumn, CharacterTypeIdColumn, characterTypeId)
     End Function
     Public Sub WriteCharacterType(characterId As Long, characterTypeId As Long)
         WriteColumnValue(AddressOf Initialize, TableName, CharacterIdColumn, characterId, CharacterTypeIdColumn, characterTypeId)
@@ -64,37 +60,13 @@
         WriteColumnValue(AddressOf Initialize, TableName, CharacterIdColumn, characterId, LocationIdColumn, locationId)
     End Sub
     Function ReadName(characterId As Long) As String
-        Initialize()
-        Return ExecuteScalar(
-            Function(x) CStr(x),
-            $"SELECT 
-                [{CharacterNameColumn}] 
-            FROM 
-                [{TableName}] 
-            WHERE 
-                [{CharacterIdColumn}]=@{CharacterIdColumn};",
-            MakeParameter($"@{CharacterIdColumn}", characterId))
+        Return ReadColumnString(AddressOf Initialize, TableName, CharacterIdColumn, characterId, CharacterNameColumn)
     End Function
     Function ReadForLocation(locationId As Long) As List(Of Long)
-        Initialize()
-        Return ExecuteReader(
-            Function(reader) CLng(reader($"{CharacterIdColumn}")),
-            $"SELECT 
-                [{CharacterIdColumn}] 
-            FROM 
-                [{TableName}] 
-            WHERE 
-                [{LocationIdColumn}]=@{LocationIdColumn};",
-            MakeParameter($"@{LocationIdColumn}", locationId))
+        Return ReadIdsWithColumnValue(AddressOf Initialize, TableName, CharacterIdColumn, LocationIdColumn, locationId)
     End Function
     Sub ClearForLocation(locationId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"DELETE FROM 
-                [{TableName}] 
-            WHERE 
-                [{LocationIdColumn}]=@{LocationIdColumn};",
-            MakeParameter($"@{LocationIdColumn}", locationId))
+        ClearForColumnValue(AddressOf Initialize, TableName, LocationIdColumn, locationId)
     End Sub
     Public Sub WriteWounds(characterId As Long, wounds As Long)
         WriteColumnValue(AddressOf Initialize, TableName, CharacterIdColumn, characterId, WoundsColumn, wounds)
@@ -121,8 +93,6 @@
             PlayerData.Clear()
         End If
         CharacterInventoryData.Clear(characterId)
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{CharacterIdColumn}]=@{CharacterIdColumn};",
-            MakeParameter($"@{CharacterIdColumn}", characterId))
+        ClearForColumnValue(AddressOf Initialize, TableName, CharacterIdColumn, characterId)
     End Sub
 End Module
