@@ -33,13 +33,10 @@
         Next
     End Sub
     Sub Clear(inventoryId As Long)
-        Initialize()
         Dim itemIds = ItemData.ReadForInventory(inventoryId)
         For Each itemId In itemIds
             ItemData.Clear(itemId)
         Next
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{InventoryIdColumn}]=@{InventoryIdColumn};",
-            MakeParameter($"@{InventoryIdColumn}", inventoryId))
+        ClearForColumnValue(AddressOf Initialize, TableName, InventoryIdColumn, inventoryId)
     End Sub
 End Module

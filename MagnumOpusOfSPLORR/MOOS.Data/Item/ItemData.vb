@@ -36,10 +36,7 @@
     End Function
 
     Public Sub Clear(itemId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{ItemIdColumn}]=@{ItemIdColumn};",
-            MakeParameter($"@{ItemIdColumn}", itemId))
+        ClearForColumnValue(AddressOf Initialize, TableName, ItemIdColumn, itemId)
     End Sub
 
     Public Sub WriteInventory(itemId As Long, inventoryId As Long)
@@ -50,17 +47,10 @@
         Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, ItemIdColumn, itemId, ItemTypeIdColumn)
     End Function
     Function ReadForInventory(inventoryId As Long) As List(Of Long)
-        Initialize()
-        Return ExecuteReader(
-            Function(reader) CLng(reader($"{ItemIdColumn}")),
-            $"SELECT [{ItemIdColumn}] FROM [{TableName}] WHERE [{InventoryIdColumn}]=@{InventoryIdColumn};",
-            MakeParameter($"@{InventoryIdColumn}", inventoryId))
+        Return ReadIdsWithColumnValue(AddressOf Initialize, TableName, ItemIdColumn, InventoryIdColumn, inventoryId)
     End Function
     Sub ClearForItemType(itemTypeId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{ItemTypeIdColumn}]=@{ItemTypeIdColumn}",
-            MakeParameter($"@{ItemTypeIdColumn}", itemTypeId))
+        ClearForColumnValue(AddressOf Initialize, TableName, ItemTypeIdColumn, itemTypeId)
     End Sub
     Function ReadCountForItemType(itemTypeId As Long) As Long
         Initialize()

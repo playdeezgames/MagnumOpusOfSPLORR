@@ -19,14 +19,22 @@
     End Function
 
     Public Sub Clear(itemTypeId As Long)
-        Initialize()
-        ExecuteNonQuery($"DELETE FROM [{TableName}] WHERE [{ItemTypeIdColumn}]=@{ItemTypeIdColumn};", MakeParameter($"@{ItemTypeIdColumn}", itemTypeId))
+        ClearForColumnValue(AddressOf Initialize, TableName, ItemTypeIdColumn, itemTypeId)
     End Sub
 
     Public Sub Write(itemTypeId As Long, equipSlotId As Long)
         Initialize()
         ExecuteNonQuery(
-            $"REPLACE INTO [{TableName}]([{ItemTypeIdColumn}],[{EquipSlotIdColumn}]) VALUES(@{ItemTypeIdColumn},@{EquipSlotIdColumn});",
+            $"REPLACE INTO [{TableName}]
+            (
+                [{ItemTypeIdColumn}],
+                [{EquipSlotIdColumn}]
+            ) 
+            VALUES
+            (
+                @{ItemTypeIdColumn},
+                @{EquipSlotIdColumn}
+            );",
             MakeParameter($"@{ItemTypeIdColumn}", itemTypeId),
             MakeParameter($"@{EquipSlotIdColumn}", equipSlotId))
     End Sub

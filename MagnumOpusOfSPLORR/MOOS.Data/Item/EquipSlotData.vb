@@ -17,10 +17,7 @@
     End Property
 
     Public Sub Clear(equipSlotId As Long)
-        Initialize()
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{EquipSlotIdColumn}]=@{EquipSlotIdColumn};",
-            MakeParameter($"@{EquipSlotIdColumn}", equipSlotId))
+        ClearForColumnValue(AddressOf Initialize, TableName, EquipSlotIdColumn, equipSlotId)
     End Sub
 
     Public Function ReadName(equipSlotId As Long) As String

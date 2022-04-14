@@ -72,11 +72,8 @@
     End Sub
 
     Public Sub Clear(itemTypeId As Long)
-        Initialize()
         ItemData.ClearForItemType(itemTypeId)
-        ExecuteNonQuery(
-            $"DELETE FROM [{TableName}] WHERE [{ItemTypeIdColumn}]=@{ItemTypeIdColumn};",
-            MakeParameter($"@{ItemTypeIdColumn}", itemTypeId))
+        ClearForColumnValue(AddressOf Initialize, TableName, ItemTypeIdColumn, itemTypeId)
     End Sub
 
     Public Function ReadName(itemTypeId As Long) As String
@@ -97,10 +94,6 @@
         Return LastInsertRowId
     End Function
     Function ReadForName(itemTypeName As String) As List(Of Long)
-        Initialize()
-        Return ExecuteReader(
-            Function(reader) CLng(reader(ItemTypeIdColumn)),
-            $"SELECT [{ItemTypeIdColumn}] FROM [{TableName}] WHERE [{ItemTypeNameColumn}]=@{ItemTypeNameColumn};",
-            MakeParameter($"@{ItemTypeNameColumn}", itemTypeName))
+        Return ReadIdsWithColumnValue(AddressOf Initialize, TableName, ItemTypeIdColumn, ItemTypeNameColumn, itemTypeName)
     End Function
 End Module
