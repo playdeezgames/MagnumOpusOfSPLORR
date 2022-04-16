@@ -7,4 +7,7 @@
             Return SpawnerData.All.Select(Function(id) New Spawner(id)).ToList
         End Get
     End Property
+    Function FindSpawnerTypeByUniqueName(uniqueName As String) As Spawner
+        Return AllSpawners.FirstOrDefault(Function(x) x.UniqueName = uniqueName)
+    End Function
 End Module

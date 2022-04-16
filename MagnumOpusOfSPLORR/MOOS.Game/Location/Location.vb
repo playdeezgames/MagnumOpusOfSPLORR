@@ -13,6 +13,14 @@
             Return $"{Name}(#{Id})"
         End Get
     End Property
+    ReadOnly Property Spawner As LocationSpawner
+        Get
+            If SpawnerLocationData.ReadSpawnerForLocation(Id).HasValue Then
+                Return New LocationSpawner(Id)
+            End If
+            Return Nothing
+        End Get
+    End Property
     ReadOnly Property AvailableDirections As List(Of Direction)
         Get
             Dim unavailableDirectionIds As New HashSet(Of Long)(Routes.Select(Function(r) r.Direction.Id))
@@ -76,4 +84,12 @@
     Public Shared Operator <>(first As Location, second As Location) As Boolean
         Return first.Id <> second.Id
     End Operator
+
+    Public Sub RemoveSpawner()
+        SpawnerLocationData.ClearForLocation(Id)
+    End Sub
+
+    Public Sub SetSpawner(spawner As Spawner, cooldown As Long)
+        SpawnerLocationData.Write(spawner.Id, Id, cooldown)
+    End Sub
 End Class

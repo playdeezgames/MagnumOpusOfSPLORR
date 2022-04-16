@@ -39,6 +39,22 @@
                 Return FindCharacterTypeByUniqueName(answer)
         End Select
     End Function
+    Function ChooseSpawner(title As String, canCancel As Boolean) As Spawner
+        Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
+        If canCancel Then
+            prompt.AddChoice(NeverMindText)
+        End If
+        For Each spawner In AllSpawners
+            prompt.AddChoices(spawner.UniqueName)
+        Next
+        Dim answer = AnsiConsole.Prompt(prompt)
+        Select Case answer
+            Case NeverMindText
+                Return Nothing
+            Case Else
+                Return FindSpawnerTypeByUniqueName(answer)
+        End Select
+    End Function
     Function ChooseDirection(title As String, candidates As List(Of Direction), canCancel As Boolean) As Direction
         Dim prompt As New SelectionPrompt(Of String) With {.Title = $"[olive]{title}[/]"}
         If canCancel Then
