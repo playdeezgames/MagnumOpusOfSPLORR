@@ -63,6 +63,7 @@
         End Get
     End Property
     Public Sub Clear(spawnerId As Long)
+        SpawnerLocationData.ClearForSpawner(spawnerId)
         ClearForColumnValue(AddressOf Initialize, TableName, SpawnerIdColumn, spawnerId)
     End Sub
 End Module

@@ -52,4 +52,15 @@
             MakeParameter($"@{LocationIdColumn}", locationId),
             MakeParameter($"@{CooldownColumn}", cooldown))
     End Sub
+
+    Public Function ReadCountForSpawner(spawnerId As Long) As Long
+        Initialize()
+        Return ExecuteScalar(Of Long)(
+            $"SELECT COUNT(1) FROM [{TableName}] WHERE [{SpawnerIdColumn}]=@{SpawnerIdColumn};",
+            MakeParameter($"@{SpawnerIdColumn}", spawnerId)).Value
+    End Function
+
+    Friend Sub ClearForSpawner(spawnerId As Long)
+        ClearForColumnValue(AddressOf Initialize, TableName, SpawnerIdColumn, spawnerId)
+    End Sub
 End Module

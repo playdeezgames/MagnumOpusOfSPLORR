@@ -59,11 +59,13 @@
 
     ReadOnly Property CanDestroy As Boolean
         Get
-            Return True
+            Return SpawnerLocationData.ReadCountForSpawner(Id) = 0
         End Get
     End Property
 
     Public Sub Destroy()
-        SpawnerData.Clear(Id)
+        If CanDestroy Then
+            SpawnerData.Clear(Id)
+        End If
     End Sub
 End Class
