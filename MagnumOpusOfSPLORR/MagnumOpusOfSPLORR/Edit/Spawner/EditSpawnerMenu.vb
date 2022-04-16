@@ -6,7 +6,19 @@
         AnsiConsole.MarkupLine($"Name: {spawner.Name}")
         AnsiConsole.MarkupLine($"Spawn Nothing Weight: {spawner.SpawnNothingWeight}")
         AnsiConsole.MarkupLine($"Cooldown: {spawner.Cooldown}")
+        ShowCharacterTypes(spawner)
     End Sub
+
+    Private Sub ShowCharacterTypes(spawner As Spawner)
+        Dim characterTypes = spawner.CharacterTypes
+        If characterTypes.any Then
+            AnsiConsole.MarkupLine("Character Types:")
+            For Each characterType In characterTypes
+                AnsiConsole.MarkupLine($"- {characterType.Key.Name}({characterType.Value})")
+            Next
+        End If
+    End Sub
+
     Private Function CreatePrompt(spawner As Spawner) As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now What?[/]"}
         prompt.AddChoice(GoBackText)
@@ -17,6 +29,7 @@
         End If
         Return prompt
     End Function
+
     Friend Sub Run(spawner As Spawner)
         Dim done = False
         While Not done

@@ -3,6 +3,16 @@
     Sub New(spawnerId As Long)
         Id = spawnerId
     End Sub
+    ReadOnly Property CharacterTypes As Dictionary(Of CharacterType, Integer)
+        Get
+            Dim table = SpawnerCharacterTypeData.ReadForSpawner(Id)
+            Dim result As New Dictionary(Of CharacterType, Integer)
+            For Each entry In table
+                result(New CharacterType(entry.Key)) = CInt(entry.Value)
+            Next
+            Return result
+        End Get
+    End Property
     Property Name As String
         Get
             Return SpawnerData.ReadName(Id)
