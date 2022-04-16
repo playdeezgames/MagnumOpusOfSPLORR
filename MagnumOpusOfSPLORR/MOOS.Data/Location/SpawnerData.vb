@@ -15,20 +15,20 @@
             );")
     End Sub
 
-    Public Function ReadSpawnNothingWeight(id As Long) As Long?
-        Throw New NotImplementedException()
+    Public Function ReadSpawnNothingWeight(spawnerId As Long) As Long?
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, SpawnerIdColumn, spawnerId, SpawnNothingWeightColumn)
     End Function
 
-    Public Sub WriteSpawnNothingWeight(id As Long, value As Long)
-        Throw New NotImplementedException()
+    Public Sub WriteSpawnNothingWeight(spawnerId As Long, weight As Long)
+        WriteColumnValue(AddressOf Initialize, TableName, SpawnerIdColumn, spawnerId, SpawnNothingWeightColumn, weight)
     End Sub
 
-    Public Function ReadCooldown(id As Long) As Long?
-        Throw New NotImplementedException()
+    Public Function ReadCooldown(spawnerId As Long) As Long?
+        Return ReadColumnValue(Of Long)(AddressOf Initialize, TableName, SpawnerIdColumn, spawnerId, CooldownColumn)
     End Function
 
-    Public Sub WriteCooldown(id As Long, value As Long)
-        Throw New NotImplementedException()
+    Public Sub WriteCooldown(spawnerId As Long, cooldown As Long)
+        WriteColumnValue(AddressOf Initialize, TableName, SpawnerIdColumn, spawnerId, CooldownColumn, cooldown)
     End Sub
 
     Public Function ReadName(spawnerId As Long) As String

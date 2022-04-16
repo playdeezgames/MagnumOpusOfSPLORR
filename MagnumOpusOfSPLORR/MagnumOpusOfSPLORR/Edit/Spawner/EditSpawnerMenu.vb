@@ -1,4 +1,6 @@
 ﻿Module EditSpawnerMenu
+    Private Const ChangeSpawnNothingWeightText = "Change Spawn Nothing Weight..."
+    Private Const ChangeCooldownText = "Change Cooldown..."
     Private Sub ShowStatus(spawner As Spawner)
         AnsiConsole.MarkupLine($"Id: {spawner.Id}")
         AnsiConsole.MarkupLine($"Name: {spawner.Name}")
@@ -8,6 +10,8 @@
     Private Function CreatePrompt(spawner As Spawner) As SelectionPrompt(Of String)
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "[olive]Now What?[/]"}
         prompt.AddChoice(GoBackText)
+        prompt.AddChoice(ChangeSpawnNothingWeightText)
+        prompt.AddChoice(ChangeCooldownText)
         If spawner.CanDestroy Then
             prompt.AddChoice(DestroyText)
         End If
@@ -16,6 +20,7 @@
     Friend Sub Run(spawner As Spawner)
         Dim done = False
         While Not done
+            AnsiConsole.Clear()
             ShowStatus(spawner)
             Select Case AnsiConsole.Prompt(CreatePrompt(spawner))
                 Case GoBackText
@@ -23,12 +28,27 @@
                 Case DestroyText
                     HandleDestroy(spawner)
                     done = True
+                Case ChangeCooldownText
+                    HandleChangeCooldown(spawner)
+                Case ChangeSpawnNothingWeightText
+                    HandleChangeSpawnNothingWeight(spawner)
                 Case Else
                     Throw New NotImplementedException
             End Select
         End While
     End Sub
+
+    Private Sub HandleChangeSpawnNothingWeight(spawner As Spawner)
+        spawner.SpawnNothingWeight = AnsiConsole.Ask(Of Long)("[olive]New Spawn Nothing Weight:[/]")
+    End Sub
+
+    Private Sub HandleChangeCooldown(spawner As Spawner)
+        spawner.Cooldown = AnsiConsole.Ask(Of Long)("[olive]New Cooldown:[/]")
+    End Sub
+
     Private Sub HandleDestroy(spawner As Spawner)
-        spawner.Destroy()
+        If spawner.CanDestroy Then
+            spawner.Destroy()
+        End If
     End Sub
 End Module
