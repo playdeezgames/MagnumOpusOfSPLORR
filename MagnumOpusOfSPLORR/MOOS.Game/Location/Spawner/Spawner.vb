@@ -1,8 +1,10 @@
 ﻿Public Class Spawner
     ReadOnly Property Id As Long
+
     Sub New(spawnerId As Long)
         Id = spawnerId
     End Sub
+
     ReadOnly Property CharacterTypes As Dictionary(Of CharacterType, Integer)
         Get
             Dim table = SpawnerCharacterTypeData.ReadForSpawner(Id)
@@ -13,6 +15,7 @@
             Return result
         End Get
     End Property
+
     Property Name As String
         Get
             Return SpawnerData.ReadName(Id)
@@ -21,6 +24,7 @@
             SpawnerData.WriteName(Id, value)
         End Set
     End Property
+
     Property SpawnNothingWeight As Long
         Get
             Return SpawnerData.ReadSpawnNothingWeight(Id).Value
@@ -29,6 +33,7 @@
             SpawnerData.WriteSpawnNothingWeight(Id, value)
         End Set
     End Property
+
     Property Cooldown As Long
         Get
             Return SpawnerData.ReadCooldown(Id).Value
@@ -37,16 +42,19 @@
             SpawnerData.WriteCooldown(Id, value)
         End Set
     End Property
+
     ReadOnly Property UniqueName As String
         Get
             Return $"{Name}(#{Id})"
         End Get
     End Property
+
     ReadOnly Property CanDestroy As Boolean
         Get
             Return True
         End Get
     End Property
+
     Public Sub Destroy()
         SpawnerData.Clear(Id)
     End Sub
