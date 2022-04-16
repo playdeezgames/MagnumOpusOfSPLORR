@@ -50,7 +50,7 @@
     End Property
     ReadOnly Property CanDestroy As Boolean
         Get
-            Return Not CharacterData.ReadForCharacterType(Id).Any
+            Return Not CharacterData.ReadForCharacterType(Id).Any AndAlso SpawnerCharacterTypeData.CountForCharacterType(Id) = 0
         End Get
     End Property
 
@@ -68,12 +68,15 @@
             CharacterTypeData.Clear(Id)
         End If
     End Sub
+
     Public Shared Operator =(first As CharacterType, second As CharacterType) As Boolean
         Return first.Id = second.Id
     End Operator
+
     Public Shared Operator <>(first As CharacterType, second As CharacterType) As Boolean
         Return first.Id <> second.Id
     End Operator
+
     Public Sub AddEquipSlot(equipSlot As EquipSlot)
         CharacterTypeEquipSlotData.Write(Id, equipSlot.Id)
     End Sub

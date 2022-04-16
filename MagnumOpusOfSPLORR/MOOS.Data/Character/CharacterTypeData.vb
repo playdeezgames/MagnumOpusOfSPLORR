@@ -47,6 +47,7 @@
     End Function
 
     Public Sub Clear(characterTypeId As Long)
+        SpawnerCharacterTypeData.ClearForCharacterType(characterTypeId)
         Dim characterIds = CharacterData.ReadForCharacterType(characterTypeId)
         For Each characterId In characterIds
             CharacterData.Clear(characterId)

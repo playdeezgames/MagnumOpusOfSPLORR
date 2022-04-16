@@ -49,6 +49,13 @@
             MakeParameter($"@{WeightColumn}", weight))
     End Sub
 
+    Public Function CountForCharacterType(characterTypeId As Long) As Long
+        Initialize()
+        Return ExecuteScalar(Of Long)(
+            $"SELECT COUNT(1) FROM [{TableName}] WHERE [{CharacterTypeIdColumn}]=@{CharacterTypeIdColumn};",
+            MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId)).Value
+    End Function
+
     Public Function ReadForSpawner(spawnerId As Long) As Dictionary(Of Long, Long)
         Initialize()
         Dim records = ExecuteReader(
@@ -67,4 +74,8 @@
         Next
         Return result
     End Function
+
+    Friend Sub ClearForCharacterType(characterTypeId As Long)
+        ClearForColumnValue(AddressOf Initialize, TableName, CharacterTypeIdColumn, characterTypeId)
+    End Sub
 End Module
