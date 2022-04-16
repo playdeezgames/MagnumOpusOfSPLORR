@@ -16,6 +16,14 @@
         End Get
     End Property
 
+    Sub SetCharacterTypeWeight(characterType As CharacterType, weight As Integer)
+        If weight > 0 Then
+            SpawnerCharacterTypeData.Write(Id, characterType.Id, weight)
+        Else
+            SpawnerCharacterTypeData.Clear(Id, characterType.Id)
+        End If
+    End Sub
+
     Property Name As String
         Get
             Return SpawnerData.ReadName(Id)

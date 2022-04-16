@@ -1,6 +1,7 @@
 ﻿Module EditSpawnerMenu
     Private Const ChangeSpawnNothingWeightText = "Change Spawn Nothing Weight..."
     Private Const ChangeCooldownText = "Change Cooldown..."
+    Private Const ChangeSpawnWeightForCharacterTypeText = "Change Spawn Weight for Character Type..."
     Private Sub ShowStatus(spawner As Spawner)
         AnsiConsole.MarkupLine($"Id: {spawner.Id}")
         AnsiConsole.MarkupLine($"Name: {spawner.Name}")
@@ -24,6 +25,7 @@
         prompt.AddChoice(GoBackText)
         prompt.AddChoice(ChangeSpawnNothingWeightText)
         prompt.AddChoice(ChangeCooldownText)
+        prompt.AddChoice(ChangeSpawnWeightForCharacterTypeText)
         If spawner.CanDestroy Then
             prompt.AddChoice(DestroyText)
         End If
@@ -45,10 +47,20 @@
                     HandleChangeCooldown(spawner)
                 Case ChangeSpawnNothingWeightText
                     HandleChangeSpawnNothingWeight(spawner)
+                Case ChangeSpawnWeightForCharacterTypeText
+                    HandleChangeSpawnWeightForCharacterType(spawner)
                 Case Else
                     Throw New NotImplementedException
             End Select
         End While
+    End Sub
+
+    Private Sub HandleChangeSpawnWeightForCharacterType(spawner As Spawner)
+        Dim characterType = ChooseCharacterType("Character Type:", True)
+        If characterType IsNot Nothing Then
+            Dim weight = AnsiConsole.Ask(Of Integer)("[olive]Spawn Weight:[/]")
+            spawner.SetCharacterTypeWeight(characterType, weight)
+        End If
     End Sub
 
     Private Sub HandleChangeSpawnNothingWeight(spawner As Spawner)

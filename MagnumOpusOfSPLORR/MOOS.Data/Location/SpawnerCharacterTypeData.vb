@@ -17,6 +17,38 @@
                 FOREIGN KEY ([{CharacterTypeIdColumn}]) REFERENCES [{CharacterTypeData.TableName}]([{CharacterTypeData.CharacterTypeIdColumn}])
             );")
     End Sub
+
+    Public Sub Clear(spawnerId As Long, characterTypeId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            $"DELETE FROM 
+                [{TableName}] 
+            WHERE 
+                [{SpawnerIdColumn}]=@{SpawnerIdColumn} AND [{CharacterTypeIdColumn}]=@{CharacterTypeIdColumn};",
+            MakeParameter($"@{SpawnerIdColumn}", spawnerId),
+            MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId))
+    End Sub
+
+    Public Sub Write(spawnerId As Long, characterTypeId As Long, weight As Integer)
+        Initialize()
+        ExecuteNonQuery(
+            $"REPLACE INTO [{TableName}]
+            (
+                [{SpawnerIdColumn}],
+                [{CharacterTypeIdColumn}],
+                [{WeightColumn}]
+            ) 
+            VALUES
+            (
+                @{SpawnerIdColumn},
+                @{CharacterTypeIdColumn},
+                @{WeightColumn}
+            );",
+            MakeParameter($"@{SpawnerIdColumn}", spawnerId),
+            MakeParameter($"@{CharacterTypeIdColumn}", characterTypeId),
+            MakeParameter($"@{WeightColumn}", weight))
+    End Sub
+
     Public Function ReadForSpawner(spawnerId As Long) As Dictionary(Of Long, Long)
         Initialize()
         Dim records = ExecuteReader(
