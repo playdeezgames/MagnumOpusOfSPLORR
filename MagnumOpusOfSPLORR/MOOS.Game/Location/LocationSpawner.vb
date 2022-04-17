@@ -19,4 +19,11 @@
             Return Spawner.Name
         End Get
     End Property
+
+    Friend Sub Trigger(location As Location)
+        Dim characterType As CharacterType = Spawner.Generate()
+        If characterType IsNot Nothing Then
+            CharacterData.Create(location.Id, characterType.Name, characterType.Id, 0)
+        End If
+    End Sub
 End Class

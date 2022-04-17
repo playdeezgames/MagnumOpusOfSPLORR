@@ -63,4 +63,16 @@
     Friend Sub ClearForSpawner(spawnerId As Long)
         ClearForColumnValue(AddressOf Initialize, TableName, SpawnerIdColumn, spawnerId)
     End Sub
+
+    Public Sub WriteCooldownForLocation(locationId As Long, cooldown As Long)
+        Initialize()
+        ExecuteNonQuery(
+            $"UPDATE [{TableName}] 
+            SET 
+                [{CooldownColumn}]=@{CooldownColumn} 
+            WHERE 
+                [{LocationIdColumn}]=@{LocationIdColumn};",
+            MakeParameter($"@{LocationIdColumn}", locationId),
+            MakeParameter($"@{CooldownColumn}", cooldown))
+    End Sub
 End Module

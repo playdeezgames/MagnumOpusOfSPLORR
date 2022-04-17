@@ -24,6 +24,18 @@
         End If
     End Sub
 
+    Friend Function Generate() As CharacterType
+        Dim generatable As New List(Of CharacterType)
+        Dim table As New Dictionary(Of Integer, Integer)
+        table(generatable.Count) = CInt(SpawnNothingWeight)
+        generatable.Add(Nothing)
+        For Each entry In CharacterTypes
+            table(generatable.Count) = entry.Value
+            generatable.Add(entry.Key)
+        Next
+        Return generatable(RNG.FromGenerator(table))
+    End Function
+
     Property Name As String
         Get
             Return SpawnerData.ReadName(Id)

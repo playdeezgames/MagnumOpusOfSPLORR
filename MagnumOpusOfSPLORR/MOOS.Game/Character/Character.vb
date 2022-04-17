@@ -214,6 +214,7 @@
             route.SelfDestructBarriers()
             AddMoveToCounter()
             Location = route.ToLocation
+            Location.CooldownSpawner()
         End If
     End Sub
     Private Sub AddMoveToCounter()

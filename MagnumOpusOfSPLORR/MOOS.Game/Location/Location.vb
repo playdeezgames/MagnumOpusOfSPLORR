@@ -92,4 +92,18 @@
     Public Sub SetSpawner(spawner As Spawner, cooldown As Long)
         SpawnerLocationData.Write(spawner.Id, Id, cooldown)
     End Sub
+
+    Friend Sub CooldownSpawner()
+        If Spawner IsNot Nothing Then
+            Dim cooldown = SpawnerLocationData.ReadCooldownForLocation(Id)
+            If cooldown.HasValue Then
+                cooldown = cooldown.Value - 1
+                If cooldown.Value <= 0 Then
+                    Spawner.Trigger(Me)
+                    cooldown = Spawner.Cooldown
+                End If
+                SpawnerLocationData.WriteCooldownForLocation(Id, cooldown.Value)
+            End If
+        End If
+    End Sub
 End Class
